@@ -32,7 +32,7 @@ export default function Closet() {
   const buttons = [
     { name: '사진 촬영', buttonClick: takePicture },
     { name: '앨범에서 선택', buttonClick: choosePicture },
-    { name: '현재 사진 삭제', buttonClick: deleteImage },
+    { name: '현재 사진 삭제', buttonClick: deleteImage, state: 'emphasis' },
   ];
 
   return (

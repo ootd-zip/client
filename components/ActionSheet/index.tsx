@@ -4,6 +4,7 @@ import { Button2 } from '../UI';
 interface colorProps {
   buttonClick: () => void;
   name: string;
+  state?: string;
 }
 
 interface ActionSheetProps {
@@ -17,7 +18,14 @@ export default function ActionSheet({ buttons }: ActionSheetProps) {
         buttons.map((item, index) => {
           return (
             <S.ButtonWrap key={index}>
-              <Button2 onClick={item.buttonClick}>{item.name}</Button2>
+              <Button2
+                onClick={item.buttonClick}
+                style={{
+                  color: item.state === 'emphasis' ? '#EC0000' : '#030303',
+                }}
+              >
+                {item.name}
+              </Button2>
             </S.ButtonWrap>
           );
         })}
