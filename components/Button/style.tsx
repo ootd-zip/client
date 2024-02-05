@@ -25,7 +25,8 @@ const SmallButton = styled(Buttons)`
   display: ${(props) => (props.show ? 'inline' : 'none')};
   width: 70px;
   height: 30px;
-  border-radius: 122px;
+  border-radius: ${(props) =>
+    props.className === 'followButton' ? '2px' : '122px'};
 `;
 
 export { LargeButton, SmallButton };

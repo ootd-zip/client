@@ -12,7 +12,7 @@ import ClothCategoryModal, {
 import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
 
 interface BaiscInfoFirst {
-  clothImage: string | ImageWithTag | undefined;
+  clothImage: ImageWithTag | undefined;
   clothCategory: CategoryListType[] | null;
   clothBrand: string;
   clothWhereBuy: ClothWhereBuy;
@@ -88,7 +88,7 @@ export default function BasicInfoFirst({
       />
       <S.Layout>
         <S.ClothImage>
-          {typeof clothImage === 'string' && <img src={clothImage} alt="" />}
+          <img src={clothImage![0].ootdImage} alt="" />
         </S.ClothImage>
         <S.BasicInfo>
           <S.Title>

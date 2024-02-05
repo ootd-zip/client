@@ -15,7 +15,7 @@ import ClothSizeModal from '@/components/Domain/AddCloth/ClothSizeModal';
 import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
 
 interface BasicInfoSecondProps {
-  clothImage: string | ImageWithTag | undefined;
+  clothImage: ImageWithTag | undefined;
   clothCategory: CategoryListType[] | null;
   clothBrand: string;
   clothWhereBuy: ClothWhereBuy;
@@ -98,7 +98,7 @@ export default function BasicInfoSecond({
         <S.BasicInfoFirst>
           <Category />
           <Headline1>{clothBrand}</Headline1>
-          {typeof clothImage === 'string' && <img src={clothImage} alt="" />}
+          <img src={clothImage![0].ootdImage} alt="" />
           <hr />
         </S.BasicInfoFirst>
         <S.BasicInfoSecond>

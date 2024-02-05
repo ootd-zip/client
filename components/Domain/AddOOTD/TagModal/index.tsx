@@ -4,8 +4,9 @@ import ClothInformation from '@/components/ClothInformation';
 import { ClothInformationProps } from '@/components/ClothInformation/type';
 import { Dispatch, SetStateAction, useState } from 'react';
 import TabView from '@/components/TabView';
-import { Button1 } from '@/components/UI';
+import { Body4 } from '@/components/UI';
 import Modal from '@/components/Modal';
+import NewRegister from './NewRegister';
 
 const ClothInformationSampleData = [
   {
@@ -71,6 +72,7 @@ const ClothInformationSampleData = [
 ] as [...ClothInformationProps[]];
 
 export type ImageWithTag = {
+  ootdId: number;
   ootdImage: string;
   tag?: {
     clothId: number;
@@ -89,8 +91,8 @@ export type ImageWithTag = {
 interface AddTagProps {
   setAddTag: Dispatch<SetStateAction<Boolean>>;
   addTag: Boolean;
-  setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined | string>>;
-  imageAndTag: ImageWithTag | string;
+  setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined>>;
+  imageAndTag: ImageWithTag | undefined;
   slideIndex: number;
 }
 
@@ -102,17 +104,23 @@ export default function AddTag({
   slideIndex,
 }: AddTagProps) {
   const categoryList = ['외투', '상의', '하의', '한벌옷', '신발'];
-
-  const [clicked, setClicked] = useState<number>(0);
+  const [letter, setLetter] = useState<string>('');
+  const [clicked, setClicked] = useState<number | null>();
 
   const onClickCategory = (index: number) => {
+    console.log(clicked, index);
+    if (clicked === index) {
+      setClicked(null);
+      return;
+    }
     setClicked(index);
   };
 
   //태그 추가
   const onClickClothInformation = (index: number) => {
-    if (typeof imageAndTag !== 'string') {
-      const newTag = [...imageAndTag];
+    if (imageAndTag) {
+      const newTag = JSON.parse(JSON.stringify(imageAndTag));
+
       if (newTag[slideIndex].tag) {
         newTag[slideIndex].tag?.push({
           clothId: ClothInformationSampleData[index].clothId,
@@ -144,53 +152,6 @@ export default function AddTag({
     }
   };
 
-  const MyCloset = () => {
-    return (
-      <S.MyCloset>
-        <SearchBar placeholder="Hinted search text" />
-        <S.Category>
-          {categoryList.map((item, index) => {
-            return (
-              <S.CategorySpan
-                state={index === clicked}
-                key={index}
-                onClick={() => onClickCategory(index)}
-              >
-                <Button1>{item}</Button1>
-              </S.CategorySpan>
-            );
-          })}
-        </S.Category>
-        <S.List>
-          {ClothInformationSampleData.map((item, index) => {
-            return (
-              <>
-                <div onClick={() => onClickClothInformation(index)} key={index}>
-                  <ClothInformation
-                    clothId={item.clothId}
-                    size={item.size}
-                    clothImage={item.clothImage}
-                    caption=""
-                    headline={item.headline}
-                    subHeadline={item.subHeadline}
-                    bodyFirst={item.bodyFirst}
-                    bodySecond={item.bodySecond}
-                    icon={item.icon}
-                  />
-                </div>
-                <hr />
-              </>
-            );
-          })}
-        </S.List>
-      </S.MyCloset>
-    );
-  };
-
-  const AddNewCloth = () => {
-    return <div>신규 등록 페이지</div>;
-  };
-
   return (
     <>
       <S.Background onClick={() => setAddTag(false)} addTag={addTag} />
@@ -200,10 +161,64 @@ export default function AddTag({
             <TabView.TabBar tab={['내 옷장', '신규 등록']} />
             <TabView.Tabs>
               <TabView.Tab>
-                <MyCloset />
+                <S.MyCloset>
+                  <SearchBar
+                    letter={letter}
+                    setLetter={setLetter}
+                    placeholder="이름, 카테고리 등"
+                  />
+                  <S.SearchFilter>
+                    <S.IsOpenSpan state={true}>
+                      <Body4 state="emphasis">공개</Body4>
+                    </S.IsOpenSpan>
+                    <S.IsOpenSpan state={false}>
+                      <Body4 state="emphasis">비공개</Body4>
+                    </S.IsOpenSpan>
+                    <S.Divider />
+                    <S.Category>
+                      {categoryList.map((item, index) => {
+                        return (
+                          <S.CategorySpan
+                            onTouchStart={(e) => e.stopPropagation()}
+                            onTouchEnd={() => onClickCategory(index)}
+                            state={index === clicked}
+                            key={index}
+                          >
+                            <Body4 state="emphasis">{item}</Body4>
+                          </S.CategorySpan>
+                        );
+                      })}
+                    </S.Category>
+                  </S.SearchFilter>
+                  <S.List>
+                    {ClothInformationSampleData.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            onClick={() => onClickClothInformation(index)}
+                            key={index}
+                          >
+                            <ClothInformation
+                              clothId={item.clothId}
+                              size={item.size}
+                              clothImage={item.clothImage}
+                              caption=""
+                              headline={item.headline}
+                              subHeadline={item.subHeadline}
+                              bodyFirst={item.bodyFirst}
+                              bodySecond={item.bodySecond}
+                              icon={item.icon}
+                            />
+                          </div>
+                          <hr />
+                        </>
+                      );
+                    })}
+                  </S.List>
+                </S.MyCloset>
               </TabView.Tab>
               <TabView.Tab>
-                <AddNewCloth />
+                <NewRegister imageAndTag={imageAndTag} />
               </TabView.Tab>
             </TabView.Tabs>
           </TabView>

@@ -6,11 +6,12 @@ import Rectangle from 'public/images/rectangle.png';
 interface SubHeadProps {
   count: number;
   clicked: string;
+  state?: string;
 }
 
-export default function SubHead({ count, clicked }: SubHeadProps) {
+export default function SubHead({ count, clicked, state }: SubHeadProps) {
   return (
-    <S.Layout>
+    <S.Layout state={state}>
       <S.Frame>
         <Body4 style={{ fontWeight: '500', color: '#BBBBBB' }}>{count}</Body4>
         <Body4 style={{ color: '#BBBBBB' }}>개의 게시물</Body4>

@@ -22,6 +22,7 @@ const Background = styled.div<LayoutProps>`
   width: 100vw;
   height: 100vh;
   position: absolute;
+  top: 0;
 `;
 
 const MyCloset = styled.div`
@@ -34,7 +35,6 @@ const MyCloset = styled.div`
 const Category = styled.div`
   display: flex;
   gap: 8px;
-  padding: 16px 0 24px 0;
 `;
 
 const CategorySpan = styled.div<CategorySpanProps>`
@@ -43,9 +43,46 @@ const CategorySpan = styled.div<CategorySpanProps>`
     props.state ? props.theme.color.grey_00 : props.theme.color.grey_100};
   color: ${(props) =>
     !props.state ? props.theme.color.grey_00 : props.theme.color.grey_100};
-  padding: 6px 14px;
+  padding: 8px 16px;
   border: 1px solid ${(props) => props.theme.color.grey_80};
-  border-radius: 2px;
+  border-radius: 17px;
+  flex-shrink: 0;
+`;
+
+interface IsOpenProps {
+  state: Boolean;
+}
+
+const IsOpenSpan = styled.div<IsOpenProps>`
+  display: inline;
+  padding: 8px 16px;
+  border-radius: 17px;
+  background-color: ${(props) =>
+    props.state ? props.theme.color.grey_00 : props.theme.color.grey_95};
+  color: ${(props) =>
+    !props.state ? props.theme.color.grey_00 : props.theme.color.grey_100};
+  flex-shrink: 0;
+  border: ${(props) =>
+    !props.state && `1px solid ${props.theme.color.grey_90}`};
+`;
+
+const SearchFilter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: scroll;
+  padding: 16px 0 24px 0;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Divider = styled.div`
+  width: 1px;
+  height: 34px;
+  background-color: #f2f2f2;
+  flex-shrink: 0;
 `;
 
 const List = styled.div`
@@ -59,6 +96,16 @@ const List = styled.div`
   }
 `;
 
-const S = { Layout, Background, Category, List, MyCloset, CategorySpan };
+const S = {
+  Layout,
+  Background,
+  Category,
+  List,
+  MyCloset,
+  CategorySpan,
+  IsOpenSpan,
+  SearchFilter,
+  Divider,
+};
 
 export default S;

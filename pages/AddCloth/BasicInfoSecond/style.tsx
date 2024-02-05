@@ -49,6 +49,7 @@ const BasicInfoFirst = styled.div`
     width: 106px;
     height: 106px;
     margin-top: 20px;
+    object-fit: cover;
   }
   hr {
     position: absolute;

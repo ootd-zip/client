@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
-const Layout = styled.div`
+interface LayoutProps {
+  state?: string;
+}
+
+const Layout = styled.div<LayoutProps>`
   display: flex;
-  width: 375px;
-  padding: 0px 20px 16px 20px;
+  padding: ${(props) =>
+    props.state ? '8px 0px 8px 0px' : '0px 20px 16px 20px'};
+
   justify-content: flex-end;
   align-items: center;
 `;

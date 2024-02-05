@@ -43,6 +43,9 @@ const AlertButton = styled.div`
     &.yes p {
       font-weight: 600 !important;
     }
+    &.no p {
+      color: red;
+    }
   }
 `;
 

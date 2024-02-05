@@ -19,8 +19,8 @@ const Background = styled.div<LayoutProps>`
 `;
 
 const Label = styled.div`
-  h5 {
-    padding: 22px 0;
+  h2 {
+    padding: 33px 0 22px 0;
     flex-grow: 1;
   }
 
@@ -37,7 +37,11 @@ const Label = styled.div`
   }
 `;
 
-const CheckBox = styled.div``;
+const CheckBox = styled.div`
+  .helperText {
+    margin: 40px 0 16px 0;
+  }
+`;
 
 const Dragger = styled.div`
   width: 100%;

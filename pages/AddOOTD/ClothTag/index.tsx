@@ -6,13 +6,12 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import TagInformation from '@/components/ClothInformation/TagInformation';
 import Carousel from '@/components/Carousel';
-import { sendReactNativeMessage } from '@/utils/reactNativeMessage';
 import AddTag, { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 
 interface ClothTagProps {
-  setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined | string>>;
+  setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined>>;
   handleStep: (next: string) => void;
-  imageAndTag: ImageWithTag | string;
+  imageAndTag: ImageWithTag | undefined;
 }
 
 export default function ClothTag({
@@ -43,11 +42,9 @@ export default function ClothTag({
   //이미지, 태그 정보
   //다음 버튼 활성화 함수
   useEffect(() => {
-    if (typeof imageAndTag !== 'string') {
-      const filterdSamplData = imageAndTag.filter((item) => item.tag);
-      if (filterdSamplData.length) setNextButtonState(true);
-      else setNextButtonState(false);
-    }
+    const filterdSamplData = imageAndTag!.filter((item) => item.tag);
+    if (filterdSamplData.length) setNextButtonState(true);
+    else setNextButtonState(false);
   }, [imageAndTag]);
 
   //드래그 함수
@@ -57,19 +54,18 @@ export default function ClothTag({
     e: DraggableEvent,
     data: DraggableData
   ) => {
-    if (typeof imageAndTag !== 'string') {
-      const updatedElements = [...imageAndTag!];
-      updatedElements[ootdIndex].tag![index] = {
-        ...updatedElements[ootdIndex].tag![index],
-        xRate: String(data.lastX),
-        yRate: String(data.lastY),
-        deviceHeight: componentHeight,
-        deviceWidth: componentWidth,
-      };
-      console.log(updatedElements[ootdIndex].tag![index]);
-      setImageAndTag(updatedElements);
-      e.stopPropagation();
-    }
+    const updatedElements = JSON.parse(JSON.stringify(imageAndTag));
+
+    updatedElements[ootdIndex].tag![index] = {
+      ...updatedElements[ootdIndex].tag![index],
+      xRate: String(data.lastX),
+      yRate: String(data.lastY),
+      deviceHeight: componentHeight,
+      deviceWidth: componentWidth,
+    };
+    console.log(updatedElements[ootdIndex].tag![index]);
+    setImageAndTag(updatedElements);
+    e.stopPropagation();
   };
 
   //옷추가 모달창 열기
@@ -94,52 +90,47 @@ export default function ClothTag({
         infinite={false}
         beforeChange={(_current: number, next: number) => setSlideIndex(next)}
       >
-        {typeof imageAndTag !== 'string' &&
-          imageAndTag.map((item, ootdIndex) => {
-            return (
-              <>
-                <S.Image ref={dragRef}>
-                  {item.tag &&
-                    item.tag.map((element, index) => {
-                      if (componentWidth !== 0 && componentHeight !== 0) {
-                        return (
-                          <Draggable
-                            key={index}
-                            bounds=".image"
-                            onDrag={(e, data) =>
-                              onDrag(index, ootdIndex, e, data)
-                            }
-                            defaultPosition={{
-                              x: Number(element.xRate),
-                              y: Number(element.yRate),
-                            }}
-                          >
-                            <div className="sample">
-                              <TagInformation
-                                clothId={element.clothId}
-                                clothImage={element.clothImage}
-                                caption={element.caption}
-                                headline={element.headline}
-                                bodyFirst={element.bodyFirst}
-                                state={element.state as 'dark' | 'light'}
-                              />
-                            </div>
-                          </Draggable>
-                        );
-                      }
-                    })}
-                  {/* 이미지 */}
-                  <img
-                    onClick={onClickImage}
-                    className="image"
-                    ref={imageRef}
-                    src={item.ootdImage}
-                    alt=""
-                  />
-                </S.Image>
-              </>
-            );
-          })}
+        {imageAndTag!.map((item, ootdIndex) => {
+          return (
+            <>
+              <S.Image ref={dragRef}>
+                {item.tag &&
+                  item.tag.map((element, index) => {
+                    return (
+                      <Draggable
+                        key={index}
+                        bounds=".image"
+                        onDrag={(e, data) => onDrag(index, ootdIndex, e, data)}
+                        defaultPosition={{
+                          x: Number(element.xRate),
+                          y: Number(element.yRate),
+                        }}
+                      >
+                        <div className="sample">
+                          <TagInformation
+                            clothId={element.clothId}
+                            clothImage={element.clothImage}
+                            caption={element.caption}
+                            headline={element.headline}
+                            bodyFirst={element.bodyFirst}
+                            state={element.state as 'dark' | 'light'}
+                          />
+                        </div>
+                      </Draggable>
+                    );
+                  })}
+                {/* 이미지 */}
+                <img
+                  onClick={onClickImage}
+                  className="image"
+                  ref={imageRef}
+                  src={item.ootdImage}
+                  alt=""
+                />
+              </S.Image>
+            </>
+          );
+        })}
       </Carousel>
     );
   };
@@ -153,7 +144,11 @@ export default function ClothTag({
         <Body3>원하는 곳을 터치해서 옷 정보를 태그해보세요.</Body3>
       </S.Tag>
       {/* 다음버튼 */}
-      <NextButton state={nextButtonState} onClick={onClickNextButton}>
+      <NextButton
+        className="nextButton"
+        state={nextButtonState}
+        onClick={onClickNextButton}
+      >
         다음단계
       </NextButton>
       {/* 태그 모달창 */}

@@ -39,6 +39,7 @@ const ClothImage = styled.div`
   img {
     width: 106px;
     height: 106px;
+    object-fit: cover;
   }
 `;
 

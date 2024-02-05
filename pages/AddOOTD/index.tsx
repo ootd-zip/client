@@ -7,11 +7,9 @@ import { AppLayoutProps } from '@/AppLayout';
 import { ComponentWithLayout } from '../sign-up';
 import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
-import { Button1, Title1 } from '@/components/UI';
+import { Title1 } from '@/components/UI';
 import { useRouter } from 'next/router';
 import { styleList } from '@/constants/business.constants';
-import theme from '@/styles/theme';
-import { useOOTD } from '@/apis/domain/OOTD/OOTDApi';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 
 export interface Style {
@@ -20,12 +18,9 @@ export interface Style {
 }
 
 const AddOOTD: ComponentWithLayout = () => {
-  const steps = ['미리보기', '의류태그', '게시하기'];
+  const steps = ['편집', '태그', '게시하기'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
-  const [imageAndTag, setImageAndTag] = useState<
-    ImageWithTag | undefined | string
-  >([]); //이미지 + 태그
-  const [gender, setGender] = useState('남성'); //성별
+  const [imageAndTag, setImageAndTag] = useState<ImageWithTag | undefined>([]); //이미지 + 태그
   const [string, setString] = useState(''); //게시글
   const styleListInitial = styleList.map((item) => {
     return { value: false, tag: item } as Style;
@@ -37,8 +32,8 @@ const AddOOTD: ComponentWithLayout = () => {
   const router = useRouter();
 
   //앱바 왼쪽 네비게이션 관리
-  const LeftPropsContent = () => {
-    if (currentStep === '미리보기') {
+  const AppbarLeftProps = () => {
+    if (currentStep === '편집') {
       return <AiOutlineClose onClick={onClickAppbarLeftButton} />;
     } else {
       return <AiOutlineArrowLeft onClick={onClickAppbarLeftButton} />;
@@ -47,68 +42,12 @@ const AddOOTD: ComponentWithLayout = () => {
 
   //앱바 왼쪽 네비게이션 클릭
   const onClickAppbarLeftButton = () => {
-    if (currentStep === '미리보기') {
+    if (currentStep === '편집') {
       router.push('/name');
-    } else if (currentStep === '의류태그') {
-      handleStep('미리보기');
+    } else if (currentStep === '태그') {
+      handleStep('편집');
     } else {
-      handleStep('의류태그');
-    }
-  };
-
-  //앱바 오른쪽 네비게이션 관리
-  const RightPropsContent = () => {
-    if (currentStep === '의류태그') {
-      return <Button1 onClick={onClickAppbarRightButton}>건너뛰기</Button1>;
-    }
-    if (complete) {
-      return <Button1 onClick={onClickAppbarRightButton}>등록</Button1>;
-    } else {
-      return (
-        <Button1 style={{ color: `${theme.color.grey_90}` }}>등록</Button1>
-      );
-    }
-  };
-
-  const [addOOTD] = useOOTD();
-
-  //앱바 오른쪽 네비게이션 클릭
-  const onClickAppbarRightButton = async () => {
-    if (currentStep === '의류태그') {
-      handleStep('게시하기');
-    } else {
-      //OOTD 게시
-      if (typeof imageAndTag !== 'string') {
-        const payload = {
-          content: string,
-          isPrivate: true as Boolean,
-          styles: [1],
-          ootdImages: imageAndTag!.map((ootd) => {
-            return {
-              ootdImage: ootd.ootdImage,
-              clothesTags: ootd.tag
-                ? ootd.tag?.map((tag) => {
-                    return {
-                      clothesId: tag.clothId,
-                      deviceWidth: tag.deviceWidth,
-                      deviceHeight: tag.deviceHeight,
-                      xrate: tag.xRate,
-                      yrate: tag.yRate,
-                    };
-                  })
-                : [],
-            };
-          }),
-        };
-        const addOOTDSuccess = await addOOTD(payload);
-
-        //ootd 성공 여부에 따른 페이지 이동
-        if (addOOTDSuccess) {
-          alert('등록 성공!');
-        } else {
-          alert('등록 실패');
-        }
-      }
+      handleStep('태그');
     }
   };
 
@@ -124,21 +63,21 @@ const AddOOTD: ComponentWithLayout = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <AppBar
-        leftProps={<LeftPropsContent />}
+        leftProps={<AppbarLeftProps />}
         middleProps={<Title1>{currentStep}</Title1>}
-        rightProps={<RightPropsContent />}
+        rightProps={<></>}
       />
       <Funnel>
-        <Funnel.Steps name="미리보기">
+        <Funnel.Steps name="편집">
           <Gallery
+            imageAndTag={imageAndTag}
             setImageAndTag={setImageAndTag}
-            imageAndTag={imageAndTag!}
             handleStep={handleStep}
-            nextStep="의류태그"
+            nextStep="태그"
             item="OOTD"
           />
         </Funnel.Steps>
-        <Funnel.Steps name="의류태그">
+        <Funnel.Steps name="태그">
           <ClothTag
             setImageAndTag={setImageAndTag}
             imageAndTag={imageAndTag!}
@@ -148,8 +87,6 @@ const AddOOTD: ComponentWithLayout = () => {
         <Funnel.Steps name="게시하기">
           <WriteOOTD
             imageAndTag={imageAndTag!}
-            gender={gender}
-            setGender={setGender}
             string={string}
             setString={setString}
             style={style}
@@ -158,6 +95,7 @@ const AddOOTD: ComponentWithLayout = () => {
             setOpen={setOpen}
             selectedStyle={selectedStyle}
             setSelectedStyle={setSelectedStyle}
+            complete={complete}
           />
         </Funnel.Steps>
       </Funnel>

@@ -1,9 +1,18 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import SearchBar from '@/components/SearchBar';
 import S from './style';
 import { Headline2 } from '@/components/UI';
-export default function search() {
+import SearchResult from '@/components/Domain/Search/SearchResult';
+
+export default function Search() {
+  const [keyword, setKeyword] = useState<string>('');
+
   return (
     <S.Layout>
-      <Headline2>아직 없습니다! </Headline2>
+      <S.SearchField>
+        <SearchBar placeholder="검색" letter={keyword} setLetter={setKeyword} />
+      </S.SearchField>
+      <SearchResult />
     </S.Layout>
   );
 }

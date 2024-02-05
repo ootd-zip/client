@@ -1,6 +1,6 @@
-import { Body3 } from '@/components/UI';
+import { Title1 } from '@/components/UI';
 import S from './style';
-import { AiOutlineArrowDown } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 import { Dispatch, SetStateAction } from 'react';
 import Input from '@/components/Input';
 import { Style } from '@/pages/AddOOTD';
@@ -33,20 +33,16 @@ export default function StyleModal({
   return (
     <>
       <S.Background addTag={addTag} onClick={() => setAddTag(false)} />
-
       <Modal height="80" isOpen={addTag}>
         <S.Layout>
-          <S.Dragger>
-            <S.DraggerBar />
-          </S.Dragger>
           <S.Label>
-            <Body3>스타일 태그</Body3>
-            <AiOutlineArrowDown onClick={() => setAddTag(false)} />
+            <Title1>스타일 태그</Title1>
+            <AiOutlineClose onClick={() => setAddTag(false)} />
           </S.Label>
           <S.CheckBox>
             <Input>
               <Input.CheckBox state={style} setState={setStyle} />
-              <Input.HelperText state={1}>
+              <Input.HelperText className="helperText" state={1}>
                 최소 1개 이상 선택해주세요
               </Input.HelperText>
             </Input>

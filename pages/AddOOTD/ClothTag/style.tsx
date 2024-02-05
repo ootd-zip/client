@@ -34,6 +34,10 @@ const Layout = styled.div`
       }
     }
   }
+
+  .nextButton {
+    padding: 0 20px;
+  }
 `;
 
 const Image = styled.div`

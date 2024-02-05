@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface Body3State {
-  state?: 'emphasis' | 'underline';
+  state?: string;
 }
 
 const Body3 = styled.p<Body3State>`
@@ -19,6 +19,11 @@ const Body3 = styled.p<Body3State>`
     props.state === 'underline' &&
     `
       text-decoration: underline;
+  `}
+  ${(props) =>
+    props.state === 'center' &&
+    `
+      text-align: center;
   `}
 `;
 

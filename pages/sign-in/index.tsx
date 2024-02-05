@@ -7,7 +7,7 @@ import { Headline1 } from '@/components/UI';
 import { AppLayoutProps } from '@/AppLayout';
 import { ComponentWithLayout } from '../sign-up';
 import { SignInApi } from '@/apis/domain/SignIn/SignInApi';
-import SocialLoginButton from '@/components/Comment/SignIn/SocialLoginButton';
+import SocialLoginButton from '@/components/Domain/SignIn/SocialLoginButton';
 
 const SignIn: ComponentWithLayout = () => {
   const [, routing] = SignInApi();
