@@ -5,7 +5,7 @@ import EditMyInfo from './EditMyInfo';
 import { useState } from 'react';
 import ActionSheet from '@/components/ActionSheet';
 
-export default function Closet() {
+export default function Edit() {
   const [ImageURL, setImageURL] = useState<string>('/images/권낙현.jpg');
 
   const [nickName, setNickName] = useState<string>('닉네임');

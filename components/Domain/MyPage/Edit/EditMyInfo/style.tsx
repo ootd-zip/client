@@ -39,6 +39,23 @@ const Wrap = styled.div`
   justify-content: space-between;
 `;
 
-const S = { Layout, Category, BodyInfo, OpenStatus, Wrap };
+const CaptionLayout = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: ${(props) => props.theme.color.grey_50};
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+`;
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const S = { Layout, Category, BodyInfo, OpenStatus, Wrap, CaptionLayout, Icon };
 
 export default S;

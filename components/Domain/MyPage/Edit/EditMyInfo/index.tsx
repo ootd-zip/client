@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import S from './style';
-import { Body3 } from '@/components/UI';
+import { Body3, Caption1 } from '@/components/UI';
 import HelperText from '@/components/Input/HelperText';
 import Input from '@/components/Input';
 import SwitchToggle from '@/components/Toggle/SwitchToggle';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 interface MyInfoProps {
   nickName: string;
@@ -60,7 +61,7 @@ export default function EditMyInfo({
               defaultValue={height}
               size="small"
               line="outline"
-              unit="cm"
+              unit="CM"
               type="number"
               onChange={setHeight}
             />
@@ -84,9 +85,12 @@ export default function EditMyInfo({
           <Body3>체형정보 공개</Body3>
           <SwitchToggle state={open} setState={setOpen} />
         </S.Wrap>
-        <HelperText state={3}>
-          다른 사람에게 내 체형정보가 표시되지 않습니다.
-        </HelperText>
+        <S.CaptionLayout>
+          <S.Icon>
+            <AiOutlineExclamationCircle />
+          </S.Icon>
+          <Caption1>다른 사람에게 내 체형정보가 표시되지 않습니다.</Caption1>
+        </S.CaptionLayout>
       </S.OpenStatus>
     </>
   );
