@@ -1,38 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 데이터화 된 옷들을 관리하고 공유 할 수 있는 디지털 옷장 커뮤니티 - 옷집 
+<div align='center'>
+  <img src='https://github.com/skrgus6269/ootd.zip/assets/158991486/3691b94f-d90f-49bf-9bcc-024bc0f4de6c'/>
+  <h3>데이터화 된 옷들을 관리하고 공유 할 수 있는 디지털 옷장 커뮤니티🚪</h3>
+  <h4>3월 배포 예정...</h4>
+</div> 
+<br/>
+ 
+ ## 🚪 서비스 기능 소개 
+ 
+ ### 1️⃣ 간편한 옷/OOTD 저장
+   - OOTD 임시저장 기능 제공
+   - OOTD 등록 시 내 옷 태그 가능
+   - 옷 브랜드 추천 검색어 제공
+   - 옷 정보 입력 시 필수정보/ 추가정보 제공
 
-## Getting Started
+ ### 2️⃣ 내 옷/OOTD를 볼 수 있는 옷장
+   - 필터링을 활용한 옷 모아보기
+   - 비공개 설정으로 나만 보기 기능 제공
+     
+ ### 3️⃣ 다른 유저의 옷장 열람
+   - 유저의 체형을 제공해 나와 체형이 비슷한 유저의 옷장 방문 가능 **(옷 길라잡이 역할)**
+     
+ ### 4️⃣ 인지도를 쌓을 수 있는 옷장 커뮤니티
+   - 나와 취향이 비슷한 유저 팔로우 기능 제공
+   - OOTD 좋아요, 북마크 기능 제공
+   - OOTD 댓글 기능을 통한 옷장 주인과의 소통 가능
+   - 탐색 기능을 통한 유저, OOTD 추천 
+   - 인지도 확인이 가능한 랭킹 기능 제공 (2차 배포 예정)
+   - 원하는 유저와의 옷장을 활용한 패션 멘토링 (2,3차 배포 예정)
+     
+<br/>
 
-First, run the development server:
+## 🛠 Tech Stacks
+![image](https://github.com/skrgus6269/ootd.zip/assets/158991486/8fb749dd-1f7f-400f-9bf7-7c9d966f9579)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 😀 Member
+|팀장, FE|FE|BE|BE|BE|Design|
+|------|---|---|---|---|---|
+|[권낙현](https://github.com/skrgus6269)|[정연휘](https://github.com/JungYeonHwi)|[김강민](https://github.com/orgs/ootd-zip/people/kkmin223)|[박진훈](https://github.com/jinhoon227)|[박이언](https://github.com/Lechros)|[이바름](https://github.com/eeaeu)| 
