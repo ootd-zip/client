@@ -34,6 +34,7 @@ export default function Explore() {
       sortCriteria: sortStandard,
       page: ootdPage,
       size: ootdSize,
+      writerGender: '',
     });
 
     return data;
