@@ -19,21 +19,42 @@ import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import FilledSquare from '@/public/images/FilledPlusSquare.svg';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const icons = [
   <AiOutlineHome />,
   <AiOutlineSearch />,
   <AiOutlinePlusSquare />,
-  <BookmarkOutlined />,
+  <Image
+    src="/images/BookmarkOutlined.svg"
+    alt="BookmarkOutlined"
+    width={16}
+    height={16}
+  />,
   <AiOutlineUser />,
 ];
 
 const activeIcons = [
   <AiFillHome />,
-  <SearchFilled />,
+  <Image
+    src="/images/SearchFilled.svg"
+    alt="SearchFilled"
+    width={16}
+    height={16}
+  />,
   <FilledSquare />,
-  <BookmarkFilled />,
-  <UserFilled />,
+  <Image
+    src="/images/BookmarkFilled.svg"
+    alt="BookmarkFilled"
+    width={16}
+    height={16}
+  />,
+  <Image
+    src="/images/UserFilled.svg"
+    alt="UserFilled"
+    width={16}
+    height={16}
+  />,
 ];
 
 interface BottomNavBarProps {
