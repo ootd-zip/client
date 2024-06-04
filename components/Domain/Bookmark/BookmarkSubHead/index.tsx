@@ -34,25 +34,26 @@ export default function BookmarSubHead({
             <>
               <button
                 onClick={() => setAlertOpen(true)}
-                className="editingButton"
+                className="deleteButton"
               >
-                <Button3 style={{ color: '#EC0000' }} state="emphasis">
-                  삭제
-                </Button3>
+                <Button3 state="emphasis">삭제</Button3>
               </button>
 
               <Image src={Rectangle} alt="Rectangle" width={1} height={20} />
 
               <button
                 onClick={() => setEditing(false)}
-                className="editingButton"
+                className="cancelButton"
               >
                 <Button3 state="emphasis">취소</Button3>
               </button>
             </>
           ) : (
             <>
-              <button onClick={() => setEditing(true)}>
+              <button
+                onClick={() => setEditing(true)}
+                className="editingButton"
+              >
                 <Button3 state="emphasis">편집</Button3>
               </button>
             </>
