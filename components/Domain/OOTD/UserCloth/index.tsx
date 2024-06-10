@@ -35,7 +35,7 @@ export default function UserCloth({ userName, userId }: UserClothProps) {
     return data;
   };
 
-  const { data: userClothData } = useInfiniteScroll({
+  const { data: userClothData, reset } = useInfiniteScroll({
     fetchDataFunction,
     initialData: [],
     size: 10,
@@ -44,6 +44,10 @@ export default function UserCloth({ userName, userId }: UserClothProps) {
   useEffect(() => {
     setData(userClothData);
   }, [userClothData]);
+
+  useEffect(() => {
+    reset();
+  }, [router.isReady, router.query.OOTDNumber![0], userId]);
 
   return (
     <S.Layout>

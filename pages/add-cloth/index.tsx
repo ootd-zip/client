@@ -19,6 +19,7 @@ import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { BrandType } from '@/components/BrandList/Brand';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export interface ClothWhereBuy {
   letter: string;
@@ -48,6 +49,7 @@ const AddCloth: ComponentWithLayout = () => {
   const myId = useRecoilValue(userId);
 
   const { postCloth } = ClothApi();
+  const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
 
   const onClickSubmitButton = async () => {
     //옷 등록 api
@@ -67,6 +69,7 @@ const AddCloth: ComponentWithLayout = () => {
     };
 
     const result = await postCloth(payload);
+    reset();
     if (result) router.push(`/mypage/${myId}`);
   };
 

@@ -14,6 +14,7 @@ import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 interface WriteOOTDProps {
   imageAndTag: ImageWithTag | undefined;
@@ -52,6 +53,8 @@ export default function WriteOOTD({
     setSelectedStyle(sampleSelectedStyleTag);
   };
 
+  const { reset } = useRememberScroll({ key: `mypage-${myId}-ootd` });
+
   const onClickSubmitButton = async () => {
     if (imageAndTag !== undefined) {
       const payload = {
@@ -79,6 +82,7 @@ export default function WriteOOTD({
 
       //ootd 성공 여부에 따른 페이지 이동
       if (addOOTDSuccess) {
+        reset();
         router.replace(`/mypage/${myId}`);
       } else {
         alert('등록 실패');
@@ -154,7 +158,7 @@ export default function WriteOOTD({
           state={complete}
           onClick={onClickSubmitButton}
         >
-          다음
+          작성 완료
         </NextButton>
       </S.Layout>
       {styleModalIsOpen && (

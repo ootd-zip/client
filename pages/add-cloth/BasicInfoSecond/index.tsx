@@ -21,6 +21,7 @@ import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 interface BasicInfoSecondProps {
   clothName: string;
@@ -93,6 +94,8 @@ export default function BasicInfoSecond({
     handleStep('추가정보');
   };
 
+  const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
+
   const onClickNoButton = async () => {
     const payload = {
       purchaseStore: clothWhereBuy.letter,
@@ -107,7 +110,11 @@ export default function BasicInfoSecond({
     };
 
     const result = await postCloth(payload);
-    if (result) router.replace(`/mypage/${myId}`);
+
+    if (result) {
+      reset();
+      router.replace(`/mypage/${myId}`);
+    }
   };
 
   return (
