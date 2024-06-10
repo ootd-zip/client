@@ -55,7 +55,6 @@ export default function FollowList() {
   };
 
   const onClickYesButton = () => {
-    console.log('팔로우');
     setAlertOpen(false);
     setToastOpen(true);
   };

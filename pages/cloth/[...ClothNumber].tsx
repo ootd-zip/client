@@ -100,7 +100,6 @@ const Cloth = () => {
   };
 
   const delclationButton = () => {
-    console.log('신고');
     setDeclaration(true);
   };
 
@@ -111,7 +110,6 @@ const Cloth = () => {
       payload
     );
     setReRender(reRender + 1);
-    console.log(result);
     setClickedRight(false); // ActionSheet 숨기기
   };
 

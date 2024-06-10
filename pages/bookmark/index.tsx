@@ -123,7 +123,6 @@ export default function Bookmark() {
   useEffect(() => {
     setBookmarkList(
       bookmarkData.map((item: any) => {
-        console.log(item);
         return {
           ootdId: item.ootdId,
           ootdBookmarkId: item.ootdBookmarkId,

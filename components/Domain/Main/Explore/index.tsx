@@ -82,7 +82,6 @@ export default function Explore() {
 
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = container;
-      console.log(scrollTop, clientHeight, scrollHeight);
       if (scrollTop >= 50) {
         setIsVisible(true);
       } else if (scrollTop < 50) {

@@ -31,7 +31,6 @@ export default function ReceivedDeclarationModal({
 
   const blockUserButton = async () => {
     const blockUser = await postUserBlock({ userId: ID });
-    console.log(blockUser);
 
     if (blockUser.divisionCode === 'UB003') {
       setReceivedDeclaration(false); // 차단 모달 닫기
