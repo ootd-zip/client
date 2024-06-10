@@ -74,8 +74,10 @@ export default function SameCloth() {
                   alt="같은옷"
                 />
                 <div className="filterItemTrue">
-                  <Title2>{item.clothesCategory.categoryName}</Title2>
-                  <Body3>{item.clothesName}</Body3>
+                  <Title2 className="category">
+                    {item.clothesCategory.categoryName}
+                  </Title2>
+                  <Body3 className="name">{item.clothesName}</Body3>
                 </div>
               </S.FilterItem>
             );

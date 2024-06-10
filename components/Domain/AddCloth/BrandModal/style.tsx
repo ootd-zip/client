@@ -64,6 +64,7 @@ const SelectedBrand = styled.div`
   }
   width: 100%;
   padding: 16px 20px;
+  border-top: 1px solid ${(props) => props.theme.color.grey_95};
 `;
 
 const SelectedBrandSpan = styled.div`
@@ -73,7 +74,6 @@ const SelectedBrandSpan = styled.div`
   background-color: ${(props) => props.theme.color.grey_10};
   color: ${(props) => props.theme.color.grey_100};
   border-radius: 17px;
-
   .close {
     color: ${(props) => props.theme.color.grey_100};
     position: absolute;

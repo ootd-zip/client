@@ -115,6 +115,8 @@ export default function ClothTag({
         slidesToShow={1}
         infinite={false}
         beforeChange={(_current: number, next: number) => setSlideIndex(next)}
+        dots={true}
+        initialSlide={0}
       >
         {imageAndTag?.map((item, ootdIndex) => {
           return (

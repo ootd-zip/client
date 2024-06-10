@@ -23,6 +23,7 @@ import DeclarationModal from '@/components/DeclarationModal';
 import ReceivedDeclarationModal from '@/components/ReceivedDeclarationModal';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export interface ClothDataType {
   id: number;
@@ -90,9 +91,12 @@ const Cloth = () => {
     setDeleteOpen(true);
   };
 
+  const { reset } = useRememberScroll({ key: `mypage-${localUserId}-cloth` });
+
   const onClickYesButton = async () => {
     const result = await deleteCloth(Number(router.query.ClothNumber![0]));
-    if (result) router.replace(`/mypage/${localUserId}`);
+    reset();
+    if (result) router.replace(`/mypage/${localUserId}/cloth`);
   };
 
   const onClickNoButton = () => {

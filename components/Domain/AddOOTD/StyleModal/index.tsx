@@ -78,7 +78,7 @@ export default function StyleModal({
           </S.CheckBox>
           <NextButton
             className="nextButton"
-            state={style !== null && style.length > 0}
+            state={!(currentStyle !== undefined && currentStyle.length === 0)}
             onClick={onClickStyleCompleteButton}
           >
             선택완료

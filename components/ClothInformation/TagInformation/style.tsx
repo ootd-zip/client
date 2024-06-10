@@ -22,14 +22,15 @@ const Layout = styled.div<ThemeProps>`
       props.state === 'dark'
         ? props.theme.color.grey_80
         : props.theme.color.grey_30};
-    max-width: 109px;
+    max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width: 134px;
   }
   h2 {
     color: ${(props) => (props.state === 'dark' ? 'white' : 'black')};
-    max-width: 109px;
+    max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
