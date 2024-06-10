@@ -1,13 +1,13 @@
 import S from './style';
 import { Button2 } from '../UI';
 
-interface colorProps {
+interface buttonProps {
   buttonClick: () => void;
   name: string;
 }
 
 interface ActionSheetProps {
-  buttons?: colorProps[];
+  buttons?: buttonProps[];
 }
 
 export default function ActionSheet({ buttons }: ActionSheetProps) {
