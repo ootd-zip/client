@@ -57,6 +57,8 @@ const ColorSpan = styled.div<ColorSpanProps>`
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.bgColor};
+  border: ${(props) =>
+    props.bgColor === '#FFFFFF' && `1px solid ${props.theme.color.grey_90}`};
 `;
 
 const ColorName = styled.div``;
