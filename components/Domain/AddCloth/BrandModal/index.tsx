@@ -10,7 +10,7 @@ import NextButton from '@/components/NextButton';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import CheckBoxTrue from '@/public/images/CheckBoxTrue.svg';
 import CheckBoxFalse from '@/public/images/CheckBoxFalse.svg';
-import Image from 'next/image';
+import Input from '@/components/Input';
 
 interface BrandModalProps {
   brandModalIsOpen: Boolean;
@@ -72,6 +72,8 @@ export default function BrandModal({
     }
   }, [brandList]);
 
+  const [noBrandName, setNoBrandName] = useState<string>('');
+
   return (
     <Modal isOpen={brandModalIsOpen} height="90">
       <S.Layout>
@@ -84,6 +86,7 @@ export default function BrandModal({
         </S.Title>
         <S.Search>
           <SearchBar
+            state={noBrandState ? 'disabled' : ''}
             placeholder="검색"
             letter={searchKeyword}
             setLetter={setSearchKeyword}
@@ -98,6 +101,26 @@ export default function BrandModal({
               {noBrandState ? <CheckBoxTrue /> : <CheckBoxFalse />}
               <Body4 className="noBrand">찾고 있는 브랜드가 없어요.</Body4>
             </S.NoBrand>
+          )}
+          {noBrandState && (
+            <S.NoBrandInput>
+              <Title1>찾고 있는 브랜드를 알려주세요.</Title1>
+              <Body4 className="noBrandinfo1">
+                저희에게 알려주시면 최대한 빨리 업데이트하겠습니다.
+              </Body4>
+              <Body4 className="noBrandinfo2">
+                업데이트가 완료되면 알림을 통해 바로 알려드릴게요!
+              </Body4>
+              <Input>
+                <Input.Text
+                  placeholder="브랜드명 (나이키, cos 등)"
+                  size="big"
+                  line="outline"
+                  state={true}
+                  onChange={setNoBrandName}
+                />
+              </Input>
+            </S.NoBrandInput>
           )}
           <BrandList
             brandInitial={null}
