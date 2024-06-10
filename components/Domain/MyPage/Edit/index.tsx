@@ -26,13 +26,11 @@ export default function Edit({
 }: ActionSheetProps) {
   const router = useRouter();
 
-  const [profileImage, setProfileImage] = useState<string>(
-    '/images/basicProfile.svg'
-  );
+  const [profileImage, setProfileImage] =
+    useState<string>('/images/Avatar.svg');
 
-  const [originProfile, setOriginProfile] = useState<string>(
-    '/images/basicProfile.svg'
-  );
+  const [originProfile, setOriginProfile] =
+    useState<string>('/images/Avatar.svg');
 
   const [nickNameCheck, setNickNameCheck] = useState<Boolean>(true);
   const [nickName, setNickName] = useState<string>('닉네임');

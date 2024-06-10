@@ -5,7 +5,7 @@ const BottomComponent = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 430px;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme.color.grey_100};
   position: fixed;
   bottom: 0;
   justify-content: space-around;
