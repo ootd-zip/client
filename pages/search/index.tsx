@@ -43,13 +43,15 @@ export default function Search() {
   }, [router.query]);
 
   const handleAddKeyword = (text: string) => {
+    if (text.trim() === '') return; // 공백일 경우 무시
+
     const newKeyword = {
       id: Date.now(),
       text: text,
     };
-    if (keywords.filter((item) => item.text === text).length > 0) return;
-    if (text.trim() === '') return;
-    setKeywords([newKeyword, ...keywords]);
+
+    const updatedKeywords = keywords.filter((item) => item.text !== text); // 이미 존재하는 키워드가 있다면 제거
+    setKeywords([newKeyword, ...updatedKeywords]); // 새로운 키워드를 배열의 맨 앞에 추가
   };
 
   const handleRemoveKeyword = (id: number) => {
