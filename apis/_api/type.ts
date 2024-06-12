@@ -140,3 +140,7 @@ export interface getUserBlockListParams {
 export interface postUserBlockPayload {
   userId: number;
 }
+
+export interface postBrandPayload {
+  name: string;
+}

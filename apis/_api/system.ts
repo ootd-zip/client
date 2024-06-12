@@ -1,5 +1,5 @@
 import fetcher from '../fetcher';
-import { postReportPayload } from './type';
+import { postReportPayload, postBrandPayload } from './type';
 
 export const getClothCategory = async () => {
   const { data } = await fetcher.get('/v1/category');
@@ -39,6 +39,12 @@ export const getReport = async () => {
 
 export const postReport = async (payload: postReportPayload) => {
   const { data } = await fetcher.post('v1/report', payload);
+
+  return data;
+};
+
+export const postBrand = async (payload: postBrandPayload) => {
+  const { data } = await fetcher.post('v1/brand', payload);
 
   return data;
 };

@@ -30,7 +30,7 @@ export default function BrandModal({
   >(null);
   const [noBrandState, setNoBrandState] = useState<Boolean>(false);
 
-  const { getBrand } = ClothApi();
+  const { getBrand, postBrand } = ClothApi();
 
   const onClickCloseBrandButton = (id: number) => {
     if (brandList) {
@@ -51,6 +51,7 @@ export default function BrandModal({
     if (noBrandState) {
       setClothBrand([{ id: 9999, name: '브랜드 없음' }]);
       setBrandModalIsOpen(false);
+      postBrand({ name: noBrandName });
       return;
     }
     setClothBrand(selectedBrandList);
