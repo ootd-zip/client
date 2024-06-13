@@ -74,7 +74,7 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
   useEffectAfterMount(() => {
     setMyPageOOTDList([]);
     reset();
-  }, [sortStandard]);
+  }, [sortStandard, router.query.UserId![0]]);
 
   const [listScrollState, setListScrollState] = useState<Boolean>(false);
 
