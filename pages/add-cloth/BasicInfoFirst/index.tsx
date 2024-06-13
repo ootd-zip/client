@@ -14,6 +14,7 @@ import BrandModal from '@/components/Domain/AddCloth/BrandModal';
 import NextImage from '@/components/NextImage';
 import ArrowLeft from '@/public/images/ArrowLeft.svg';
 import Background from '@/components/Background';
+import Toast from '@/components/Toast';
 
 interface BaiscInfoFirst {
   clothName: string;
@@ -97,6 +98,15 @@ export default function BasicInfoFirst({
     if (brandModalOpen) setBrandModalOpen(false);
   };
 
+  const [brandSubmitStatus, setNoBrandSubmitStatus] = useState<Boolean>(false);
+  const [toastOpen, setToastOpen] = useState<Boolean>(false);
+
+  useEffect(() => {
+    if (!brandModalOpen && brandSubmitStatus) {
+      setToastOpen(true);
+    }
+  }, [brandSubmitStatus, brandModalOpen]);
+
   return (
     <>
       <Background
@@ -156,6 +166,13 @@ export default function BasicInfoFirst({
             </Input>
           </S.Information>
         </S.BasicInfo>
+        {true && (
+          <Toast
+            text={`브랜드 건의가 정상적으로 접수되었습니다.`}
+            setState={setToastOpen}
+            state={toastOpen}
+          />
+        )}
         <NextButton
           className="nextButton"
           state={nextButtonState}
@@ -181,6 +198,7 @@ export default function BasicInfoFirst({
           brandModalIsOpen={brandModalOpen}
           setClothBrand={setClothBrand}
           setBrandModalIsOpen={setBrandModalOpen}
+          setNoBrandSubmitStatus={setNoBrandSubmitStatus}
         />
       )}
       {whereToBuyModalOpen && (

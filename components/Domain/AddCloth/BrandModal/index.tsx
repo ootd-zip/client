@@ -16,12 +16,14 @@ interface BrandModalProps {
   brandModalIsOpen: Boolean;
   setBrandModalIsOpen: Dispatch<SetStateAction<Boolean>>;
   setClothBrand: Dispatch<SetStateAction<BrandType[] | null>>;
+  setNoBrandSubmitStatus: Dispatch<SetStateAction<Boolean>>;
 }
 
 export default function BrandModal({
   brandModalIsOpen,
   setBrandModalIsOpen,
   setClothBrand,
+  setNoBrandSubmitStatus,
 }: BrandModalProps) {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [brandList, setBrandList] = useState<BrandType[] | null>(null);
@@ -52,6 +54,7 @@ export default function BrandModal({
       setClothBrand([{ id: 9999, name: '브랜드 없음' }]);
       setBrandModalIsOpen(false);
       postBrand({ name: noBrandName });
+      setNoBrandSubmitStatus(true);
       return;
     }
     setClothBrand(selectedBrandList);
@@ -74,6 +77,10 @@ export default function BrandModal({
   }, [brandList]);
 
   const [noBrandName, setNoBrandName] = useState<string>('');
+
+  useEffect(() => {
+    setNoBrandSubmitStatus(false);
+  });
 
   return (
     <Modal isOpen={brandModalIsOpen} height="90">
