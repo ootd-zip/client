@@ -36,7 +36,6 @@ export default function Recents({
                 <S.Chip key={id}>
                   <Button3
                     className="tagName"
-                    state="emphasis"
                     onClick={() => {
                       onSearch(text);
                       setSearchValue(text);
