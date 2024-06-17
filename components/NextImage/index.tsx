@@ -3,7 +3,7 @@ import { MutableRefObject } from 'react';
 interface ImageProps {
   src: string;
   alt: string;
-  fill: Boolean;
+  fill: boolean;
   className?: string;
   width?: number;
   height?: number;
