@@ -30,7 +30,7 @@ export default function DeclarationModal({
   setReceivedDeclaration,
   setReportStatus,
 }: DeclarationModalProps) {
-  const [checks, setChecks] = useState<Array<boolean>>([
+  const [checks, setChecks] = useState<Array<Boolean>>([
     false,
     false,
     false,
@@ -40,7 +40,7 @@ export default function DeclarationModal({
     false,
     false,
   ]);
-  const [possible, setPossible] = useState<boolean>(false);
+  const [possible, setPossible] = useState<Boolean>(false);
 
   useEffect(() => {
     setPossible(checks.some((check) => check));
@@ -63,7 +63,7 @@ export default function DeclarationModal({
 
   const onClickDeclarationButton = async () => {
     const trueIndices: number[] = checks.reduce(
-      (acc: number[], currentValue: boolean, currentIndex: number) => {
+      (acc: number[], currentValue: Boolean, currentIndex: number) => {
         if (currentValue === true) {
           acc.push(currentIndex);
         }
