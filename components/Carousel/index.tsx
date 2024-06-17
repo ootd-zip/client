@@ -9,8 +9,8 @@ interface CarouselProps {
   ParentRef?: React.MutableRefObject<Slider | null>;
   afterChange?: (currentIndex: number) => void;
   beforeChange?: (currentIndex: number, nextIndex: number) => void;
-  swipe?: boolean;
-  dots?: boolean;
+  swipe?: Boolean;
+  dots?: Boolean;
   initialSlide?: number;
 }
 
@@ -26,7 +26,7 @@ export default function Carousel({
 }: CarouselProps) {
   const sliderSettings = {
     speed: 400,
-    infinite: infinite as boolean, //무한 슬라이드 true,
+    infinite: infinite as Boolean, //무한 슬라이드 true,
     slidesToShow: slidesToShow,
     afterChange,
     beforeChange,

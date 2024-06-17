@@ -5,7 +5,7 @@ import Carousel from '@/components/Carousel';
 
 interface TabsProps {
   children: React.ReactNode;
-  dots?: boolean;
+  dots?: Boolean;
 }
 
 export default function Tabs({ children, dots }: TabsProps) {
