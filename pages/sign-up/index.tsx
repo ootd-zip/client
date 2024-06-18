@@ -20,10 +20,10 @@ interface ComponentWithLayout extends FC {
 const SignUp: ComponentWithLayout = () => {
   const steps = ['기본정보', '체형정보', '취향정보'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
-  const [id, setId] = useState('');
-  const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
+  const [id, setId] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [height, setHeight] = useState<string>('');
+  const [weight, setWeight] = useState<string>('');
   const [open, setOpen] = useState<Boolean>(true);
   const [gender, setGender] = useState<Boolean>(true);
   const [canUseId, setCanUseId] = useState<Boolean>(false);

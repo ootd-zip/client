@@ -46,7 +46,7 @@ export interface ClothDataType {
 const Cloth = () => {
   const router = useRouter();
   const [data, setData] = useState<ClothDataType | null>(null);
-  const [reRender, setReRender] = useState(0);
+  const [reRender, setReRender] = useState<number>(0);
   const { getClothDetail, deleteCloth, patchClothIsPrivate } = ClothApi();
 
   const [reportModalIsOpen, setReportModalIsOpen] = useState<Boolean>(false);

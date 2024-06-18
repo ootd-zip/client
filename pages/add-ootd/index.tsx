@@ -21,7 +21,7 @@ const AddOOTD: ComponentWithLayout = () => {
   const steps = ['편집', '태그', '게시하기'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
   const [imageAndTag, setImageAndTag] = useState<ImageWithTag | undefined>(); //이미지 + 태그
-  const [string, setString] = useState(''); //게시글
+  const [string, setString] = useState<string>(''); //게시글
   const [selectedStyle, setSelectedStyle] = useState<Style[]>([]);
   const [open, setOpen] = useState<Boolean>(true); //공개여부
   const [complete, setComplete] = useState<Boolean>(false); //게시 완료 여부

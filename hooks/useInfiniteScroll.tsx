@@ -18,7 +18,7 @@ export default function useInfiniteScroll({
   key,
 }: InfiniteScrollProps) {
   const [page, setPage] = useState<number>(initialPage ? initialPage : 0);
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState<any>(initialData);
   const [hasNextPage, setHasNextPage] = useState<Boolean>(false);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [total, setTotal] = useState<number>(0); // total 필드 추가

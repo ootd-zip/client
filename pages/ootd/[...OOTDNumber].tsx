@@ -88,8 +88,8 @@ const OOTD: ComponentWithLayout = () => {
 
   const router = useRouter();
 
-  const [reRender, setReRender] = useState(0);
-  const [getPostReRender, setGetPostReRender] = useState(0);
+  const [reRender, setReRender] = useState<number>(0);
+  const [getPostReRender, setGetPostReRender] = useState<number>(0);
 
   const onClickBackButton = () => {
     if (router.query.OOTDNumber![1] === 'explore') {

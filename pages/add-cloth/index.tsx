@@ -42,8 +42,8 @@ const AddCloth: ComponentWithLayout = () => {
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
   const [open, setOpen] = useState<Boolean>(true);
-  const [clothBuyDate, setClothBuyDate] = useState('');
-  const [clothMemo, setClothMemo] = useState('');
+  const [clothBuyDate, setClothBuyDate] = useState<string>('');
+  const [clothMemo, setClothMemo] = useState<string>('');
 
   const router = useRouter();
   const myId = useRecoilValue(userId);

@@ -50,7 +50,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     brand: null,
     isOpen: null,
   });
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<myPageClothType[]>([]);
   const [filterModalInitialIndex, setFilterModalInitialIndex] =
     useState<number>(1);
 

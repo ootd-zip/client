@@ -37,9 +37,9 @@ const EditCloth: ComponentWithLayout = () => {
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
   const [clothOpen, setClothOpen] = useState<Boolean>(true);
-  const [clothBuyDate, setClothBuyDate] = useState('');
-  const [clothMemo, setClothMemo] = useState('');
-  const [sizeRerender, setSizeRerender] = useState(0);
+  const [clothBuyDate, setClothBuyDate] = useState<string>('');
+  const [clothMemo, setClothMemo] = useState<string>('');
+  const [sizeRerender, setSizeRerender] = useState<number>(0);
 
   const { getClothDetail, putCloth } = ClothApi();
 
