@@ -67,7 +67,7 @@ function PostingComment({
     if (commentType === 'all') setCommentType('preview');
   };
   const [data, setData] = useState<PostingCommentData[]>([]);
-  const [totalCount, setTotalCount] = useState<Number>(0);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   const { getOOTDComment } = OOTDApi();
 
