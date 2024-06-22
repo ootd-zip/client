@@ -4,7 +4,6 @@ const Layout = styled.div`
   width: 100%;
   display: inline-flex;
   flex-direction: column;
-  gap: 24px;
 `;
 
 const Category = styled.div`
@@ -23,6 +22,7 @@ const BodyInfo = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  margin-top: 24px;
 `;
 
 const OpenStatus = styled.div`

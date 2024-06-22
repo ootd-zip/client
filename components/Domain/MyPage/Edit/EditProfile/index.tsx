@@ -38,7 +38,7 @@ export default function EditProfile({
           />
         )}
         <Caption1 style={{ color: '#8B8B8B' }} onClick={onClickPicutre}>
-          사진 입력
+          사진 변경
         </Caption1>
       </S.Layout>
     </>
