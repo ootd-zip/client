@@ -10,11 +10,11 @@ interface BrandProps {
   state?: Boolean;
 }
 
-export interface BrandType {
-  id: number;
-  name: string;
-  state?: Boolean;
-}
+// export interface BrandType {
+//   id: number;
+//   name: string;
+//   state?: Boolean;
+// }
 
 export default function Brand({
   keyword,
