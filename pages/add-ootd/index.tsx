@@ -20,13 +20,7 @@ export interface Style {
 const AddOOTD: ComponentWithLayout = () => {
   const steps = ['편집', '태그', '게시하기'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
-  const [imageAndTag, setImageAndTag] = useState<ImageWithTag | undefined>([
-    {
-      ootdId: 1,
-      ootdImage:
-        'https://ootdzip.s3.ap-northeast-2.amazonaws.com/ff471013-454e-4466-9d66-b669b34a8794_2024-05-01.jpg',
-    },
-  ]); //이미지 + 태그
+  const [imageAndTag, setImageAndTag] = useState<ImageWithTag | undefined>(); //이미지 + 태그
   const [string, setString] = useState(''); //게시글
   const [selectedStyle, setSelectedStyle] = useState<Style[]>([]);
   const [open, setOpen] = useState<Boolean>(true); //공개여부
