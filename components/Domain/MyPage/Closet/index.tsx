@@ -32,7 +32,7 @@ export default function Closet({
       return;
     }
     handleStep('OOTD');
-  }, [router.isReady, router.query.UserId![0]]);
+  }, [router.isReady, router.query.UserId]);
 
   return (
     <>
