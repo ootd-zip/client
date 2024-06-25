@@ -44,6 +44,7 @@ export default function Explore() {
     containerRef: OOTDRef,
     hasNextPage: OOTDHasNextPage,
     reset: ootdReset,
+    total,
   } = useInfiniteScroll({
     fetchDataFunction: fetchOOTDDataFunction,
     size: 12,
@@ -94,7 +95,7 @@ export default function Explore() {
         <SubHead
           setState={setSortStandard}
           state={sortStandard}
-          count={OOTDList?.length || 0}
+          count={total}
         />
       </S.SubHeadDiv>
       <S.Layout>
