@@ -29,8 +29,10 @@ export default function Closet({
     if (!router.isReady) return;
     if (router.query.UserId![1] === 'cloth') {
       handleStep('Cloth');
+      return;
     }
-  }, [router.isReady]);
+    handleStep('OOTD');
+  }, [router.isReady, router.query.UserId]);
 
   return (
     <>
