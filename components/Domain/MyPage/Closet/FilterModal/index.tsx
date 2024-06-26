@@ -3,7 +3,7 @@ import S from './style';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import TabView from '@/components/TabView';
 import ClothCategory from '@/components/ClothCategory';
-import ColorList, { ColorListType } from '@/components/ColorList';
+import ColorList from '@/components/ColorList';
 import { Body4, Button3 } from '@/components/UI';
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from '@/components/Button';
@@ -17,6 +17,8 @@ import {
   GenderTypes,
   SearchFilterData,
 } from '@/components/Domain/Search/SearchResult/ClosetCloth';
+
+import { ColorListType } from '@/utils/types/OOTD.types';
 
 interface FilterModalProps {
   isOpen: Boolean;

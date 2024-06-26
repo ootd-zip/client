@@ -5,7 +5,6 @@ import ImageList from '@/components/ImageList';
 import { useRouter } from 'next/router';
 import { AiOutlineDown } from 'react-icons/ai';
 import FilterModal from '../FilterModal';
-import { ColorListType } from '@/components/ColorList';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
 import { BrandType } from '@/utils/types/OOTD.types';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
@@ -17,6 +16,7 @@ import { ClothDataType } from '@/pages/cloth/[...ClothNumber]';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
+import { ColorListType } from '@/utils/types/OOTD.types';
 
 interface ClosetClothProps {
   showingId: number;

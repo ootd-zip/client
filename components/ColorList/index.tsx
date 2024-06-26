@@ -2,13 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useLayoutEffect } from 'react';
 import S from './style';
 import ColorSpan from './ColorSpan';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-
-export type ColorListType = {
-  id: number;
-  name: string;
-  colorCode: string;
-  state: Boolean;
-}[];
+import { ColorListType } from '@/utils/types/OOTD.types';
 
 interface ColorListProps {
   colorList: ColorListType;

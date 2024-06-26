@@ -11,7 +11,7 @@ import BasicInfoSecond from './BasicInfoSecond';
 import AdditionalInfo from './AdditionalInfo';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { ColorListType } from '@/components/ColorList';
+import { ColorListType } from '@/utils/types/OOTD.types';
 import { useRouter } from 'next/router';
 import ClothName from './ClothName';
 import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';

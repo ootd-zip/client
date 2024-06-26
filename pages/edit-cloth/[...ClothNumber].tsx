@@ -8,16 +8,11 @@ import { AppLayoutProps } from '@/AppLayout';
 import { useRouter } from 'next/router';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { ColorListType } from '@/components/ColorList';
+import { ColorListType } from '@/utils/types/OOTD.types';
 import { BrandType } from '@/utils/types/OOTD.types';
 import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';
 import BasicInfo from './BasicInfo';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-
-export interface ClothWhereBuy {
-  letter: string;
-  type: 'Link' | 'Write';
-}
 
 const EditCloth: ComponentWithLayout = () => {
   const router = useRouter();

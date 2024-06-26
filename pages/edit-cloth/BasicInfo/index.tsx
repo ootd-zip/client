@@ -10,7 +10,7 @@ import ClothCategoryModal, {
 import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
 import { BrandType } from '@/utils/types/OOTD.types';
 import BrandModal from '@/components/Domain/AddCloth/BrandModal';
-import { ColorListType } from '@/components/ColorList';
+import { ColorListType } from '@/utils/types/OOTD.types';
 import ClothSizeModal, {
   SizeItem,
 } from '@/components/Domain/AddCloth/ClothSizeModal';
