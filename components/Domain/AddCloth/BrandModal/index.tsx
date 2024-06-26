@@ -3,7 +3,6 @@ import S from './style';
 import { Body4, Button3, Title1 } from '@/components/UI';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import BrandList from '@/components/BrandList';
-// import { BrandType } from '@/components/BrandList/Brand';
 import SearchBar from '@/components/SearchBar';
 import { AiOutlineClose } from 'react-icons/ai';
 import NextButton from '@/components/NextButton';

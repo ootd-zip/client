@@ -7,7 +7,7 @@ import { AiOutlineDown } from 'react-icons/ai';
 import FilterModal from '../FilterModal';
 import { ColorListType } from '@/components/ColorList';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import Spinner from '@/components/Spinner';

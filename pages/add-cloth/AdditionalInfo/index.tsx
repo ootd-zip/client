@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import NextButton from '@/components/NextButton';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import S from '@/pageStyle/add-cloth/AdditionalInfo/style';
 import NextImage from '@/components/NextImage';
 

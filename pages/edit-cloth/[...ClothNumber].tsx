@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
 import { ColorListType } from '@/components/ColorList';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';
 import BasicInfo from './BasicInfo';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';

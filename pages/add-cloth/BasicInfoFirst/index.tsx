@@ -9,7 +9,7 @@ import ClothCategoryModal, {
   CategoryListType,
 } from '@/components/Domain/AddCloth/ClothCategoryModal';
 import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import BrandModal from '@/components/Domain/AddCloth/BrandModal';
 import NextImage from '@/components/NextImage';
 import ArrowLeft from '@/public/images/ArrowLeft.svg';

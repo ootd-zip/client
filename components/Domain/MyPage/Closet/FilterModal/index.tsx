@@ -7,7 +7,7 @@ import ColorList, { ColorListType } from '@/components/ColorList';
 import { Body4, Button3 } from '@/components/UI';
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from '@/components/Button';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import BrandList from '@/components/BrandList';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
 import { MyPageApi } from '@/apis/domain/MyPage/MyPageApi';

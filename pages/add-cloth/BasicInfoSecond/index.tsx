@@ -13,7 +13,7 @@ import ClothSizeModal, {
   SizeItem,
 } from '@/components/Domain/AddCloth/ClothSizeModal';
 import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import { ClothWhereBuy } from '..';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { useRouter } from 'next/router';

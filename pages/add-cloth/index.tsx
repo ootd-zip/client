@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import ClothName from './ClothName';
 import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import useRememberScroll from '@/hooks/useRememberScroll';
