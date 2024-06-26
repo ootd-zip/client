@@ -4,7 +4,7 @@ import Input from '@/components/Input';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Modal from '@/components/Modal';
 import NextButton from '@/components/NextButton';
-import { ClothWhereBuy } from '@/pages/add-cloth';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import { AiOutlineClose } from 'react-icons/ai';
 
 interface WhereToBuyModal {

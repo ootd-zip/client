@@ -14,7 +14,7 @@ import ClothSizeModal, {
 } from '@/components/Domain/AddCloth/ClothSizeModal';
 import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
 import { BrandType } from '@/utils/types/OOTD.types';
-import { ClothWhereBuy } from '..';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';

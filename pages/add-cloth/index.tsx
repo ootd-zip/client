@@ -20,11 +20,7 @@ import { BrandType } from '@/utils/types/OOTD.types';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import useRememberScroll from '@/hooks/useRememberScroll';
-
-export interface ClothWhereBuy {
-  letter: string;
-  type: 'Link' | 'Write';
-}
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 
 const AddCloth: ComponentWithLayout = () => {
   const steps = ['편집', '제품명', '기본정보1', '기본정보2', '추가정보'];

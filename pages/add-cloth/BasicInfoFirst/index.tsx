@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Input from '@/components/Input';
 import { Body2, Body3, Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
-import { ClothWhereBuy } from '..';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import ClothCategoryModal, {
   CategoryListType,

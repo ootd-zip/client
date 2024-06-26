@@ -2,7 +2,7 @@ import S from '@/pageStyle/edit-cloth/BasicInfo/style';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Input from '@/components/Input';
 import { Body3, Title1 } from '@/components/UI';
-import { ClothWhereBuy } from '../[...ClothNumber]';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import ClothCategoryModal, {
   CategoryListType,

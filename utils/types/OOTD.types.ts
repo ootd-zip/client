@@ -10,3 +10,8 @@ export type ColorListType = {
   colorCode: string;
   state: Boolean;
 }[];
+
+export interface ClothWhereBuy {
+  letter: string;
+  type: 'Link' | 'Write';
+}

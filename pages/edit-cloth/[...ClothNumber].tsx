@@ -13,6 +13,7 @@ import { BrandType } from '@/utils/types/OOTD.types';
 import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';
 import BasicInfo from './BasicInfo';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 
 const EditCloth: ComponentWithLayout = () => {
   const router = useRouter();
