@@ -3,21 +3,7 @@ import S from './style';
 import Button from '@/components/Button';
 import { Body3, Body4, Button3 } from '@/components/UI';
 import { useRouter } from 'next/router';
-
-export interface UserProfileDataType {
-  userId: number;
-  userName: string;
-  profileImage: string;
-  followerCount: number;
-  followingCount: number;
-  height: number;
-  weight: number;
-  description: string;
-  isMyProfile: Boolean;
-  isFollow: Boolean;
-  ootdCount: number;
-  clothesCount: number;
-}
+import { UserProfileDataType } from '@/utils/types/user.types';
 
 interface profileProps {
   data: UserProfileDataType;
