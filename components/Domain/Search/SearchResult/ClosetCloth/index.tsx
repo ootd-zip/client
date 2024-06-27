@@ -12,6 +12,7 @@ import Portal from '@/components/Portal';
 import EmptyFilteredResult from '../EmptyFilteredResult';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
+import { OOTDListType, GenderTypes } from '@/utils/types/OOTD.types';
 
 interface ClosetClothProps {
   OOTDTotal: number;
@@ -25,17 +26,6 @@ interface ClosetClothProps {
   sortStandard: string;
   setSortStandard: Dispatch<SetStateAction<string>>;
 }
-
-export type OOTDListType = {
-  id: number;
-  imageUrl: string;
-  imageCount: number;
-};
-
-export type GenderTypes = {
-  man: Boolean;
-  woman: Boolean;
-};
 
 export interface SearchFilterData extends FilterData {
   gender?: GenderTypes;

@@ -32,7 +32,7 @@ import Avatar from '@/public/images/Avatar.svg';
 import Toast from '../Toast';
 import FixModal from '../Domain/OOTD/FixModal';
 import LikeToggle from '../Toggle/LikeToggle';
-import { OOTDType } from '@/pages/ootd/[...OOTDNumber]';
+import { OOTDType } from '@/utils/types/OOTD.types';
 import Image from '../NextImage';
 import NextImage from '../NextImage';
 import Background from '../Background';

@@ -1,5 +1,5 @@
 import S from './style';
-import ClosetCloth, { OOTDListType } from './ClosetCloth';
+import ClosetCloth from './ClosetCloth';
 import Profile, { ProfileListType } from './Profile';
 import EmptySearch from '@/components/EmptySearch';
 import { UserApi } from '@/apis/domain/User/UserApi';
@@ -11,6 +11,7 @@ import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
 import TabView from '@/components/TabView';
 import { FilterData } from '../../MyPage/Closet/ClosetCloth';
 import useRememberScroll from '@/hooks/useRememberScroll';
+import { OOTDListType } from '@/utils/types/OOTD.types';
 
 interface searchResultProps {
   keywordsValue: string;
