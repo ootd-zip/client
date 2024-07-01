@@ -9,7 +9,7 @@ import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 import { Title1 } from '@/components/UI';
 import { useRouter } from 'next/router';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 
 export interface Style {
   id: number;

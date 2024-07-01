@@ -4,7 +4,7 @@ import Input from '@/components/Input';
 import { Body2, Body3, Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
 import { ClothWhereBuy } from '@/utils/types/OOTD.types';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import ClothCategoryModal, {
   CategoryListType,
 } from '@/components/Domain/AddCloth/ClothCategoryModal';

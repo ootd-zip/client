@@ -5,7 +5,7 @@ import Input from '@/components/Input';
 import NextButton from '@/components/NextButton';
 import PlusButton from '@/components/PlusButton';
 import { ColorListType } from '@/utils/types/OOTD.types';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
 import ColorSpan from '@/components/ColorList/ColorSpan';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';

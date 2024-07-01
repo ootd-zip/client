@@ -6,7 +6,7 @@ import AdditionalInfo from './AdditionalInfo';
 import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';
 import { useRouter } from 'next/router';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
 import { ColorListType } from '@/utils/types/OOTD.types';
 import { BrandType } from '@/utils/types/OOTD.types';

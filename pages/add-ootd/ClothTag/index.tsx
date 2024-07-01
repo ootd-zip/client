@@ -12,9 +12,10 @@ import {
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import TagInformation from '@/components/ClothInformation/TagInformation';
 import Carousel from '@/components/Carousel';
-import AddTag, { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import AddTag from '@/components/Domain/AddOOTD/TagModal';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 
 interface ClothTagProps {
   setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined>>;

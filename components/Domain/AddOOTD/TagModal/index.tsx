@@ -17,23 +17,7 @@ import Toast from '@/components/Toast';
 import { useRouter } from 'next/router';
 import Alert from '@/components/Alert';
 import Background from '@/components/Background';
-
-export type ImageWithTag = {
-  ootdId: number;
-  ootdImage: string;
-  ootdImageClothesList?: {
-    clothesId: number;
-    clothesImage: string;
-    coordinate: { xrate: string; yrate: string };
-    deviceSize: { deviceWidth: number; deviceHeight: number };
-    caption: string;
-    size?: string;
-    state?: string;
-    name?: string;
-    brand?: string;
-    category?: string;
-  }[];
-}[];
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 
 interface AddTagProps {
   setAddTag: Dispatch<SetStateAction<Boolean>>;

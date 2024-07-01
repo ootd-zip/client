@@ -92,3 +92,20 @@ export type GenderTypes = {
   man: Boolean;
   woman: Boolean;
 };
+
+export type ImageWithTag = {
+  ootdId: number;
+  ootdImage: string;
+  ootdImageClothesList?: {
+    clothesId: number;
+    clothesImage: string;
+    coordinate: { xrate: string; yrate: string };
+    deviceSize: { deviceWidth: number; deviceHeight: number };
+    caption: string;
+    size?: string;
+    state?: string;
+    name?: string;
+    brand?: string;
+    category?: string;
+  }[];
+}[];

@@ -5,7 +5,7 @@ import { Body4, Button3, Title1 } from '@/components/UI';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Style } from '..';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import StyleModal from '@/components/Domain/AddOOTD/StyleModal';
 import NextButton from '@/components/NextButton';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
