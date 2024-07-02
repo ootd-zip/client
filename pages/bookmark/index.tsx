@@ -15,15 +15,15 @@ import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
 
-export type OOTDdataType = {
+type OOTDBookmarkDataType = {
   ootdId: number;
   ootdBookmarkId: number;
   ootdImage: string;
   ootdImageCount: number;
 };
 
-export type BookmarkListType = {
-  content: OOTDdataType[];
+type BookmarkListType = {
+  content: OOTDBookmarkDataType[];
   page: number;
   size: number;
   isLast: Boolean;

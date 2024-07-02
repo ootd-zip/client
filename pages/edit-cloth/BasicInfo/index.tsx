@@ -4,16 +4,14 @@ import Input from '@/components/Input';
 import { Body3, Title1 } from '@/components/UI';
 import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import { ImageWithTag } from '@/utils/types/OOTD.types';
-import ClothCategoryModal, {
-  CategoryListType,
-} from '@/components/Domain/AddCloth/ClothCategoryModal';
+import ClothCategoryModal from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
 import { BrandType } from '@/utils/types/OOTD.types';
 import BrandModal from '@/components/Domain/AddCloth/BrandModal';
 import { ColorListType } from '@/utils/types/OOTD.types';
-import ClothSizeModal, {
-  SizeItem,
-} from '@/components/Domain/AddCloth/ClothSizeModal';
+import ClothSizeModal from '@/components/Domain/AddCloth/ClothSizeModal';
+import { SizeItem } from '@/utils/types/OOTD.types';
 import ColorSpan from '@/components/ColorList/ColorSpan';
 import PlusButton from '@/components/PlusButton';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';

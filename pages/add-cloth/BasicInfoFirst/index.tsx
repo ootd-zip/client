@@ -5,9 +5,8 @@ import { Body2, Body3, Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
 import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import { ImageWithTag } from '@/utils/types/OOTD.types';
-import ClothCategoryModal, {
-  CategoryListType,
-} from '@/components/Domain/AddCloth/ClothCategoryModal';
+import ClothCategoryModal from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
 import { BrandType } from '@/utils/types/OOTD.types';
 import BrandModal from '@/components/Domain/AddCloth/BrandModal';

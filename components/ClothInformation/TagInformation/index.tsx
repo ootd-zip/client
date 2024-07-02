@@ -1,7 +1,7 @@
 import { Body4, Title2 } from '@/components/UI';
 import S from './style';
 import Image from 'next/image';
-import { ClothInformationProps } from '../type';
+import { ClothInformationProps } from '@/utils/types/cloth.types';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
 export default function TagInformation({

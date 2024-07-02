@@ -6,7 +6,7 @@ import NextButton from '@/components/NextButton';
 import PlusButton from '@/components/PlusButton';
 import { ColorListType } from '@/utils/types/OOTD.types';
 import { ImageWithTag } from '@/utils/types/OOTD.types';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import ColorSpan from '@/components/ColorList/ColorSpan';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
 import ClothSizeModal, {

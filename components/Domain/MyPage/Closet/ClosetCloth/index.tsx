@@ -5,7 +5,7 @@ import ImageList from '@/components/ImageList';
 import { useRouter } from 'next/router';
 import { AiOutlineDown } from 'react-icons/ai';
 import FilterModal from '../FilterModal';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import { BrandType } from '@/utils/types/OOTD.types';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
@@ -16,7 +16,7 @@ import { ClothDataType } from '@/pages/cloth/[...ClothNumber]';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
-import { ColorListType } from '@/utils/types/OOTD.types';
+import { ColorListType, FilterData } from '@/utils/types/OOTD.types';
 
 interface ClosetClothProps {
   showingId: number;
@@ -26,17 +26,6 @@ export type myPageClothType = {
   clothId: number;
   clothImage: string;
 };
-
-export interface FilterData {
-  category: CategoryListType[] | null;
-  color: ColorListType | null;
-  brand: BrandType[] | null;
-  isOpen: Boolean | null;
-  gender?: {
-    man: Boolean;
-    woman: Boolean;
-  };
-}
 
 export default function ClosetCloth({ showingId }: ClosetClothProps) {
   const router = useRouter();

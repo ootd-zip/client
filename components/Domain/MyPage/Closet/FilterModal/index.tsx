@@ -9,7 +9,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Button from '@/components/Button';
 import { BrandType } from '@/utils/types/OOTD.types';
 import BrandList from '@/components/BrandList';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import { MyPageApi } from '@/apis/domain/MyPage/MyPageApi';
 import { useRouter } from 'next/router';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';

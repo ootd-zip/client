@@ -6,7 +6,7 @@ import { Button3, Caption1, Title1 } from '../UI';
 import WithdrawBlock from '../Setting/WithdrawBlock';
 import ReportApi from '@/apis/domain/Report/ReportApi';
 
-export type withdrawBlockType = {
+type withdrawBlockType = {
   id: number;
   message: string;
 }[];

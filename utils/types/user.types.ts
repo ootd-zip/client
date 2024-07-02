@@ -12,3 +12,20 @@ export interface UserProfileDataType {
   ootdCount: number;
   clothesCount: number;
 }
+
+export interface ProfileType {
+  isUser: Boolean;
+  userImage: string;
+  userName: string;
+  follow?: number;
+  myCloth?: number;
+  className?: string;
+  showingId?: number;
+}
+
+export type ProfileListType = {
+  id: number;
+  name: string;
+  profileImage: string;
+  isFollow: Boolean;
+};

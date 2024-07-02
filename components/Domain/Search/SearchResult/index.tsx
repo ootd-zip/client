@@ -1,6 +1,6 @@
 import S from './style';
 import ClosetCloth from './ClosetCloth';
-import Profile, { ProfileListType } from './Profile';
+import Profile from './Profile';
 import EmptySearch from '@/components/EmptySearch';
 import { UserApi } from '@/apis/domain/User/UserApi';
 import { useRouter } from 'next/router';
@@ -9,9 +9,10 @@ import { useEffect, useState } from 'react';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
 import TabView from '@/components/TabView';
-import { FilterData } from '../../MyPage/Closet/ClosetCloth';
+import { FilterData } from '@/utils/types/OOTD.types';
 import useRememberScroll from '@/hooks/useRememberScroll';
 import { OOTDListType } from '@/utils/types/OOTD.types';
+import { ProfileListType } from '@/utils/types/user.types';
 
 interface searchResultProps {
   keywordsValue: string;

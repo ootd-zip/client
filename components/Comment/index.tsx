@@ -4,28 +4,7 @@ import S from './style';
 import Avatar from '@/public/images/Avatar.svg';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
 import NextImage from '../NextImage';
-
-export interface CommentProps {
-  id: number;
-  userId: number;
-  userImage: string;
-  userName: string;
-  content: string;
-  timeStamp: string;
-  type?: 'child';
-  view?: 'preview';
-  onClickReplyButton?: () => void;
-  taggedUserName?: string;
-  myComment?: Boolean;
-  parentId?: number;
-  reRender: number;
-  depth?: number;
-  setReRender: Dispatch<SetStateAction<number>>;
-  setDeclaration: Dispatch<SetStateAction<Boolean>>;
-  setReportUserName: Dispatch<SetStateAction<string>>;
-  setReportID: Dispatch<SetStateAction<number>>;
-  setBlockID: Dispatch<SetStateAction<number>>;
-}
+import { CommentProps } from '@/utils/types/OOTD.types';
 
 function Comment({
   id,

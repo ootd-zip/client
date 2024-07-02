@@ -7,7 +7,7 @@ import { AiOutlineDown } from 'react-icons/ai';
 import SubHead from '../SubHead';
 import Spinner from '@/components/Spinner';
 import FilterModal from '@/components/Domain/MyPage/Closet/FilterModal';
-import { FilterData } from '@/components/Domain/MyPage/Closet/ClosetCloth';
+import { FilterData } from '@/utils/types/OOTD.types';
 import Portal from '@/components/Portal';
 import EmptyFilteredResult from '../EmptyFilteredResult';
 import Background from '@/components/Background';
