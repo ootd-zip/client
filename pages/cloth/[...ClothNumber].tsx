@@ -24,24 +24,7 @@ import ReceivedDeclarationModal from '@/components/ReceivedDeclarationModal';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
-
-export interface ClothDataType {
-  id: number;
-  name: string;
-  userName: string;
-  brand: { id: number; name: string };
-  category: { id: number; categoryName: string; parentCategoryName: string };
-  size: { id: number; name: string; lineNo: string };
-  colors: { id: number; name: string; colorCode: string }[];
-  isPrivate: Boolean;
-  memo: string;
-  purchaseStore: string;
-  purchaseStoreType: string;
-  purchaseDate: string;
-  imageUrl: string;
-  createdAt: string;
-  userId: number;
-}
+import { ClothDataType } from '@/utils/types/cloth.types';
 
 const Cloth = () => {
   const router = useRouter();

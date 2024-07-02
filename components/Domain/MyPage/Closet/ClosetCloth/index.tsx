@@ -12,7 +12,7 @@ import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import Spinner from '@/components/Spinner';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
-import { ClothDataType } from '@/pages/cloth/[...ClothNumber]';
+import { ClothDataType } from '@/utils/types/cloth.types';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';

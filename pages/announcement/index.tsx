@@ -5,13 +5,7 @@ import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-
-export interface AnnoucementDataType {
-  date: string;
-  headline: string;
-  newState: Boolean;
-  body: string;
-}
+import { AnnoucementDataType } from '@/utils/types/setting.types';
 
 export default function Announcement() {
   const router = useRouter();

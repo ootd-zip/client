@@ -10,7 +10,7 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { storedImageKey, userId } from '@/utils/recoil/atom';
-import { UserClothDataType } from '../../OOTD/UserCloth';
+import { UserClothDataType } from '@/utils/types/cloth.types';
 import Spinner from '@/components/Spinner';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import Toast from '@/components/Toast';

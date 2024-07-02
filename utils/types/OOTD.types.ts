@@ -158,3 +158,8 @@ export interface FilterData {
     woman: Boolean;
   };
 }
+
+export interface keywordsInterface {
+  id: number;
+  text: string;
+}
