@@ -4,3 +4,9 @@ export interface AnnoucementDataType {
   newState: Boolean;
   body: string;
 }
+
+export interface QueryParams {
+  code?: string;
+  state?: string;
+  callback?: string[];
+}
