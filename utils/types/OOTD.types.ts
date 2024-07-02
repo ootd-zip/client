@@ -163,3 +163,9 @@ export interface keywordsInterface {
   id: number;
   text: string;
 }
+
+export interface Style {
+  id: number;
+  name: string;
+  state?: Boolean;
+}

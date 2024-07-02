@@ -10,7 +10,7 @@ import AppBar from '@/components/Appbar';
 import { AppLayoutProps } from '@/AppLayout';
 import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import { RegisterApi } from '@/apis/domain/Register/RegisterApi';
 
 interface ComponentWithLayout extends FC {

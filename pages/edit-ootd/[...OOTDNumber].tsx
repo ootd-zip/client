@@ -11,7 +11,7 @@ import {
   AiOutlineClose,
   AiOutlinePlus,
 } from 'react-icons/ai';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import { AppLayoutProps } from '@/AppLayout';
 import { ComponentWithLayout } from '../sign-up';
 import { useRouter } from 'next/router';
