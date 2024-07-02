@@ -5,7 +5,7 @@ import {
   NEXT_PUBLIC_NAVER_URI,
 } from '@/constants/develop.constants';
 import { useRouter } from 'next/router';
-import { QueryParams } from '@/pages/sign-in/[...callback]';
+import { QueryParams } from '@/utils/types/setting.types';
 import { useState } from 'react';
 import { kakaoLogin } from '@/apis/_api/auth';
 

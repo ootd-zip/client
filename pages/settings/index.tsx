@@ -18,7 +18,7 @@ export default function Setting() {
 
   const [queryState, setQueryState] = useState<Boolean>(false);
   const [URLState, setURLState] = useState<any>(false);
-  const [platform, setPlatform] = useState('');
+  const [platform, setPlatform] = useState<string>('');
 
   const { getSocilLoginProvider } = UserApi();
 

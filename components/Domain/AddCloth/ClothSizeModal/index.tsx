@@ -5,6 +5,7 @@ import { Body2, Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { AiOutlineClose } from 'react-icons/ai';
+import { SizeItem } from '@/utils/types/OOTD.types';
 
 interface ClothSizeProps {
   isOpen: Boolean;
@@ -13,11 +14,6 @@ interface ClothSizeProps {
   categoryId: number;
   clothSizeInitial: SizeItem | null;
 }
-
-export type SizeItem = {
-  id: number;
-  name: string;
-};
 
 export type SizeListType = SizeItem[][];
 

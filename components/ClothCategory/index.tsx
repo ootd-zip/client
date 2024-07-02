@@ -1,7 +1,7 @@
 import S from './style';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Body3 } from '@/components/UI';
-import { CategoryListType } from '../Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 
 interface ClothCategoryModalProps {

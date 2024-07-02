@@ -1,6 +1,6 @@
 import AppBar from '@/components/Appbar';
 import StyleModal from '@/components/Domain/AddOOTD/StyleModal';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import Input from '@/components/Input';
 import NextButton from '@/components/NextButton';
 import { Body3, Body4, Button3, Title1 } from '@/components/UI';
@@ -11,7 +11,7 @@ import {
   AiOutlineClose,
   AiOutlinePlus,
 } from 'react-icons/ai';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import { AppLayoutProps } from '@/AppLayout';
 import { ComponentWithLayout } from '../sign-up';
 import { useRouter } from 'next/router';

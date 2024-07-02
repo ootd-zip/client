@@ -6,16 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-
-export interface UserClothDataType {
-  id: number;
-  isTagged: number;
-  imageUrl: string;
-  clothesName: string;
-  brandName: string;
-  categoryName: string;
-  sizeName: string;
-}
+import { UserClothDataType } from '@/utils/types/cloth.types';
 
 interface UserClothProps {
   userName: string;

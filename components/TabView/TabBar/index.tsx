@@ -23,7 +23,7 @@ export default function TabBar({
   //props로 전달받은 tab의 개수만큼 유동적으로 초깃값 관리
   const firstState = new Array(tab.length - 1).fill(false);
 
-  const [state, setState] = useState([true, ...firstState]);
+  const [state, setState] = useState<Array<Boolean>>([true, ...firstState]);
 
   //처음엔 onChangeState가 일어나지 않게 하기 위한 상태
   const [onChangeFirstState, setOnChangeFirstState] = useState<number>(0);

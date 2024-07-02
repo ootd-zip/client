@@ -5,11 +5,7 @@ import SearchResult from '@/components/Domain/Search/SearchResult';
 import Recents from '@/components/Domain/Search/Recents';
 import { useRouter } from 'next/router';
 import Toast from '@/components/Toast';
-
-export interface keywordsInterface {
-  id: number;
-  text: string;
-}
+import { keywordsInterface } from '@/utils/types/OOTD.types';
 
 export default function Search() {
   const [keywords, setKeywords] = useState<keywordsInterface[]>([]);

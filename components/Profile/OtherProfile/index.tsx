@@ -1,6 +1,6 @@
 import ProfileLayout from '../ProfileLayout';
 import S from './style';
-import { ProfileType } from '../type';
+import { ProfileType } from '@/utils/types/user.types';
 import { Body2, Body4 } from '@/components/UI';
 import { useRouter } from 'next/router';
 

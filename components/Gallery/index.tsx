@@ -5,7 +5,7 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Carousel from '../Carousel';
 import { useRouter } from 'next/router';
-import { ImageWithTag } from '../Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import S from './style';
 import NextButton from '../NextButton';
 import { Body3, Body4, Caption1 } from '../UI';

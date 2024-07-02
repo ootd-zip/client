@@ -1,4 +1,4 @@
-import { ClothInformationProps } from './type';
+import { ClothInformationProps } from '@/utils/types/cloth.types';
 import S from './style';
 import { Body4, Title2 } from '../UI';
 import ImageWithCaption from '../UI/ImageWithCaption';

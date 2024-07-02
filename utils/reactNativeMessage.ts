@@ -1,4 +1,4 @@
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import { Dispatch, SetStateAction } from 'react';
 import { WebViewMessageEvent } from 'react-native-webview';
 interface Message {

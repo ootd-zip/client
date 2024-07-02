@@ -6,7 +6,7 @@ import { Button3, Title1 } from '@/components/UI';
 import { useEffect, useState } from 'react';
 import GenderInput from '@/components/Domain/SignUp/GenderInput';
 import LikeInfoStyleInput from '@/components/Domain/Setting/LikeInfo';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import { UserApi } from '@/apis/domain/User/UserApi';
 import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';

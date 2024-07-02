@@ -18,7 +18,7 @@ import Avatar from '@/public/images/Avatar.svg';
 import BlockUserAlert from '@/components/Domain/BlockUser/BlockUserAlert';
 import PublicApi from '@/apis/domain/Public/PublicApi';
 
-export interface UserBlockListDataType {
+interface UserBlockListDataType {
   id: number;
   userId: number;
   userName: string;

@@ -5,8 +5,9 @@ import NextButton from '@/components/NextButton';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import React from 'react';
-import ColorList, { ColorListType } from '@/components/ColorList';
+import ColorList from '@/components/ColorList';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
+import { ColorListType } from '@/utils/types/OOTD.types';
 interface ColorModalProps {
   isOpen: Boolean;
   setIsOpen: Dispatch<SetStateAction<Boolean>>;

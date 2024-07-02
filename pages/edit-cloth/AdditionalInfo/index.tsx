@@ -1,4 +1,4 @@
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import S from '@/pageStyle/edit-cloth/AdditionalInfo/style';
 import Input from '@/components/Input';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

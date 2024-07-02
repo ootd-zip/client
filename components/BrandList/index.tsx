@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import Brand, { BrandType } from './Brand';
+import Brand from './Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import S from './style';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 

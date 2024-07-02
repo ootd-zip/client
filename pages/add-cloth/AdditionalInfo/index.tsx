@@ -2,9 +2,9 @@ import { Body2, Body3, Headline1, Title1 } from '@/components/UI';
 import Input from '@/components/Input';
 import { Dispatch, SetStateAction } from 'react';
 import NextButton from '@/components/NextButton';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { BrandType } from '@/components/BrandList/Brand';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
+import { CategoryListType } from '@/utils/types/OOTD.types';
+import { BrandType } from '@/utils/types/OOTD.types';
 import S from '@/pageStyle/add-cloth/AdditionalInfo/style';
 import NextImage from '@/components/NextImage';
 

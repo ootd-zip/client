@@ -32,7 +32,7 @@ import Avatar from '@/public/images/Avatar.svg';
 import Toast from '../Toast';
 import FixModal from '../Domain/OOTD/FixModal';
 import LikeToggle from '../Toggle/LikeToggle';
-import { OOTDType } from '@/pages/ootd/[...OOTDNumber]';
+import { OOTDType } from '@/utils/types/OOTD.types';
 import Image from '../NextImage';
 import NextImage from '../NextImage';
 import Background from '../Background';
@@ -59,8 +59,8 @@ export default function Posting({
   const [followState, setFollowState] = useState<Boolean>(false);
   const [heartState, setHeartState] = useState<Boolean>(false);
   const [bookMarkState, setBookMarkState] = useState<Boolean>(false);
-  const [componentWidth, setComponentWidth] = useState(0); //컴포넌트 길이
-  const [componentHeight, setComponentHeight] = useState(0); //컴포넌트 높이
+  const [componentWidth, setComponentWidth] = useState<number>(0); //컴포넌트 길이
+  const [componentHeight, setComponentHeight] = useState<number>(0); //컴포넌트 높이
   const [clothTagOpen, setClothTagOpen] = useState<Boolean>(true);
   const [reportModalIsOpen, setReportModalIsOpen] = useState<Boolean>(false);
   const [declaration, setDeclaration] = useState<Boolean>(false); // 신고 Modal

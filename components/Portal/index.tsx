@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 const Portal = ({ children }: { children: ReactElement }) => {
-  const [mounted, setMounted] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<Boolean>(false);
 
   useEffect(() => {
     setMounted(true);

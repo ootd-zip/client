@@ -3,12 +3,7 @@ import { useEffect } from 'react';
 import { SignInApi } from '@/apis/domain/SignIn/SignInApi';
 import { RegisterApi } from '@/apis/domain/Register/RegisterApi';
 import Spinner from '@/components/Spinner';
-
-export interface QueryParams {
-  code?: string;
-  state?: string;
-  callback?: string[];
-}
+import { QueryParams } from '@/utils/types/setting.types';
 
 export default function SignUpCallbackPage() {
   const router = useRouter();

@@ -3,7 +3,6 @@ import S from './style';
 import { Body4, Button3, Title1 } from '@/components/UI';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import BrandList from '@/components/BrandList';
-import { BrandType } from '@/components/BrandList/Brand';
 import SearchBar from '@/components/SearchBar';
 import { AiOutlineClose } from 'react-icons/ai';
 import NextButton from '@/components/NextButton';
@@ -11,6 +10,7 @@ import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import CheckBoxTrue from '@/public/images/CheckBoxTrue.svg';
 import CheckBoxFalse from '@/public/images/CheckBoxFalse.svg';
 import Image from 'next/image';
+import { BrandType } from '@/utils/types/OOTD.types';
 
 interface BrandModalProps {
   brandModalIsOpen: Boolean;

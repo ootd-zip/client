@@ -11,8 +11,8 @@ interface WithdrawBlockProps {
   content?: React.ReactNode;
   content2?: React.ReactNode;
   buttonClick?: () => void;
-  checked: boolean;
-  setChecked: Dispatch<SetStateAction<boolean>>;
+  checked: Boolean;
+  setChecked: Dispatch<SetStateAction<Boolean>>;
   lastItem?: Boolean;
 }
 

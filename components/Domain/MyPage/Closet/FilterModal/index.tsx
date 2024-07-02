@@ -3,20 +3,18 @@ import S from './style';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import TabView from '@/components/TabView';
 import ClothCategory from '@/components/ClothCategory';
-import ColorList, { ColorListType } from '@/components/ColorList';
+import ColorList from '@/components/ColorList';
 import { Body4, Button3 } from '@/components/UI';
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from '@/components/Button';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import BrandList from '@/components/BrandList';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import { MyPageApi } from '@/apis/domain/MyPage/MyPageApi';
 import { useRouter } from 'next/router';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-import {
-  GenderTypes,
-  SearchFilterData,
-} from '@/components/Domain/Search/SearchResult/ClosetCloth';
+import { GenderTypes, SearchFilterData } from '@/utils/types/OOTD.types';
+import { ColorListType } from '@/utils/types/OOTD.types';
 
 interface FilterModalProps {
   isOpen: Boolean;

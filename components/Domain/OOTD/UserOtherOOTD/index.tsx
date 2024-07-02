@@ -6,15 +6,11 @@ import { useEffect } from 'react';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
 import Carousel from '@/components/Carousel';
 import NextImage from '@/components/NextImage';
+import { OOTDListType } from '@/utils/types/OOTD.types';
 
 interface UserOOTDProps {
   userId?: number;
   userName?: string;
-}
-
-interface OOTDListType {
-  id: number;
-  image: string;
 }
 
 export default function UserOtherOOTD({ userId, userName }: UserOOTDProps) {
@@ -50,7 +46,7 @@ export default function UserOtherOOTD({ userId, userName }: UserOOTDProps) {
                 <NextImage
                   onClick={() => router.push(`/ootd/${item.id}`)}
                   key={item.id}
-                  src={item.image}
+                  src={item.imageUrl}
                   alt="이 유저의 다른 ootd"
                   fill={false}
                   width={167}

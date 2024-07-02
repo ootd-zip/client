@@ -2,7 +2,7 @@ import { Headline2 } from '@/components/UI';
 import S from '@/pageStyle/add-cloth/ClothName/style';
 import Input from '@/components/Input';
 import { Dispatch, SetStateAction } from 'react';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import NextButton from '@/components/NextButton';
 import NextImage from '@/components/NextImage';
 import Portal from '@/components/Portal';

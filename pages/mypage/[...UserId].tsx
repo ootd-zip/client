@@ -11,7 +11,7 @@ import Closet from '@/components/Domain/MyPage/Closet';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Toast from '@/components/Toast';
 import { UserApi } from '@/apis/domain/User/UserApi';
-import { UserProfileDataType } from '@/components/Domain/MyPage/Profile';
+import { UserProfileDataType } from '@/utils/types/user.types';
 import OtherModal from '@/components/Domain/MyPage/OtherModal';
 import Background from '@/components/Background';
 import PublicApi from '@/apis/domain/Public/PublicApi';

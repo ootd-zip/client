@@ -7,11 +7,16 @@ import { AiOutlineDown } from 'react-icons/ai';
 import SubHead from '../SubHead';
 import Spinner from '@/components/Spinner';
 import FilterModal from '@/components/Domain/MyPage/Closet/FilterModal';
-import { FilterData } from '@/components/Domain/MyPage/Closet/ClosetCloth';
+import { FilterData } from '@/utils/types/OOTD.types';
 import Portal from '@/components/Portal';
 import EmptyFilteredResult from '../EmptyFilteredResult';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
+import {
+  OOTDListType,
+  GenderTypes,
+  SearchFilterData,
+} from '@/utils/types/OOTD.types';
 
 interface ClosetClothProps {
   OOTDTotal: number;
@@ -24,21 +29,6 @@ interface ClosetClothProps {
   setFilter: Dispatch<SetStateAction<FilterData | SearchFilterData>>;
   sortStandard: string;
   setSortStandard: Dispatch<SetStateAction<string>>;
-}
-
-export type OOTDListType = {
-  id: number;
-  imageUrl: string;
-  imageCount: number;
-};
-
-export type GenderTypes = {
-  man: Boolean;
-  woman: Boolean;
-};
-
-export interface SearchFilterData extends FilterData {
-  gender?: GenderTypes;
 }
 
 export default function ClosetCloth({
