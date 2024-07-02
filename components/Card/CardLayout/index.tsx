@@ -1,5 +1,5 @@
 import { Layout, CardBody } from './style';
-import { CardProps } from '../type';
+import { CardProps } from '@/utils/types/card.type';
 import ImageWithCaption from '@/components/UI/ImageWithCaption';
 
 export default function Card(props: CardProps) {

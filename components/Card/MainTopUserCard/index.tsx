@@ -1,5 +1,5 @@
 import { Body4, Title2 } from '@/components/UI';
-import { CardComponentProps } from '../type';
+import { CardComponentProps } from '@/utils/types/card.type';
 import Card from '../CardLayout';
 import { Layout } from './style';
 
