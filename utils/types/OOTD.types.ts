@@ -106,16 +106,16 @@ export interface OOTDType {
   }[];
 }
 
-export type OOTDListType = {
+export interface OOTDListType {
   id: number;
   imageUrl: string;
   imageCount?: number;
-};
+}
 
-export type GenderTypes = {
+export interface GenderTypes {
   man: Boolean;
   woman: Boolean;
-};
+}
 
 export type ImageWithTag = {
   ootdId: number;
@@ -143,10 +143,10 @@ type CategoryType = {
 
 export type CategoryListType = CategoryType;
 
-export type SizeItem = {
+export interface SizeItem {
   id: number;
   name: string;
-};
+}
 
 export interface FilterData {
   category: CategoryListType[] | null;

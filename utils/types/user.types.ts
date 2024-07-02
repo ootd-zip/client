@@ -23,9 +23,9 @@ export interface ProfileType {
   showingId?: number;
 }
 
-export type ProfileListType = {
+export interface ProfileListType {
   id: number;
   name: string;
   profileImage: string;
   isFollow: Boolean;
-};
+}

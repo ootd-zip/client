@@ -9,9 +9,8 @@ import { ImageWithTag } from '@/utils/types/OOTD.types';
 import { CategoryListType } from '@/utils/types/OOTD.types';
 import ColorSpan from '@/components/ColorList/ColorSpan';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
-import ClothSizeModal, {
-  SizeItem,
-} from '@/components/Domain/AddCloth/ClothSizeModal';
+import ClothSizeModal from '@/components/Domain/AddCloth/ClothSizeModal';
+import { SizeItem } from '@/utils/types/OOTD.types';
 import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
 import { BrandType } from '@/utils/types/OOTD.types';
 import { ClothWhereBuy } from '@/utils/types/OOTD.types';
