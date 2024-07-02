@@ -13,11 +13,7 @@ import { CategoryListType } from '@/utils/types/OOTD.types';
 import { MyPageApi } from '@/apis/domain/MyPage/MyPageApi';
 import { useRouter } from 'next/router';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-import {
-  GenderTypes,
-  SearchFilterData,
-} from '@/components/Domain/Search/SearchResult/ClosetCloth';
-
+import { GenderTypes, SearchFilterData } from '@/utils/types/OOTD.types';
 import { ColorListType } from '@/utils/types/OOTD.types';
 
 interface FilterModalProps {

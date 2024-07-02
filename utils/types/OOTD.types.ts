@@ -169,3 +169,7 @@ export interface Style {
   name: string;
   state?: Boolean;
 }
+
+export interface SearchFilterData extends FilterData {
+  gender?: GenderTypes;
+}

@@ -12,7 +12,11 @@ import Portal from '@/components/Portal';
 import EmptyFilteredResult from '../EmptyFilteredResult';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
-import { OOTDListType, GenderTypes } from '@/utils/types/OOTD.types';
+import {
+  OOTDListType,
+  GenderTypes,
+  SearchFilterData,
+} from '@/utils/types/OOTD.types';
 
 interface ClosetClothProps {
   OOTDTotal: number;
@@ -25,10 +29,6 @@ interface ClosetClothProps {
   setFilter: Dispatch<SetStateAction<FilterData | SearchFilterData>>;
   sortStandard: string;
   setSortStandard: Dispatch<SetStateAction<string>>;
-}
-
-export interface SearchFilterData extends FilterData {
-  gender?: GenderTypes;
 }
 
 export default function ClosetCloth({
