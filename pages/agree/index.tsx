@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { AppLayoutProps } from '@/AppLayout';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import S from '@/pageStyle/agree/style';
 import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft } from 'react-icons/ai';

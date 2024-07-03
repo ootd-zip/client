@@ -92,7 +92,7 @@ export default function Bookmark() {
   };
 
   const { getUserBookmarkList, deleteBookmarkList } = BookmarkApi();
-  const [bookmarkList, setBookmarkList] = useState<OOTDdataType[]>([]);
+  const [bookmarkList, setBookmarkList] = useState<OOTDBookmarkDataType[]>([]);
 
   const fetchDataFunction = async (bookmarkPage: number, size: number) => {
     if (!router.isReady) return;

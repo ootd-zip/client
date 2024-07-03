@@ -4,7 +4,7 @@ import { AiOutlineArrowLeft, AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import Edit from '@/components/Domain/MyPage/Edit';
 import React, { FC, useEffect, useState } from 'react';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import { AppLayoutProps } from '@/AppLayout';
 import Background from '@/components/Background';
 

@@ -3,7 +3,7 @@ import S from '@/pageStyle/add-ootd/WriteOOTD/style';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Body4, Button3, Title1 } from '@/components/UI';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { Style } from '..';
+import { Style } from '@/utils/types/OOTD.types';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ImageWithTag } from '@/utils/types/OOTD.types';
 import StyleModal from '@/components/Domain/AddOOTD/StyleModal';
