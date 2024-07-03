@@ -8,7 +8,7 @@ interface Message {
 export const getReactNativeMessage = (
   setState: Dispatch<SetStateAction<any>>
 ) => {
-  const listener = (event: WebViewMessageEvent) => {
+  const listener = (event: any) => {
     const parsedData = JSON.parse(event.data);
     if (parsedData?.type === 'OOTD') {
       const banana = parsedData?.payload;

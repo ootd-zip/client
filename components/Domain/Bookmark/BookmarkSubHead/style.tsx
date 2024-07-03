@@ -33,8 +33,19 @@ const Wrap = styled.div`
   align-items: center;
   gap: 14px;
 
+  .deleteButton {
+    padding: 0px;
+    color: ${(props) => props.theme.color.error};
+  }
+
+  .cancelButton {
+    padding: 0px;
+    color: ${(props) => props.theme.color.grey_50};
+  }
+
   .editingButton {
     padding: 0px;
+    color: ${(props) => props.theme.color.grey_00};
   }
 `;
 

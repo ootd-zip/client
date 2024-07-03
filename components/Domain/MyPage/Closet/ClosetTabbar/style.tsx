@@ -3,10 +3,13 @@ import styled from 'styled-components';
 const Layout = styled.div`
   display: flex;
   border-bottom: 1px solid ${(props) => props.theme.color.grey_90};
+  justify-content: space-around;
+  a {
+    width: 50%;
+  }
 `;
 const OOTD = styled.div`
   text-align: center;
-  width: 50%;
   padding: 13px 0;
   position: relative;
   display: flex;
@@ -15,7 +18,6 @@ const OOTD = styled.div`
 `;
 const Closet = styled(OOTD)`
   text-align: center;
-  width: 50%;
   padding: 13px 0;
 `;
 

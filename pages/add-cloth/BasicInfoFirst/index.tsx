@@ -76,8 +76,13 @@ export default function BasicInfoFirst({
 
   const Brand = <Body3>{clothBrand && clothBrand[0].name}</Body3>;
 
-  const WhereToBuy = (
-    <Body3 style={{ WebkitTextDecorationLine: 'underline' }}>
+  const WhereToBuy = clothWhereBuy && (
+    <Body3
+      style={{
+        WebkitTextDecorationLine:
+          clothWhereBuy.type === 'Link' ? 'underline' : 'none',
+      }}
+    >
       {clothWhereBuy?.letter}
     </Body3>
   );

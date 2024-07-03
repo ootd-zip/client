@@ -1,7 +1,6 @@
 import { Title1 } from '@/components/UI';
 import S from '@/pageStyle/bookmark/style';
 import AppBar from '@/components/Appbar';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import BookmarkSubHead from '@/components/Domain/Bookmark/BookmarkSubHead';
@@ -14,6 +13,7 @@ import Toast from '@/components/Toast';
 import Spinner from '@/components/Spinner';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export type OOTDdataType = {
   ootdId: number;
@@ -117,7 +117,22 @@ export default function Bookmark() {
   } = useInfiniteScroll({
     fetchDataFunction,
     size: 9,
-    initialData: [],
+    initialData:
+      typeof window !== 'undefined' && sessionStorage.getItem('bookmark-item')
+        ? JSON.parse(sessionStorage.getItem('bookmark-item')!)
+        : [],
+    initialPage:
+      typeof window !== 'undefined' && sessionStorage.getItem('bookmark-page')
+        ? JSON.parse(sessionStorage.getItem('bookmark-page')!)
+        : 0,
+    key: 'bookmark',
+  });
+
+  useRememberScroll({
+    key: 'bookmark',
+    containerRef: bookmarkRef,
+    setList: setBookmarkList,
+    list: bookmarkList,
   });
 
   useEffect(() => {

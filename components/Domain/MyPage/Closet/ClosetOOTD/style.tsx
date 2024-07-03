@@ -27,9 +27,13 @@ const OOTDSort = styled.div<OOTDSortProps>`
     color: ${(props) => (!props.state ? 'black' : props.theme.color.grey_50)};
   }
 `;
-const OOTDList = styled.div`
+
+interface ScrollState {
+  state: Boolean;
+}
+const OOTDList = styled.div<ScrollState>`
   height: calc(100vh - 200px);
-  overflow-y: scroll;
+  overflow-y: ${(props) => (props.state ? 'scroll' : 'hidden')};
 `;
 
 const Divider = styled.span`

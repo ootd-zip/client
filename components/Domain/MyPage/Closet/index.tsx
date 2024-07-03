@@ -40,6 +40,7 @@ export default function Closet({
           clothesCount={clothesCount}
           handleStep={handleStep}
           currentStep={currentStep}
+          showingId={showingId}
         />
         <Funnel>
           <Funnel.Steps name="OOTD">
@@ -51,7 +52,7 @@ export default function Closet({
                 isMyProfile={isMyProfile}
               />
             ) : (
-              <ClosetOOTD />
+              <ClosetOOTD showingId={showingId} />
             )}
           </Funnel.Steps>
           <Funnel.Steps name="Cloth">

@@ -2,6 +2,7 @@ import { Body2, Body3, Caption1 } from '@/components/UI';
 import { Layout, Tab, Hr } from './style';
 import { useTabViewContext } from '@/hooks/use-tabview/context';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 interface TabBarProps {
   count?: number[];
   tab: string[];
@@ -24,6 +25,9 @@ export default function TabBar({
 
   const [state, setState] = useState([true, ...firstState]);
 
+  //처음엔 onChangeState가 일어나지 않게 하기 위한 상태
+  const [onChangeFirstState, setOnChangeFirstState] = useState<number>(0);
+
   const handleTabClick = (currentIndex: number) => {
     setIndex(currentIndex);
   };
@@ -32,11 +36,14 @@ export default function TabBar({
     const newArray = new Array(tab.length).fill(false);
     newArray[index - 1] = true;
     setState(newArray);
+    setOnChangeFirstState(onChangeFirstState + 1);
   }, [index, tab.length]);
 
   // 검색어 초기화
   useEffect(() => {
-    onChangeState?.();
+    if (onChangeFirstState >= 2) {
+      onChangeState?.();
+    }
   }, [state]);
 
   return (

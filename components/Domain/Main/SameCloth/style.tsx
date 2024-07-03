@@ -39,6 +39,13 @@ const FilterItem = styled.div<FilterProps>`
 
   .filterItemTrue {
     width: 100px;
+    .category,
+    .name {
+      width: 90px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 
   img {

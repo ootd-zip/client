@@ -8,7 +8,7 @@ import {
 import { useRouter } from 'next/router';
 import Profile from '@/components/Domain/MyPage/Profile';
 import Closet from '@/components/Domain/MyPage/Closet';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Toast from '@/components/Toast';
 import { UserApi } from '@/apis/domain/User/UserApi';
 import { UserProfileDataType } from '@/components/Domain/MyPage/Profile';

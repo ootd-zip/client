@@ -18,7 +18,7 @@ const Layout = styled.div`
 
 const OOTDImage = styled.div`
   display: flex;
-  padding: 8px 0 48px 20px;
+  padding: 8px 0 40px 20px;
   gap: 8px;
   overflow-x: scroll;
   img {
@@ -44,7 +44,7 @@ const Style = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  margin: 32px 0 0 0;
+  margin: 16px 0 0 0;
 
   svg {
     position: absolute;

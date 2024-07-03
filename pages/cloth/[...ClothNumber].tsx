@@ -23,6 +23,7 @@ import DeclarationModal from '@/components/DeclarationModal';
 import ReceivedDeclarationModal from '@/components/ReceivedDeclarationModal';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export interface ClothDataType {
   id: number;
@@ -90,9 +91,12 @@ const Cloth = () => {
     setDeleteOpen(true);
   };
 
+  const { reset } = useRememberScroll({ key: `mypage-${localUserId}-cloth` });
+
   const onClickYesButton = async () => {
     const result = await deleteCloth(Number(router.query.ClothNumber![0]));
-    if (result) router.replace(`/mypage/${localUserId}`);
+    reset();
+    if (result) router.replace(`/mypage/${localUserId}/cloth`);
   };
 
   const onClickNoButton = () => {
@@ -140,13 +144,21 @@ const Cloth = () => {
     if (deleteOpen) setDeleteOpen(false);
   };
 
+  const onClickBackButton = () => {
+    if (router.asPath.includes('closet')) {
+      console.log('포함됨');
+      router.push(`/mypage/${data?.userId}/cloth`);
+      return;
+    }
+    router.back();
+  };
   const [goBackAfterBlock, setGoBackAfterBlock] = useState<Boolean>(false); // 사용자 차단 이후 스낵바 이용하여 이동
   const [blockStatus, setBlockStatus] = useState<Boolean>(false); // 사용자 차단 상태 값
 
   return (
     <>
       <AppBar
-        leftProps={<AiOutlineArrowLeft onClick={() => router.back()} />}
+        leftProps={<AiOutlineArrowLeft onClick={onClickBackButton} />}
         middleProps={<></>}
         rightProps={<AiOutlineEllipsis onClick={onClickAppbarButton} />}
       />
@@ -156,6 +168,7 @@ const Cloth = () => {
       />
       {data && (
         <DetailClothHeader
+          state={localUserId === data?.userId ? true : false}
           isPublic={!data?.isPrivate}
           bigCategory={data?.category.parentCategoryName!}
           smallCategory={data?.category.categoryName!}

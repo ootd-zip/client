@@ -63,7 +63,7 @@ interface ImageNumberProps {
 const ImageNumber = styled.div<ImageNumberProps>`
   position: absolute;
   top: 4px;
-  right: 12px;
+  right: 8px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
