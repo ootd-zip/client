@@ -173,3 +173,13 @@ export interface Style {
 export interface SearchFilterData extends FilterData {
   gender?: GenderTypes;
 }
+
+export interface MainFavoriteCardProps {
+  ootdId: number;
+  ootdImageUrl: string;
+  ootdImageCount: number;
+  writerId: number;
+  writerProfileImage?: string;
+  writerName: string;
+  onClick?: () => void;
+}

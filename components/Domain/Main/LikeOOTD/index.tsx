@@ -3,7 +3,7 @@ import S from './style';
 import { MainFavoriteCard } from '@/components/Card';
 import Carousel from '@/components/Carousel';
 import { useEffect, useState } from 'react';
-import { MainFavoriteCardProps } from '@/components/Card/MainFavoriteCard';
+import { MainFavoriteCardProps } from '@/utils/types/OOTD.types';
 import { useRouter } from 'next/router';
 import { MainApi } from '@/apis/domain/Main/MainApi';
 

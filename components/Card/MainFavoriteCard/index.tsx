@@ -5,16 +5,7 @@ import LikeToggle from '@/components/Toggle/LikeToggle';
 import { useState } from 'react';
 import Link from 'next/link';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
-
-export interface MainFavoriteCardProps {
-  ootdId: number;
-  ootdImageUrl: string;
-  ootdImageCount: number;
-  writerId: number;
-  writerProfileImage?: string;
-  writerName: string;
-  onClick?: () => void;
-}
+import { MainFavoriteCardProps } from '@/utils/types/OOTD.types';
 
 export default function MainFavoriteCard({
   ootdId,

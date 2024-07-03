@@ -5,20 +5,7 @@ import Avatar from '@/public/images/Avatar.svg';
 import { useRouter } from 'next/router';
 import { AlarmApi } from '@/apis/domain/Alarm/AlarmApi';
 import React from 'react';
-
-export interface AlarmType {
-  id: number;
-  profileImage: string | null;
-  timeType: string;
-  timeStamp: string;
-  message: string;
-  userName: string;
-  content?: string;
-  contentImage?: string;
-  goUrl: string;
-  userId: number;
-  className: string;
-}
+import { AlarmType } from '@/utils/types/setting.types';
 
 export default function Alarms({
   id,

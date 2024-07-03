@@ -10,3 +10,17 @@ export interface QueryParams {
   state?: string;
   callback?: string[];
 }
+
+export interface AlarmType {
+  id: number;
+  profileImage: string | null;
+  timeType: string;
+  timeStamp: string;
+  message: string;
+  userName: string;
+  content?: string;
+  contentImage?: string;
+  goUrl: string;
+  userId: number;
+  className: string;
+}
