@@ -61,7 +61,7 @@ const messageHandlers: {
 export const getReactNativeMessage = (
   setState: Dispatch<SetStateAction<any>>
 ) => {
-  const listener = (event: WebViewMessageEvent) => {
+  const listener = (event: any) => {
     const parsedData = JSON.parse(event.data);
     const { type, payload } = parsedData;
     const handler = messageHandlers[type];

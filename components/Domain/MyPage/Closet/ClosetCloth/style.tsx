@@ -83,10 +83,13 @@ const FilterSpan = styled.div<FilterSpanProps>`
     }
   `}
 `;
-
-const ClothList = styled.div`
+interface ClothListScroll {
+  state: Boolean;
+}
+const ClothList = styled.div<ClothListScroll>`
   height: calc(100vh - 246px);
-  overflow-y: scroll;
+
+  overflow-y: ${(prpos) => (prpos.state ? 'scroll' : 'hidden')};
 `;
 
 const Counter = styled.div``;

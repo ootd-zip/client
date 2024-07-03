@@ -33,6 +33,7 @@ export default function Tabs({ children, dots }: TabsProps) {
       afterChange={afterChangeHandler}
       ParentRef={ref}
       dots={dots}
+      initialSlide={index - 1}
     >
       {children}
     </Carousel>

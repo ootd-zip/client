@@ -32,6 +32,14 @@ export default function Main() {
     }
   }, []);
 
+  const onChangeTabBarIndex = () => {
+    if (router.query.main![0] === 'explore') {
+      router.replace('/main/curation');
+      return;
+    }
+    router.replace('/main/explore');
+  };
+
   return (
     <S.Layout isExistNotReadAlarm={isExistNotReadAlarm}>
       <AppBar
@@ -49,6 +57,7 @@ export default function Main() {
             display="inline"
             tab={['큐레이팅', '탐색']}
             className="tabBar"
+            onChangeState={onChangeTabBarIndex}
           />
           <TabView.Tabs>
             <TabView.Tab>

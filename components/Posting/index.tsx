@@ -229,7 +229,12 @@ export default function Posting({
             onClick={() => setClothTagOpen(!clothTagOpen)}
             className="tag"
           />
-          <Carousel infinite={false} slidesToShow={1} dots={true}>
+          <Carousel
+            infinite={false}
+            slidesToShow={1}
+            dots={true}
+            initialSlide={0}
+          >
             {data.ootdImages?.map((item, index) => {
               return (
                 <S.ImageWithTag key={index}>

@@ -11,12 +11,15 @@ const Layout = styled.div`
 
 const Category = styled.div`
   display: flex;
-  /* padding: var(--Number, 0px); */
+  width: calc(100% - 22px);
   align-items: center;
   gap: 8px;
   align-self: stretch;
   p {
+    height: 22px;
     color: ${(props) => props.theme.color.grey_70};
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 

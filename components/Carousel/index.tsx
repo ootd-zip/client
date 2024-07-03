@@ -11,6 +11,7 @@ interface CarouselProps {
   beforeChange?: (currentIndex: number, nextIndex: number) => void;
   swipe?: boolean;
   dots?: boolean;
+  initialSlide?: number;
 }
 
 export default function Carousel({
@@ -21,6 +22,7 @@ export default function Carousel({
   dots,
   afterChange,
   beforeChange,
+  initialSlide,
 }: CarouselProps) {
   const sliderSettings = {
     speed: 400,
@@ -31,6 +33,7 @@ export default function Carousel({
     arrows: false,
     dots: dots,
     slickGoTo: 4,
+    initialSlide: initialSlide,
   };
 
   return (

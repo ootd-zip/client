@@ -1,6 +1,6 @@
 import { Body4, Caption2 } from '@/components/UI';
 import S from './style';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ImageList from '@/components/ImageList';
 import { useRouter } from 'next/router';
 import { AiOutlineDown } from 'react-icons/ai';
@@ -15,6 +15,8 @@ import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import { ClothDataType } from '@/pages/cloth/[...ClothNumber]';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
+import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 
 interface ClosetClothProps {
   showingId: number;
@@ -77,7 +79,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     return data;
   };
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     reset();
   }, [filter]);
 
@@ -89,8 +91,21 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     reset,
   } = useInfiniteScroll({
     fetchDataFunction,
-    initialData: [],
-    size: 7,
+    initialData: sessionStorage.getItem(`mypage-${showingId}-cloth-item`)
+      ? JSON.parse(sessionStorage.getItem(`mypage-${showingId}-cloth-item`)!)
+      : [],
+    initialPage: sessionStorage.getItem(`mypage-${showingId}-cloth-page`)
+      ? Number(sessionStorage.getItem(`mypage-${showingId}-cloth-page`)!)
+      : 0,
+    size: 8,
+    key: `mypage-${showingId}-cloth`,
+  });
+
+  useRememberScroll({
+    key: `mypage-${showingId}-cloth`,
+    containerRef,
+    setList: setSearchResult,
+    list: searchResult,
   });
 
   useEffect(() => {
@@ -101,7 +116,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
   }, [clothData]);
 
   const onClickImageList = (index: number) => {
-    router.push(`/cloth/${index}`);
+    router.push(`/cloth/${index}/closet`);
   };
 
   const onClickFilterSpan = (index: number) => {
@@ -117,6 +132,38 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
       isOpen: null,
     });
   };
+
+  useEffect(() => {
+    //add eventlistener to window
+    window.addEventListener('scroll', onScroll);
+    // remove event on unmount to prevent a memory leak with the cleanup
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  const [listScrollState, setListScrollState] = useState<Boolean>(false);
+
+  const onScroll = () => {
+    const { scrollY } = window;
+    if (scrollY === 0) return;
+    sessionStorage.setItem(`mypage-${showingId}`, `${scrollY}`);
+    if (scrollY >= 30) {
+      setListScrollState(true);
+    } else {
+      setListScrollState(false);
+    }
+  };
+
+  useEffect(() => {
+    const memoScroll = sessionStorage.getItem(`mypage-${showingId}`);
+
+    if (!memoScroll) return;
+
+    window.scrollTo({
+      top: Number(memoScroll),
+    });
+  }, []);
 
   return (
     <>
@@ -187,7 +234,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
           </S.FilterSpan>
         </S.SearchFilter>
         {isLoading && hasNextPage && <Spinner />}
-        <S.ClothList ref={containerRef}>
+        <S.ClothList ref={containerRef} state={listScrollState}>
           <ImageList
             onClick={onClickImageList}
             data={searchResult!}

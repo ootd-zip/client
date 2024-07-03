@@ -11,10 +11,12 @@ import { FilterData } from '@/components/Domain/MyPage/Closet/ClosetCloth';
 import Portal from '@/components/Portal';
 import EmptyFilteredResult from '../EmptyFilteredResult';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 interface ClosetClothProps {
   OOTDTotal: number;
   OOTDList: OOTDListType[];
+  setOOTDList: Dispatch<SetStateAction<OOTDListType[]>>;
   OOTDIsLoading: Boolean;
   OOTDRef: MutableRefObject<any>;
   OOTDHasNextPage: Boolean;
@@ -49,6 +51,7 @@ export default function ClosetCloth({
   setFilter,
   sortStandard,
   setSortStandard,
+  setOOTDList,
 }: ClosetClothProps) {
   const router = useRouter();
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<Boolean>(false);
@@ -76,6 +79,13 @@ export default function ClosetCloth({
       },
     });
   };
+
+  useRememberScroll({
+    key: 'search-ootd',
+    containerRef: OOTDRef,
+    setList: setOOTDList,
+    list: OOTDList,
+  });
 
   return (
     <>

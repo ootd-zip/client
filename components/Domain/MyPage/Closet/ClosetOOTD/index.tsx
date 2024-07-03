@@ -7,13 +7,17 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
 import Spinner from '@/components/Spinner';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export type MyPageOOTDType = {
   ootdId: number;
   ootdImage: string;
 };
 
-export default function ClosetOOTD() {
+interface ClosetOOTDProps {
+  showingId: number;
+}
+export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
   const router = useRouter();
 
   const [myPageOOTDList, setMyPageOOTDList] = useState<MyPageOOTDType[]>([]);
@@ -50,7 +54,13 @@ export default function ClosetOOTD() {
   } = useInfiniteScroll({
     fetchDataFunction,
     size: 20,
-    initialData: [],
+    initialData: sessionStorage.getItem(`mypage-${showingId}-ootd-item`)
+      ? JSON.parse(sessionStorage.getItem(`mypage-${showingId}-ootd-item`)!)
+      : [],
+    initialPage: sessionStorage.getItem(`mypage-${showingId}-ootd-page`)
+      ? JSON.parse(sessionStorage.getItem(`mypage-${showingId}-ootd-page`)!)
+      : 0,
+    key: `mypage-${showingId}-ootd`,
   });
 
   useEffect(() => {
@@ -66,6 +76,45 @@ export default function ClosetOOTD() {
     reset();
   }, [sortStandard]);
 
+  const [listScrollState, setListScrollState] = useState<Boolean>(false);
+
+  useRememberScroll({
+    key: `mypage-${showingId}-ootd`,
+    containerRef: ootdRef,
+    setList: setMyPageOOTDList,
+    list: myPageOOTDList,
+  });
+
+  useEffect(() => {
+    //add eventlistener to window
+    window.addEventListener('scroll', onScroll);
+    // remove event on unmount to prevent a memory leak with the cleanup
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  const onScroll = () => {
+    const { scrollY } = window;
+    if (scrollY === 0) return;
+    sessionStorage.setItem(`mypage-${showingId}`, `${scrollY}`);
+    if (scrollY >= 30) {
+      setListScrollState(true);
+    } else {
+      setListScrollState(false);
+    }
+  };
+
+  useEffect(() => {
+    const memoScroll = sessionStorage.getItem(`mypage-${showingId}`);
+
+    if (!memoScroll) return;
+
+    window.scrollTo({
+      top: Number(memoScroll),
+    });
+  }, []);
+
   return (
     <S.Layout>
       <S.OOTDSort state={sortStandard === '오래된 순'}>
@@ -77,7 +126,7 @@ export default function ClosetOOTD() {
           최신순
         </Caption1>
       </S.OOTDSort>
-      <S.OOTDList ref={ootdRef}>
+      <S.OOTDList ref={ootdRef} state={listScrollState}>
         <ImageList
           type="column"
           data={myPageOOTDList!}

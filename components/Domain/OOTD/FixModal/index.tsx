@@ -8,6 +8,7 @@ import ActionSheet from '@/components/ActionSheet';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import Background from '@/components/Background';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 interface ReportModalProps {
   reportModalIsOpen: Boolean;
@@ -37,9 +38,12 @@ export default function FixModal({
 
   const [deleteAlertIsOpen, setDeleteAlertIsOpen] = useState<Boolean>(false);
 
+  const { reset } = useRememberScroll({ key: `mypage-${myId}-ootd` });
+
   const onClickYesButton = async () => {
     const result = await deleteOOTD(Number(router.query!.OOTDNumber![0]));
     setDeleteAlertIsOpen(false);
+    reset();
     if (result) router.push(`/mypage/${myId}`);
   };
 

@@ -1,18 +1,23 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import useEffectAfterMount from './useEffectAfterMount';
 
 interface InfiniteScrollProps {
   fetchDataFunction: any;
   initialData: any;
   size: number;
+  initialPage?: number;
+  key?: string;
 }
 
 export default function useInfiniteScroll({
   fetchDataFunction,
-  initialData = [],
+  initialData,
   size,
+  initialPage,
+  key,
 }: InfiniteScrollProps) {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(initialPage ? initialPage : 0);
   const [data, setData] = useState(initialData);
   const [hasNextPage, setHasNextPage] = useState<Boolean>(false);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -22,11 +27,21 @@ export default function useInfiniteScroll({
 
   useEffect(() => {
     if (!router.isReady) return;
-    fetchDataFunction(0, size).then((result: any) => {
+    fetchDataFunction(page, size).then((result: any) => {
       if (!result) return;
-      setData(result.content);
+      if (initialPage) {
+        setData(() => [...initialData, ...result.content]);
+      } else {
+        setData(result.content);
+      }
       setHasNextPage(!result.isLast);
-      setPage(1);
+      if (initialPage) {
+        if (result.content.length > 0) {
+          setPage(initialPage + 1);
+        }
+      } else {
+        setPage(1);
+      }
       setIsLoading(false);
       if (result.total) setTotal(result.total);
     });
@@ -75,6 +90,13 @@ export default function useInfiniteScroll({
       if (result.total) setTotal(result.total);
     });
   };
+
+  useEffectAfterMount(() => {
+    if (data.length === 0) return;
+    sessionStorage.setItem(`${key}-item`, JSON.stringify(data));
+    sessionStorage.setItem(`${key}-page`, String(page));
+  }, [data]);
+
   return {
     data,
     isLoading,

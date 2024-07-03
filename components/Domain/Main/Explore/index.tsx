@@ -1,9 +1,5 @@
-import { Headline2 } from '@/components/UI';
 import S from './style';
-import { MainFavoriteCard } from '@/components/Card';
-import Carousel from '@/components/Carousel';
-import { useEffect, useState } from 'react';
-import { MainFavoriteCardProps } from '@/components/Card/MainFavoriteCard';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
@@ -13,6 +9,8 @@ import SubHead from '../../Search/SearchResult/SubHead';
 import ImageList from '@/components/ImageList';
 import Spinner from '@/components/Spinner';
 import BackTop from '@/public/images/BackTop.svg';
+import Portal from '@/components/Portal';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export default function Explore() {
   const router = useRouter();
@@ -48,11 +46,17 @@ export default function Explore() {
     reset: ootdReset,
   } = useInfiniteScroll({
     fetchDataFunction: fetchOOTDDataFunction,
-    size: 20,
-    initialData: [],
+    size: 12,
+    initialData: sessionStorage.getItem('explore-item')
+      ? JSON.parse(sessionStorage.getItem('explore-item')!)
+      : [],
+    initialPage: sessionStorage.getItem('explore-page')
+      ? Number(sessionStorage.getItem('explore-page'))
+      : 0,
+    key: 'explore',
   });
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     setOOTDList(
       OOTDData.map((item: any) => {
         return {
@@ -62,6 +66,13 @@ export default function Explore() {
       })
     );
   }, [OOTDData]);
+
+  useRememberScroll({
+    key: 'explore',
+    containerRef: OOTDRef,
+    setList: setOOTDList,
+    list: OOTDList,
+  });
 
   useEffectAfterMount(() => {
     setOOTDList([]);
@@ -76,28 +87,6 @@ export default function Explore() {
       top: 0,
     });
   };
-
-  useEffect(() => {
-    const container = OOTDRef.current;
-
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } = container;
-      console.log(scrollTop, clientHeight, scrollHeight);
-      if (scrollTop >= 50) {
-        setIsVisible(true);
-      } else if (scrollTop < 50) {
-        setIsVisible(false);
-      }
-    };
-
-    // 스크롤 이벤트 리스너 등록
-    container.addEventListener('scroll', handleScroll);
-
-    // 컴포넌트 언마운트 시에 이벤트 리스너 제거
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <>
@@ -118,10 +107,13 @@ export default function Explore() {
             type={'column'}
           />
           {OOTDIsLoading && OOTDHasNextPage && <Spinner />}
+
           {isVisible && (
-            <S.TopButton>
-              <BackTop onClick={scrollToTop}>버튼</BackTop>
-            </S.TopButton>
+            <Portal>
+              <S.TopButton>
+                <BackTop onClick={scrollToTop}>버튼</BackTop>
+              </S.TopButton>
+            </Portal>
           )}
         </S.ClothList>
       </S.Layout>

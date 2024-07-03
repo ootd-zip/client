@@ -15,6 +15,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import Head from 'next/head';
 import MyErrorBoundary from '@/components/MyErrorBoundary';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 declare global {
   // Kakao 함수를 전역에서 사용할 수 있도록 선언

@@ -20,7 +20,7 @@ const TopButton = styled.div`
   flex-shrink: 0;
   width: 48px;
   height: 48px;
-  bottom: 60px;
+  bottom: 162px;
   right: 20px;
   position: fixed;
   z-index: 7;
