@@ -26,13 +26,11 @@ export default function Edit({
 }: ActionSheetProps) {
   const router = useRouter();
 
-  const [profileImage, setProfileImage] = useState<string>(
-    '/images/basicProfile.svg'
-  );
+  const [profileImage, setProfileImage] =
+    useState<string>('/images/Avatar.svg');
 
-  const [originProfile, setOriginProfile] = useState<string>(
-    '/images/basicProfile.svg'
-  );
+  const [originProfile, setOriginProfile] =
+    useState<string>('/images/Avatar.svg');
 
   const [nickNameCheck, setNickNameCheck] = useState<Boolean>(true);
   const [nickName, setNickName] = useState<string>('닉네임');
@@ -44,19 +42,16 @@ export default function Edit({
   const { getProfile, patchProfile } = UserApi();
 
   const takePicture = () => {
-    console.log('사진 촬영');
     sendReactNativeMessage({ type: 'TakeProfile' });
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
   const choosePicture = () => {
-    console.log('앨범에서 선택');
     sendReactNativeMessage({ type: 'Profile' });
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
   const deleteImage = () => {
-    console.log('기본 이미지로 변경');
     setProfileImage('/images/Avatar.svg');
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
@@ -78,7 +73,6 @@ export default function Edit({
   useEffect(() => {
     const ferchData = async () => {
       const result = await getProfile();
-      console.log(result);
 
       setNickName(result.name);
       setIntroduction(result.description);

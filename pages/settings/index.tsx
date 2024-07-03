@@ -34,7 +34,6 @@ export default function Setting() {
   const { logout } = UserApi();
 
   const shareButton = () => {
-    console.log('이메일 복사');
     setURLState(false); // 재공유 toast 노출 초기화
     sendReactNativeMessage({ type: 'copyEmail' }); // native로 클립보드 복사 처리
   };

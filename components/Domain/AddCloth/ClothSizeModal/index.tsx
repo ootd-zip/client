@@ -39,7 +39,6 @@ export default function ClothSizeModal({
   useEffect(() => {
     const fetchData = async () => {
       const result = await getSize(categoryId);
-      console.log('a', result);
       const newSizeList = [] as SizeListType;
       if (clothSizeInitial) setSelectedClothSize(clothSizeInitial);
 

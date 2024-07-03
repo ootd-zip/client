@@ -8,7 +8,6 @@ interface ButtonData {
 
 const Buttons = styled.button<ButtonData>`
   border: ${(props) => (props.buttonData.border ? '1px solid black' : 'none')};
-  //props.theme.color -> 색상 디자인 토큰을 사용하기 위한 코드
   background-color: ${(props) =>
     props.theme.color[props.buttonData.backgroundColor]};
   color: ${(props) => props.theme.color[props.buttonData.color]};

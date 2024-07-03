@@ -70,7 +70,7 @@ export default function ImageCheckBoxList({
                 ) : (
                   <Image
                     src={BookmarkCheckBoxFalse}
-                    alt={`CheckBox False'`}
+                    alt={`CheckBox False`}
                     className="checkBoxImage"
                     onClick={() => toggleChecked(item.ootdBookmarkId!)}
                     width={24}
