@@ -5,18 +5,18 @@ import ImageList from '@/components/ImageList';
 import { useRouter } from 'next/router';
 import { AiOutlineDown } from 'react-icons/ai';
 import FilterModal from '../FilterModal';
-import { ColorListType } from '@/components/ColorList';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { BrandType } from '@/components/BrandList/Brand';
+import { CategoryListType } from '@/utils/types/OOTD.types';
+import { BrandType } from '@/utils/types/OOTD.types';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import Spinner from '@/components/Spinner';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
-import { ClothDataType } from '@/pages/cloth/[...ClothNumber]';
+import { ClothDataType } from '@/utils/types/cloth.types';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
+import { ColorListType, FilterData } from '@/utils/types/OOTD.types';
 
 interface ClosetClothProps {
   showingId: number;
@@ -26,17 +26,6 @@ export type myPageClothType = {
   clothId: number;
   clothImage: string;
 };
-
-export interface FilterData {
-  category: CategoryListType[] | null;
-  color: ColorListType | null;
-  brand: BrandType[] | null;
-  isOpen: Boolean | null;
-  gender?: {
-    man: Boolean;
-    woman: Boolean;
-  };
-}
 
 export default function ClosetCloth({ showingId }: ClosetClothProps) {
   const router = useRouter();
@@ -50,7 +39,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     brand: null,
     isOpen: null,
   });
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<myPageClothType[]>([]);
   const [filterModalInitialIndex, setFilterModalInitialIndex] =
     useState<number>(1);
 

@@ -9,22 +9,18 @@ import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';
 import BasicInfoSecond from './BasicInfoSecond';
 import AdditionalInfo from './AdditionalInfo';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { ColorListType } from '@/components/ColorList';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
+import { CategoryListType } from '@/utils/types/OOTD.types';
+import { ColorListType } from '@/utils/types/OOTD.types';
 import { useRouter } from 'next/router';
 import ClothName from './ClothName';
-import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';
+import { SizeItem } from '@/utils/types/OOTD.types';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import useRememberScroll from '@/hooks/useRememberScroll';
-
-export interface ClothWhereBuy {
-  letter: string;
-  type: 'Link' | 'Write';
-}
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 
 const AddCloth: ComponentWithLayout = () => {
   const steps = ['편집', '제품명', '기본정보1', '기본정보2', '추가정보'];
@@ -42,8 +38,8 @@ const AddCloth: ComponentWithLayout = () => {
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
   const [open, setOpen] = useState<Boolean>(true);
-  const [clothBuyDate, setClothBuyDate] = useState('');
-  const [clothMemo, setClothMemo] = useState('');
+  const [clothBuyDate, setClothBuyDate] = useState<string>('');
+  const [clothMemo, setClothMemo] = useState<string>('');
 
   const router = useRouter();
   const myId = useRecoilValue(userId);

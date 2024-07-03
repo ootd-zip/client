@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
-import { OOTDListType } from '../../Search/SearchResult/ClosetCloth';
+import { OOTDListType } from '@/utils/types/OOTD.types';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import SubHead from '../../Search/SearchResult/SubHead';
 import ImageList from '@/components/ImageList';

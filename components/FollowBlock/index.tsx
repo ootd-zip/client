@@ -5,7 +5,7 @@ import Button from '../Button';
 
 interface FollowBlockProps {
   data: {
-    profileId: Number;
+    profileId: number;
     name: string;
     profileImage: string;
     followCheck?: Boolean;

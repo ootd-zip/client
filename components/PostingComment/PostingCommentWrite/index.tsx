@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { CommentStateType } from '@/pages/ootd/[...OOTDNumber]';
+import { CommentStateType } from '@/utils/types/OOTD.types';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import Avatar from '@/public/images/Avatar.svg';
 import NextImage from '@/components/NextImage';

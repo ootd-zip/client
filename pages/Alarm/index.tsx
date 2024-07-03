@@ -1,6 +1,6 @@
 import { AlarmApi } from '@/apis/domain/Alarm/AlarmApi';
 import AppBar from '@/components/Appbar';
-import Alarms, { AlarmType } from '@/components/Domain/Alarm';
+import Alarms from '@/components/Domain/Alarm';
 import AlarmLayout from '@/components/Domain/Alarm/AlarmLayout';
 import NoAlarm from '@/components/Domain/Alarm/NoAlarm';
 import { Title1 } from '@/components/UI';
@@ -9,6 +9,7 @@ import S from '@/pageStyle/alarm/style';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { AlarmType } from '@/utils/types/setting.types';
 
 interface FetchedAlarmType {
   timeType: string;

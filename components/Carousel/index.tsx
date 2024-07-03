@@ -5,11 +5,11 @@ import Slider from 'react-slick';
 interface CarouselProps {
   children: React.ReactNode;
   slidesToShow: number;
-  infinite: Boolean;
+  infinite: boolean;
   ParentRef?: React.MutableRefObject<Slider | null>;
   afterChange?: (currentIndex: number) => void;
   beforeChange?: (currentIndex: number, nextIndex: number) => void;
-  swipe?: boolean;
+  swipe?: Boolean;
   dots?: boolean;
   initialSlide?: number;
 }

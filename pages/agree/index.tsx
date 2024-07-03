@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { AppLayoutProps } from '@/AppLayout';
-import { Style } from '../add-ootd';
+import { Style } from '@/utils/types/OOTD.types';
 import S from '@/pageStyle/agree/style';
 import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
@@ -19,10 +19,10 @@ interface ComponentWithLayout extends FC {
 const Agree: ComponentWithLayout = () => {
   const router = useRouter();
 
-  const [check1, setCheck1] = useState<boolean>(false);
-  const [check2, setCheck2] = useState<boolean>(false);
+  const [check1, setCheck1] = useState<Boolean>(false);
+  const [check2, setCheck2] = useState<Boolean>(false);
 
-  const [possible, setPossible] = useState<boolean>(false);
+  const [possible, setPossible] = useState<Boolean>(false);
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
 
   useEffect(() => {

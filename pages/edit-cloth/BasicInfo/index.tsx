@@ -2,18 +2,16 @@ import S from '@/pageStyle/edit-cloth/BasicInfo/style';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Input from '@/components/Input';
 import { Body3, Title1 } from '@/components/UI';
-import { ClothWhereBuy } from '../[...ClothNumber]';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
-import ClothCategoryModal, {
-  CategoryListType,
-} from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
+import ClothCategoryModal from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
-import { BrandType } from '@/components/BrandList/Brand';
+import { BrandType } from '@/utils/types/OOTD.types';
 import BrandModal from '@/components/Domain/AddCloth/BrandModal';
-import { ColorListType } from '@/components/ColorList';
-import ClothSizeModal, {
-  SizeItem,
-} from '@/components/Domain/AddCloth/ClothSizeModal';
+import { ColorListType } from '@/utils/types/OOTD.types';
+import ClothSizeModal from '@/components/Domain/AddCloth/ClothSizeModal';
+import { SizeItem } from '@/utils/types/OOTD.types';
 import ColorSpan from '@/components/ColorList/ColorSpan';
 import PlusButton from '@/components/PlusButton';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';

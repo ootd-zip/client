@@ -10,30 +10,14 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { storedImageKey, userId } from '@/utils/recoil/atom';
-import { UserClothDataType } from '../../OOTD/UserCloth';
+import { UserClothDataType } from '@/utils/types/cloth.types';
 import Spinner from '@/components/Spinner';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import Toast from '@/components/Toast';
 import { useRouter } from 'next/router';
 import Alert from '@/components/Alert';
 import Background from '@/components/Background';
-
-export type ImageWithTag = {
-  ootdId: number;
-  ootdImage: string;
-  ootdImageClothesList?: {
-    clothesId: number;
-    clothesImage: string;
-    coordinate: { xrate: string; yrate: string };
-    deviceSize: { deviceWidth: number; deviceHeight: number };
-    caption: string;
-    size?: string;
-    state?: string;
-    name?: string;
-    brand?: string;
-    category?: string;
-  }[];
-}[];
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 
 interface AddTagProps {
   setAddTag: Dispatch<SetStateAction<Boolean>>;

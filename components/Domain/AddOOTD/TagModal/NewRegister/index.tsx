@@ -1,7 +1,7 @@
 import { Body3, Button3, Headline2 } from '@/components/UI';
 import S from './style';
 import { useRouter } from 'next/router';
-import { ImageWithTag } from '..';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 import { useSetRecoilState } from 'recoil';
 import { storedImageKey } from '@/utils/recoil/atom';
 

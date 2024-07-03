@@ -5,6 +5,7 @@ import { Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
 import ClothCategory from '@/components/ClothCategory';
 import { AiOutlineClose } from 'react-icons/ai';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 
 interface ClothCategoryModalProps {
   isOpen: Boolean;
@@ -12,19 +13,6 @@ interface ClothCategoryModalProps {
   setIsOpen: Dispatch<SetStateAction<Boolean>>;
   categoryInitial?: CategoryListType[] | null;
 }
-
-export type CategoryType = {
-  id: number;
-  name: string;
-  state?: Boolean;
-};
-
-export type CategoryListType = {
-  id: number;
-  name: string;
-  state?: Boolean;
-  detailCategories?: CategoryType[];
-};
 
 export default function ClothCategoryModal({
   isOpen,

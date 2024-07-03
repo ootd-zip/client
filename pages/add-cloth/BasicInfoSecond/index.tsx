@@ -4,17 +4,16 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import Input from '@/components/Input';
 import NextButton from '@/components/NextButton';
 import PlusButton from '@/components/PlusButton';
-import { ColorListType } from '@/components/ColorList';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
+import { ColorListType } from '@/utils/types/OOTD.types';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
+import { CategoryListType } from '@/utils/types/OOTD.types';
 import ColorSpan from '@/components/ColorList/ColorSpan';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
-import ClothSizeModal, {
-  SizeItem,
-} from '@/components/Domain/AddCloth/ClothSizeModal';
+import ClothSizeModal from '@/components/Domain/AddCloth/ClothSizeModal';
+import { SizeItem } from '@/utils/types/OOTD.types';
 import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
-import { BrandType } from '@/components/BrandList/Brand';
-import { ClothWhereBuy } from '..';
+import { BrandType } from '@/utils/types/OOTD.types';
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';

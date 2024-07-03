@@ -16,80 +16,15 @@ import Toast from '@/components/Toast';
 import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Background from '@/components/Background';
-
-export interface CommentStateType {
-  ootdId: number;
-  parentDepth: number;
-  content: string;
-  taggedUserName?: string;
-  commentParentId?: number;
-}
-
-export interface OOTDType {
-  id: number;
-  contents: string; //본문
-  viewCount: number; //조회수
-  reportCount: number; //신고 횟수
-  likeCount: number; //좋아요 개수
-  userName: string; //유저명
-  userImage: string; //유저 프로필 이미지
-  userId: number;
-  createAt: string; //작성일
-  isBookmark: Boolean;
-  isLike: Boolean;
-  isPrivate: Boolean;
-  isFollowing: Boolean;
-  ootdImages: {
-    ootdImage: string; //ootd 이미지
-    ootdImageClothesList?: {
-      clothesId: number;
-      clothesImage: string;
-      brand: { id: number; name: string }; //옷 브랜드
-      category: {
-        id: number;
-        smallCategory: string;
-        bigCategory: string;
-      };
-      size: string;
-      clothesName: string; //옷 별칭
-      coordinate: {
-        xrate: string;
-        yrate: string;
-      };
-      deviceSize: {
-        deviceWidth: number;
-        deviceHeight: number;
-      };
-    }[];
-  }[];
-  styles: {
-    styleId: number;
-    name: string;
-  }[];
-  comment?: {
-    id: number;
-    userName: string;
-    userImage: string;
-    content: string;
-    timeStamp: string;
-    childComment?: {
-      id: number;
-      userName: string;
-      userImage: string;
-      content: string;
-      createAt: string;
-      taggedUserName: string;
-    }[];
-  }[];
-}
+import { CommentStateType, OOTDType } from '@/utils/types/OOTD.types';
 
 const OOTD: ComponentWithLayout = () => {
   const { getOOTDDetail, postOOTDComment } = OOTDApi();
 
   const router = useRouter();
 
-  const [reRender, setReRender] = useState(0);
-  const [getPostReRender, setGetPostReRender] = useState(0);
+  const [reRender, setReRender] = useState<number>(0);
+  const [getPostReRender, setGetPostReRender] = useState<number>(0);
 
   const onClickBackButton = () => {
     if (router.query.OOTDNumber![1] === 'explore') {

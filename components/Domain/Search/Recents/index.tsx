@@ -1,7 +1,7 @@
 import { Title1, Caption1, Button3 } from '@/components/UI';
 import S from './style';
 import { AiOutlineClose } from 'react-icons/ai';
-import { keywordsInterface } from '@/pages/search';
+import { keywordsInterface } from '@/utils/types/OOTD.types';
 import { Dispatch, SetStateAction } from 'react';
 
 interface recentsProps {

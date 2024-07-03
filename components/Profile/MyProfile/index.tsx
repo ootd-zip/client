@@ -2,7 +2,7 @@ import ProfileLayout from '../ProfileLayout';
 import S from './style';
 import Title1 from '@/components/UI/TypoGraphy/Title1';
 import Body from '@/components/UI/TypoGraphy/Body4';
-import { ProfileType } from '../type';
+import { ProfileType } from '@/utils/types/user.types';
 
 export default function MyProfile({
   isUser,

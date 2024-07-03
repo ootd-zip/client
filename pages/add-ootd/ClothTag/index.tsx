@@ -12,9 +12,10 @@ import {
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import TagInformation from '@/components/ClothInformation/TagInformation';
 import Carousel from '@/components/Carousel';
-import AddTag, { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import AddTag from '@/components/Domain/AddOOTD/TagModal';
 import NextImage from '@/components/NextImage';
 import Background from '@/components/Background';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
 
 interface ClothTagProps {
   setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined>>;
@@ -30,12 +31,12 @@ export default function ClothTag({
   const dragRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
 
-  const [componentWidth, setComponentWidth] = useState(0); //컴포넌트 길이
-  const [componentHeight, setComponentHeight] = useState(0); //컴포넌트 높이
+  const [componentWidth, setComponentWidth] = useState<number>(0); //컴포넌트 길이
+  const [componentHeight, setComponentHeight] = useState<number>(0); //컴포넌트 높이
   const [addTag, setAddTag] = useState<Boolean>(false); //옷 추가 모달 (열기/닫기)
   const [slideIndex, setSlideIndex] = useState<number>(0); //OOTD 슬라이드 인덱스
   const [nextButtonState, setNextButtonState] = useState<Boolean>(false); //다음 버튼 상태
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState<Boolean>(false);
 
   //컴포넌트 크기 계산
   useEffect(() => {

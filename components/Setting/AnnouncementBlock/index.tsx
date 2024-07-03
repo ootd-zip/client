@@ -1,4 +1,4 @@
-import { AnnoucementDataType } from '@/pages/announcement';
+import { AnnoucementDataType } from '@/utils/types/setting.types';
 import S from './style';
 import { Body3, Caption1 } from '@/components/UI';
 import { useState } from 'react';

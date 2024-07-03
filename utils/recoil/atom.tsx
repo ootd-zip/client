@@ -1,4 +1,5 @@
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import { ImageWithTag } from '../types/OOTD.types';
+
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 

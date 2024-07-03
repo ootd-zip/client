@@ -6,18 +6,14 @@ import AdditionalInfo from './AdditionalInfo';
 import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';
 import { useRouter } from 'next/router';
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
-import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import { ColorListType } from '@/components/ColorList';
-import { BrandType } from '@/components/BrandList/Brand';
-import { SizeItem } from '@/components/Domain/AddCloth/ClothSizeModal';
+import { ImageWithTag } from '@/utils/types/OOTD.types';
+import { CategoryListType } from '@/utils/types/OOTD.types';
+import { ColorListType } from '@/utils/types/OOTD.types';
+import { BrandType } from '@/utils/types/OOTD.types';
+import { SizeItem } from '@/utils/types/OOTD.types';
 import BasicInfo from './BasicInfo';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
-
-export interface ClothWhereBuy {
-  letter: string;
-  type: 'Link' | 'Write';
-}
+import { ClothWhereBuy } from '@/utils/types/OOTD.types';
 
 const EditCloth: ComponentWithLayout = () => {
   const router = useRouter();
@@ -37,9 +33,9 @@ const EditCloth: ComponentWithLayout = () => {
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
   const [clothOpen, setClothOpen] = useState<Boolean>(true);
-  const [clothBuyDate, setClothBuyDate] = useState('');
-  const [clothMemo, setClothMemo] = useState('');
-  const [sizeRerender, setSizeRerender] = useState(0);
+  const [clothBuyDate, setClothBuyDate] = useState<string>('');
+  const [clothMemo, setClothMemo] = useState<string>('');
+  const [sizeRerender, setSizeRerender] = useState<number>(0);
 
   const { getClothDetail, putCloth } = ClothApi();
 

@@ -4,7 +4,7 @@ import {
   NEXT_PUBLIC_KAKAO_URI,
 } from '@/constants/develop.constants';
 import { postRegistUserInfoPayload } from './type';
-import { QueryParams } from '@/pages/sign-in/[...callback]';
+import { QueryParams } from '@/utils/types/setting.types';
 import axios from 'axios';
 
 export const login = async (payload: QueryParams) => {

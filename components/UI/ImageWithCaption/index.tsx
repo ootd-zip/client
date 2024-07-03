@@ -1,4 +1,4 @@
-import { ImageProps } from '@/components/Card/type';
+import { ImageProps } from '@/utils/types/card.type';
 import { ImageCaption, ImageFigure } from './style';
 import { Caption2 } from '../TypoGraphy';
 import NextImage from '@/components/NextImage';
