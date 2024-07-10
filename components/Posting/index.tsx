@@ -175,6 +175,10 @@ export default function Posting({
     setReportModalIsOpen(true);
   };
 
+  const searchStyle = (keyword: string) => {
+    router.push(`/search?q=${encodeURIComponent(keyword)}`);
+  };
+
   return (
     <>
       <Background
@@ -325,7 +329,10 @@ export default function Posting({
           {data.styles &&
             data.styles.map((item, index) => {
               return (
-                <S.PostingStyleTagSpan key={index}>
+                <S.PostingStyleTagSpan
+                  key={index}
+                  onClick={() => searchStyle(item.name)}
+                >
                   <Button3>{item.name}</Button3>
                 </S.PostingStyleTagSpan>
               );
