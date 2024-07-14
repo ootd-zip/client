@@ -15,6 +15,8 @@ import Alert from '../Alert';
 import NextImage from '../NextImage';
 import PublicApi from '@/apis/domain/Public/PublicApi';
 import Background from '../Background';
+import ClothApi from '@/apis/domain/Cloth/ClothApi';
+import { ColorListType } from '../ColorList';
 
 interface GalleryProps {
   imageAndTag: ImageWithTag | undefined;
@@ -133,10 +135,28 @@ const Gallery = ({
     handleStep(nextStep);
   };
 
-  const postingImageRef = useRef<HTMLImageElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { getColor } = ClothApi();
+
+  const [color, setColor] = useState<ColorListType | undefined>();
   const [dominantColor, setDominantColor] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const fetchColor = async () => {
+      const colorList = (await getColor()) as ColorListType;
+      setColor(colorList);
+    };
+
+    fetchColor();
+  }, []);
+
+  useEffect(() => {
+    if (imageLoaded && color) {
+      handleImageLoad();
+    }
+  }, [imageLoaded, color]);
 
   const handleImageLoad = () => {
     const img = document.getElementById('sourceImage') as HTMLImageElement;
@@ -156,15 +176,57 @@ const Gallery = ({
     const imageData = context.getImageData(centerX, centerY, 1, 1);
     const data = imageData.data;
 
-    const centerColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
-    setDominantColor(centerColor);
+    const hexCode = color
+      ? findClosestColor(data[0], data[1], data[2], color)
+      : '#FFFFFF'; // default to white if no color found
+    setDominantColor(hexCode);
   };
 
-  useEffect(() => {
-    if (imageLoaded) {
-      handleImageLoad();
+  function hexToRgb(hex: string): { r: number; g: number; b: number } {
+    let bigint = parseInt(hex.slice(1), 16);
+    return {
+      r: (bigint >> 16) & 255,
+      g: (bigint >> 8) & 255,
+      b: bigint & 255,
+    };
+  }
+
+  function colorDistance(
+    color1: { r: number; g: number; b: number },
+    color2: { r: number; g: number; b: number }
+  ): number {
+    return Math.sqrt(
+      Math.pow(color1.r - color2.r, 2) +
+        Math.pow(color1.g - color2.g, 2) +
+        Math.pow(color1.b - color2.b, 2)
+    );
+  }
+
+  function findClosestColor(
+    r: number,
+    g: number,
+    b: number,
+    colorList: ColorListType
+  ): string | null {
+    if (!colorList || colorList.length === 0) return null; // default to null if color list is empty
+
+    let minDistance = Number.MAX_VALUE;
+    let closestColorName: string | null = null;
+
+    const targetColor = { r, g, b };
+
+    for (let color of colorList) {
+      let colorRgb = hexToRgb(color.colorCode);
+      let distance = colorDistance(targetColor, colorRgb);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestColorName = color.name; // Return the name of the closest color
+      }
     }
-  }, [imageLoaded]);
+
+    return closestColorName;
+  }
 
   return (
     <>
@@ -190,7 +252,6 @@ const Gallery = ({
                 <S.BigImage key={index}>
                   <NextImage
                     id="sourceImage"
-                    ref={postingImageRef}
                     className="bigImage"
                     src={item.ootdImage}
                     alt=""
