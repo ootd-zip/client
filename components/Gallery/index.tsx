@@ -2,7 +2,7 @@ import {
   getReactNativeMessage,
   sendReactNativeMessage,
 } from '@/utils/reactNativeMessage';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from 'react';
 import Carousel from '../Carousel';
 import { useRouter } from 'next/router';
 import { ImageWithTag } from '../Domain/AddOOTD/TagModal';
@@ -133,6 +133,39 @@ const Gallery = ({
     handleStep(nextStep);
   };
 
+  const postingImageRef = useRef<HTMLImageElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [dominantColor, setDominantColor] = useState<string | null>(null);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
+  const handleImageLoad = () => {
+    const img = document.getElementById('sourceImage') as HTMLImageElement;
+    const canvas = canvasRef.current;
+
+    if (!img || !canvas) return;
+
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+
+    const centerX = Math.floor(canvas.width / 2);
+    const centerY = Math.floor(canvas.height / 2);
+    const imageData = context.getImageData(centerX, centerY, 1, 1);
+    const data = imageData.data;
+
+    const centerColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+    setDominantColor(centerColor);
+  };
+
+  useEffect(() => {
+    if (imageLoaded) {
+      handleImageLoad();
+    }
+  }, [imageLoaded]);
+
   return (
     <>
       <Background
@@ -156,11 +189,15 @@ const Gallery = ({
               return (
                 <S.BigImage key={index}>
                   <NextImage
+                    id="sourceImage"
+                    ref={postingImageRef}
                     className="bigImage"
                     src={item.ootdImage}
                     alt=""
                     fill={true}
+                    onLoadingComplete={() => setImageLoaded(true)}
                   />
+                  <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
                 </S.BigImage>
               );
           })}
@@ -169,6 +206,7 @@ const Gallery = ({
             <Body4 className="selected" state="emphasis">
               {selectedImage.length}장의 사진이 선택됨
             </Body4>
+            <h1>color : {dominantColor}</h1>
             <Carousel
               infinite={false}
               dots={true}
