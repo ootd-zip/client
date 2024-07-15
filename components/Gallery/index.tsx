@@ -137,6 +137,17 @@ const Gallery = ({
 
   const { getColor } = ClothApi();
 
+  interface RGB {
+    r: number;
+    g: number;
+    b: number;
+  }
+
+  interface Cluster {
+    centroid: RGB;
+    pixels: RGB[];
+  }
+
   const [color, setColor] = useState<ColorListType | undefined>();
   const [dominantColor, setDominantColor] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -171,39 +182,22 @@ const Gallery = ({
     canvas.height = img.naturalHeight;
     context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 
-    const centerX = Math.floor(canvas.width / 2);
-    const centerY = Math.floor(canvas.height / 2);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
 
-    // Define the 5 points around the center
-    const points = [
-      { x: centerX, y: centerY }, // center
-      { x: centerX + 3, y: centerY }, // right
-      { x: centerX - 3, y: centerY }, // left
-      { x: centerX, y: centerY + 3 }, // bottom
-      { x: centerX, y: centerY - 3 }, // top
-    ];
-
-    const colors: { r: number; g: number; b: number }[] = [];
-
-    for (let point of points) {
-      const imageData = context.getImageData(point.x, point.y, 1, 1);
-      const data = imageData.data;
-      colors.push({ r: data[0], g: data[1], b: data[2] });
+    const pixels: RGB[] = [];
+    for (let i = 0; i < data.length; i += 4) {
+      pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
     }
 
-    const averageColor = colors.reduce(
-      (acc, color) => {
-        acc.r += color.r;
-        acc.g += color.g;
-        acc.b += color.b;
-        return acc;
-      },
-      { r: 0, g: 0, b: 0 }
+    const k = 5; // Number of clusters
+    const clusters = kMeansClustering(pixels, k);
+
+    const dominantCluster = clusters.reduce((prev, current) =>
+      prev.pixels.length > current.pixels.length ? prev : current
     );
 
-    averageColor.r = Math.floor(averageColor.r / colors.length);
-    averageColor.g = Math.floor(averageColor.g / colors.length);
-    averageColor.b = Math.floor(averageColor.b / colors.length);
+    const averageColor = dominantCluster.centroid;
 
     const hexCode = color
       ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
@@ -211,7 +205,69 @@ const Gallery = ({
     setDominantColor(hexCode);
   };
 
-  function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  function kMeansClustering(pixels: RGB[], k: number): Cluster[] {
+    let centroids = initializeCentroids(pixels, k);
+    let clusters: Cluster[] = [];
+
+    for (let i = 0; i < 10; i++) {
+      clusters = assignPixelsToClusters(pixels, centroids);
+      centroids = updateCentroids(clusters);
+    }
+
+    return clusters;
+  }
+
+  function initializeCentroids(pixels: RGB[], k: number): RGB[] {
+    const centroids: RGB[] = [];
+    for (let i = 0; i < k; i++) {
+      const randomPixel = pixels[Math.floor(Math.random() * pixels.length)];
+      centroids.push(randomPixel);
+    }
+    return centroids;
+  }
+
+  function assignPixelsToClusters(pixels: RGB[], centroids: RGB[]): Cluster[] {
+    const clusters: Cluster[] = centroids.map((centroid) => ({
+      centroid,
+      pixels: [],
+    }));
+
+    for (let pixel of pixels) {
+      let minDistance = Number.MAX_VALUE;
+      let closestCentroidIndex = -1;
+
+      for (let i = 0; i < centroids.length; i++) {
+        const distance = colorDistance(pixel, centroids[i]);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestCentroidIndex = i;
+        }
+      }
+
+      clusters[closestCentroidIndex].pixels.push(pixel);
+    }
+
+    return clusters;
+  }
+
+  function updateCentroids(clusters: Cluster[]): RGB[] {
+    return clusters.map((cluster) => {
+      const sum = cluster.pixels.reduce(
+        (acc: RGB, pixel: RGB) => {
+          acc.r += pixel.r;
+          acc.g += pixel.g;
+          acc.b += pixel.b;
+          return acc;
+        },
+        { r: 0, g: 0, b: 0 }
+      );
+
+      const count = cluster.pixels.length;
+      return { r: sum.r / count, g: sum.g / count, b: sum.b / count };
+    });
+  }
+
+  function hexToRgb(hex: string): RGB {
     let bigint = parseInt(hex.slice(1), 16);
     return {
       r: (bigint >> 16) & 255,
@@ -220,10 +276,7 @@ const Gallery = ({
     };
   }
 
-  function colorDistance(
-    color1: { r: number; g: number; b: number },
-    color2: { r: number; g: number; b: number }
-  ): number {
+  function colorDistance(color1: RGB, color2: RGB): number {
     return Math.sqrt(
       Math.pow(color1.r - color2.r, 2) +
         Math.pow(color1.g - color2.g, 2) +
