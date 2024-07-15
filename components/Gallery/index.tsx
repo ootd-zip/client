@@ -173,11 +173,40 @@ const Gallery = ({
 
     const centerX = Math.floor(canvas.width / 2);
     const centerY = Math.floor(canvas.height / 2);
-    const imageData = context.getImageData(centerX, centerY, 1, 1);
-    const data = imageData.data;
+
+    // Define the 5 points around the center
+    const points = [
+      { x: centerX, y: centerY }, // center
+      { x: centerX + 3, y: centerY }, // right
+      { x: centerX - 3, y: centerY }, // left
+      { x: centerX, y: centerY + 3 }, // bottom
+      { x: centerX, y: centerY - 3 }, // top
+    ];
+
+    const colors: { r: number; g: number; b: number }[] = [];
+
+    for (let point of points) {
+      const imageData = context.getImageData(point.x, point.y, 1, 1);
+      const data = imageData.data;
+      colors.push({ r: data[0], g: data[1], b: data[2] });
+    }
+
+    const averageColor = colors.reduce(
+      (acc, color) => {
+        acc.r += color.r;
+        acc.g += color.g;
+        acc.b += color.b;
+        return acc;
+      },
+      { r: 0, g: 0, b: 0 }
+    );
+
+    averageColor.r = Math.floor(averageColor.r / colors.length);
+    averageColor.g = Math.floor(averageColor.g / colors.length);
+    averageColor.b = Math.floor(averageColor.b / colors.length);
 
     const hexCode = color
-      ? findClosestColor(data[0], data[1], data[2], color)
+      ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
       : '#FFFFFF'; // default to white if no color found
     setDominantColor(hexCode);
   };
