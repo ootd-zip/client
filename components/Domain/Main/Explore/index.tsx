@@ -28,6 +28,7 @@ export default function Explore() {
 
   const { getSearchOOTD } = OOTDApi();
 
+  //탐색 리스트 조회 api 호출 함수
   const fetchOOTDDataFunction = async (ootdPage: number, ootdSize: number) => {
     if (!router.isReady) return;
 
@@ -42,6 +43,7 @@ export default function Explore() {
     return data;
   };
 
+  //탐색 리스트 무한 스크롤 훅
   const {
     data: OOTDData,
     isLoading: OOTDIsLoading,
@@ -61,6 +63,7 @@ export default function Explore() {
     key: 'explore',
   });
 
+  //탐색 리스트 조회 api 호출 완료 시 ootdList 상태 업데이트
   useEffectAfterMount(() => {
     setOOTDList(
       OOTDData.map((item: any) => {
@@ -72,6 +75,7 @@ export default function Explore() {
     );
   }, [OOTDData]);
 
+  //탐색 리스트의 스크롤 위치를 기억하기 위한 훅
   useRememberScroll({
     key: 'explore',
     containerRef: OOTDRef,
@@ -79,6 +83,7 @@ export default function Explore() {
     list: OOTDList,
   });
 
+  //정렬 기준이 변경되면 새로운 데이터 패칭
   useEffectAfterMount(() => {
     setOOTDList([]);
     ootdReset();
@@ -86,6 +91,7 @@ export default function Explore() {
 
   const [isVisible, setIsVisible] = useState<Boolean>(false);
 
+  //맨 위 화면으로 이동하는 함수
   const scrollToTop = () => {
     const container = OOTDRef.current;
     container.scrollTo({
