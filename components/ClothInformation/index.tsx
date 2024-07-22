@@ -3,6 +3,10 @@ import S from './style';
 import { Body4, Title2 } from '../UI';
 import ImageWithCaption from '../UI/ImageWithCaption';
 
+/*
+이름: 옷 정보
+역할: 옷의 상세한 정보를 표현하는 컴포넌트
+*/
 export default function ClothInformation({
   clothImage,
   caption,

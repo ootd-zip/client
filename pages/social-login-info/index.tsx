@@ -2,7 +2,6 @@ import AppBar from '@/components/Appbar';
 import S from '@/pageStyle/social-login-info/style';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { Body3, Title1 } from '@/components/UI';
 import Header from '@/components/Header';
 import SettingBlock from '@/components/Setting/SettingBlock';
 
