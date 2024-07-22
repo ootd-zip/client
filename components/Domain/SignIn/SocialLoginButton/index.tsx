@@ -9,7 +9,10 @@ interface SocialLoginButtonProps {
   onClick: () => void;
   platform: 'KAKAO' | 'NAVER' | 'APPLE';
 }
-
+/*
+이름: 소셜 로그인 버튼
+역할: 로그인 페이지에서 사용되는 소셜 로그인 버튼 컴포넌트
+*/
 export default function SocialLoginButton({
   onClick,
   platform,

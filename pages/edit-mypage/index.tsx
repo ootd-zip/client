@@ -1,9 +1,9 @@
 import AppBar from '@/components/Appbar';
 import S from '@/pageStyle/edit-mypage/style';
-import { AiOutlineArrowLeft, AiOutlineSetting } from 'react-icons/ai';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import Edit from '@/components/Domain/MyPage/Edit';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Style } from '../add-ootd';
 import { AppLayoutProps } from '@/AppLayout';
 import Background from '@/components/Background';

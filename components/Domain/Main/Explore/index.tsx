@@ -11,16 +11,20 @@ import Spinner from '@/components/Spinner';
 import BackTop from '@/public/images/BackTop.svg';
 import Portal from '@/components/Portal';
 import useRememberScroll from '@/hooks/useRememberScroll';
-
+/*
+이름: 탐색
+역할: 유저의 ootd들을 보여주는 탐색 컴포넌트
+*/
 export default function Explore() {
   const router = useRouter();
 
+  //이미지 리스트 클릭 이벤트 함수
   const onClickImageList = (index: number) => {
     router.push(`/ootd/${index}/explore`);
   };
 
-  const [sortStandard, setSortStandard] = useState<string>('LATEST');
-  const [OOTDList, setOOTDList] = useState<OOTDListType[]>([]);
+  const [sortStandard, setSortStandard] = useState<string>('LATEST'); // 정렬기준
+  const [OOTDList, setOOTDList] = useState<OOTDListType[]>([]); //ootd 리스트
 
   const { getSearchOOTD } = OOTDApi();
 

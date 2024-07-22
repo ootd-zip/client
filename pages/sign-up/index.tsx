@@ -16,24 +16,27 @@ import { RegisterApi } from '@/apis/domain/Register/RegisterApi';
 interface ComponentWithLayout extends FC {
   Layout?: FC<AppLayoutProps>;
 }
-
+/*
+이름: 회원가입 페이지
+*/
 const SignUp: ComponentWithLayout = () => {
-  const steps = ['기본정보', '체형정보', '취향정보'];
-  const [Funnel, currentStep, handleStep] = useFunnel(steps);
-  const [id, setId] = useState('');
-  const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [open, setOpen] = useState<Boolean>(true);
-  const [gender, setGender] = useState<Boolean>(true);
-  const [canUseId, setCanUseId] = useState<Boolean>(false);
-  const [basicState, setBasicState] = useState<Boolean>(false);
-  const [bodyState, setBodyState] = useState<Boolean>(false);
-  const [styleState, setStyleState] = useState<Boolean>(false);
-  const [selectedStyle, setSelectedStyle] = useState<Style[]>([]);
+  const steps = ['기본정보', '체형정보', '취향정보']; //회원가입 단계
+  const [Funnel, currentStep, handleStep] = useFunnel(steps); //단계별 처리를 위한 Funnel
+  const [id, setId] = useState(''); //닉네임
+  const [age, setAge] = useState(''); //나이
+  const [height, setHeight] = useState(''); //키
+  const [weight, setWeight] = useState(''); //몸무게
+  const [open, setOpen] = useState<Boolean>(true); //공개 여부
+  const [gender, setGender] = useState<Boolean>(true); //성별
+  const [canUseId, setCanUseId] = useState<Boolean>(false); //닉네임 사용 가능 여부
+  const [basicState, setBasicState] = useState<Boolean>(false); //기본 정보 완료 여부
+  const [bodyState, setBodyState] = useState<Boolean>(false); //체형 정보 완료 여부
+  const [styleState, setStyleState] = useState<Boolean>(false); //스타일 완료 여부
+  const [selectedStyle, setSelectedStyle] = useState<Style[]>([]); //선택한 스타일 리스트
 
   const { postRegistUserInfo } = RegisterApi();
 
+  //각 요소들에 변화가 생기면 판단 후 상태 업데이트
   useEffect(() => {
     const canAdvanceBasicState = canUseId && age?.length > 0;
 
@@ -46,6 +49,7 @@ const SignUp: ComponentWithLayout = () => {
     setStyleState(canAdvanceStyleState);
   }, [canUseId, age, weight, height, selectedStyle]);
 
+  //작성 완료 버튼 클릭 함수
   const onClickSubmitButton = async () => {
     const payload = {
       name: id,
@@ -63,6 +67,8 @@ const SignUp: ComponentWithLayout = () => {
   };
 
   const router = useRouter();
+
+  //앱바 버튼 클릭 함수
   const onClickAppbarButton = () => {
     if (currentStep === '기본정보') {
       router.push('/sign-in');

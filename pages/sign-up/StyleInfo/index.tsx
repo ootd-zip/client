@@ -10,7 +10,9 @@ interface StyleInfoProps {
   selectedStyle: Style[];
   setSelectedStyle: Dispatch<SetStateAction<Style[]>>;
 }
-
+/*
+이름: 스타일 정보 페이지
+*/
 export default function StyleInfo({
   gender,
   setGender,

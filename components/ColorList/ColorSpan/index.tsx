@@ -8,6 +8,10 @@ interface ColorSpan {
   onClick?: (index: number) => void;
   index: number;
 }
+/*
+이름: 색상
+역할: 옷 색상과 이름을 나타는 색상 컴포넌트
+*/
 export default function ColorSpan({
   color,
   name,
@@ -17,6 +21,7 @@ export default function ColorSpan({
 }: ColorSpan) {
   return (
     <S.Layout>
+      {/*선택한 상태*/}
       {!state && (
         <S.ColorSpan
           onClick={() => (onClick ? onClick(index) : '')}
@@ -24,6 +29,7 @@ export default function ColorSpan({
           name={name}
         />
       )}
+      {/*미선택한 상태*/}
       {state && (
         <S.BigColorSpan>
           <S.SmallColorSpan

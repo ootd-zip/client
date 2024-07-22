@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import RecentsSearchBar from '@/components/RecentsSearchBar';
 import S from '@/pageStyle/search/style';
 import SearchResult from '@/components/Domain/Search/SearchResult';

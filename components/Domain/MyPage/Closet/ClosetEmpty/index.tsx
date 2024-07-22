@@ -7,7 +7,10 @@ interface ClosetEmptyProps {
   onClick: () => void;
   isMyProfile: Boolean;
 }
-
+/*
+이름: 옷이 비어있음
+역할: 옷장에서 옷이 비어있을 경우 보여줄 컴포넌트
+*/
 export default function ClosetEmpty({
   text,
   button,

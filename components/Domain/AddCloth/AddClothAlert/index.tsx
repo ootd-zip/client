@@ -1,11 +1,14 @@
 import Alert from '@/components/Alert';
-import { Body3, Title1 } from '@/components/UI';
+import { Body3 } from '@/components/UI';
 
 interface AddClothAlertProps {
   onClickYesButton: () => void;
   onClickNoButton: () => void;
 }
-
+/*
+이름: 옷 등록 추가정보 Alert
+역할: 옷 등록 페이지에서 추가 정보 입력의 유무를 선택하는 Alert 컴포넌트
+*/
 export default function AddClothAlert({
   onClickNoButton,
   onClickYesButton,

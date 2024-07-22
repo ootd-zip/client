@@ -4,6 +4,10 @@ import { ProfileType } from '../type';
 import { Body2, Body4 } from '@/components/UI';
 import { useRouter } from 'next/router';
 
+/*
+이름: 다른 유저의 프로필
+역할: 다른 유저의 프로필 컴포넌트
+*/
 export default function OtherProfile({
   isUser,
   userImage,

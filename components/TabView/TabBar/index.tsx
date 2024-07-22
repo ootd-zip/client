@@ -1,8 +1,7 @@
-import { Body2, Body3, Caption1 } from '@/components/UI';
+import { Body2 } from '@/components/UI';
 import { Layout, Tab, Hr } from './style';
 import { useTabViewContext } from '@/hooks/use-tabview/context';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import useEffectAfterMount from '@/hooks/useEffectAfterMount';
+import { useEffect, useState } from 'react';
 interface TabBarProps {
   count?: number[];
   tab: string[];

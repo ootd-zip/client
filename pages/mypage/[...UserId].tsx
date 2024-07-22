@@ -8,7 +8,7 @@ import {
 import { useRouter } from 'next/router';
 import Profile from '@/components/Domain/MyPage/Profile';
 import Closet from '@/components/Domain/MyPage/Closet';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Toast from '@/components/Toast';
 import { UserApi } from '@/apis/domain/User/UserApi';
 import { UserProfileDataType } from '@/components/Domain/MyPage/Profile';
@@ -22,6 +22,7 @@ export default function MyPage() {
 
   const [queryState, setQueryState] = useState<Boolean>(false);
 
+  //유저 프로필
   const [userProfileData, setUserProfileData] = useState<UserProfileDataType>({
     userId: 0,
     profileImage:
@@ -41,6 +42,7 @@ export default function MyPage() {
   const { getMypage } = UserApi();
   const { follow, unFollow } = PublicApi();
 
+  //마이 페이지 정보 조회 api
   useEffect(() => {
     const ferchData = async () => {
       if (!router.isReady) return;
@@ -62,6 +64,8 @@ export default function MyPage() {
   }, []);
 
   const [blockOpen, setBlockOpen] = useState<Boolean>(false);
+
+  //배경 클릭 함수
   const onClickBackground = () => {
     if (blockOpen) setBlockOpen(false);
   };
@@ -92,6 +96,7 @@ export default function MyPage() {
     setBlockOpen(false);
   };
 
+  //팔로우/언팔로우 버튼 클릭 함수
   const onClickFollowButton = async () => {
     if (!userProfileData.isFollow) {
       await follow(userProfileData.userId);

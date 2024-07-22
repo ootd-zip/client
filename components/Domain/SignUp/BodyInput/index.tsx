@@ -8,7 +8,10 @@ interface BodyInputProps {
   weight: string;
   height: string;
 }
-
+/*
+이름: 체형 인풋
+역할: 회원가입에서 사용되는 체형을 기입하는 인풋 컴포넌트
+*/
 export default function BodyInput({
   heightSetState,
   weightSetState,

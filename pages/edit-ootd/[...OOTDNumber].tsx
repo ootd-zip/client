@@ -20,19 +20,30 @@ import NextImage from '@/components/NextImage';
 import Alert from '@/components/Alert';
 import Background from '@/components/Background';
 
+/*
+이름: ootd 수정 페이지 
+*/
 const EditOOTD: ComponentWithLayout = () => {
+  //ootd 이미지
   const [imageAndTag, setImageAndTag] = useState<ImageWithTag | undefined>(
     undefined
   );
+  //ootd 본문
   const [contents, setContents] = useState<string>('');
+  //스타일 모달 렌더링 여부
   const [styleModalIsOpen, setStyleModalIsOpen] = useState<Boolean>(false);
+  //선택된 스타일 리스트
   const [selectedStyle, setSelectedStyle] = useState<Style[]>([]);
+  //옷 공개여부
   const [isOpen, setIsOpen] = useState<Boolean>(false);
+
   const router = useRouter();
+
   const [deleteImageAlertIndex, setDeleteImageAlertIndex] = useState<number>(0);
 
   const { getOOTDDetail, putOOTD } = OOTDApi();
 
+  //ootd 상세 페이지 정보 조회 api
   useEffect(() => {
     const fetchData = async () => {
       if (!router.isReady) return;
@@ -45,16 +56,19 @@ const EditOOTD: ComponentWithLayout = () => {
     fetchData();
   }, [router.isReady]);
 
+  //스타일 태그 추가 버튼 클릭 함수
   const onClickAddStyleTag = () => {
     setStyleModalIsOpen(true);
   };
 
+  //스타일 태그 클릭 함수
   const onClickStyleTag = (index: number) => {
     const sampleSelectedStyleTag = [...selectedStyle];
     sampleSelectedStyleTag.splice(index, 1);
     setSelectedStyle(sampleSelectedStyleTag);
   };
 
+  //이미지 삭제 버튼 클릭 함수
   const onClickCloseImage = (index: number) => {
     if (imageAndTag && imageAndTag.length > 1) {
       let newImageAndTag = JSON.parse(
@@ -65,11 +79,13 @@ const EditOOTD: ComponentWithLayout = () => {
     }
   };
 
+  //이미지 삭제 Alert 확인 버튼 클릭 함수
   const onClickDeleteImageAlertYesButton = () => {
     onClickCloseImage(deleteImageAlertIndex);
     setDeleteImageAlertIndex(0);
   };
 
+  //수정 완료 버튼 클릭 함수
   const onClickSubmitButton = async () => {
     if (imageAndTag !== undefined) {
       const payload = {
@@ -106,6 +122,7 @@ const EditOOTD: ComponentWithLayout = () => {
     }
   };
 
+  //배경 클릭 함수
   const onClickBackground = () => {
     if (styleModalIsOpen) setStyleModalIsOpen(false);
     if (deleteImageAlertIndex > 0) setDeleteImageAlertIndex(0);

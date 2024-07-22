@@ -12,6 +12,10 @@ interface InputProps {
   children: React.ReactNode;
 }
 
+/*
+이름: 인풋
+역할: 컴파운드 패턴을 활용해 적절하게 조합이 가능하도록 설계한 인풋 컴포넌트
+*/
 export default function Input({ children }: InputProps) {
   return <div>{children}</div>;
 }
