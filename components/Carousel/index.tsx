@@ -26,7 +26,7 @@ export default function Carousel({
 }: CarouselProps) {
   const sliderSettings = {
     speed: 400,
-    infinite: infinite as Boolean, //무한 슬라이드 true,
+    infinite: infinite as boolean, //무한 슬라이드 true,
     slidesToShow: slidesToShow,
     afterChange,
     beforeChange,
