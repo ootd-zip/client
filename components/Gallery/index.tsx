@@ -18,7 +18,11 @@ import Background from '../Background';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { ColorListType } from '../ColorList';
 import { suggestionColorType } from '@/pages/add-cloth';
-import { findClosestColor, kMeansClustering } from '@/utils/ColorExtraction';
+import {
+  findClosestColor,
+  kMeansClustering,
+  RGB,
+} from '@/utils/ColorExtraction';
 
 interface GalleryProps {
   imageAndTag: ImageWithTag | undefined;
@@ -144,17 +148,6 @@ const Gallery = ({
   };
 
   const { getColor } = ClothApi();
-
-  interface RGB {
-    r: number;
-    g: number;
-    b: number;
-  }
-
-  interface Cluster {
-    centroid: RGB;
-    pixels: RGB[];
-  }
 
   const [color, setColor] = useState<ColorListType | undefined>();
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
