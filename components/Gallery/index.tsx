@@ -17,6 +17,7 @@ import PublicApi from '@/apis/domain/Public/PublicApi';
 import Background from '../Background';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { ColorListType } from '../ColorList';
+import { suggestionColorType } from '@/pages/add-cloth';
 
 interface GalleryProps {
   imageAndTag: ImageWithTag | undefined;
@@ -24,6 +25,10 @@ interface GalleryProps {
   nextStep: string;
   handleStep: (next: string) => void;
   item: 'Cloth' | 'OOTD';
+  suggestionColor?: suggestionColorType | undefined;
+  setSuggestionColor?: Dispatch<
+    SetStateAction<suggestionColorType | undefined>
+  >;
 }
 
 const Gallery = ({
@@ -32,6 +37,8 @@ const Gallery = ({
   handleStep,
   nextStep,
   item,
+  suggestionColor,
+  setSuggestionColor,
 }: GalleryProps) => {
   const router = useRouter();
 
@@ -149,7 +156,6 @@ const Gallery = ({
   }
 
   const [color, setColor] = useState<ColorListType | undefined>();
-  const [dominantColor, setDominantColor] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -190,7 +196,7 @@ const Gallery = ({
       pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
     }
 
-    const k = 5; // Number of clusters
+    const k = 5;
     const clusters = kMeansClustering(pixels, k);
 
     const dominantCluster = clusters.reduce((prev, current) =>
@@ -201,8 +207,14 @@ const Gallery = ({
 
     const hexCode = color
       ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
-      : '#FFFFFF'; // default to white if no color found
-    setDominantColor(hexCode);
+      : {
+          id: 24,
+          name: '화이트',
+          colorCode: '#FFFFFF',
+        };
+    if (setSuggestionColor) {
+      setSuggestionColor(hexCode || undefined);
+    }
   };
 
   function kMeansClustering(pixels: RGB[], k: number): Cluster[] {
@@ -289,11 +301,11 @@ const Gallery = ({
     g: number,
     b: number,
     colorList: ColorListType
-  ): string | null {
+  ): suggestionColorType | null {
     if (!colorList || colorList.length === 0) return null; // default to null if color list is empty
 
     let minDistance = Number.MAX_VALUE;
-    let closestColorName: string | null = null;
+    let closestColorName: suggestionColorType | null = null;
 
     const targetColor = { r, g, b };
 
@@ -303,7 +315,11 @@ const Gallery = ({
 
       if (distance < minDistance) {
         minDistance = distance;
-        closestColorName = color.name; // Return the name of the closest color
+        closestColorName = {
+          id: color.id,
+          name: color.name,
+          colorCode: color.colorCode,
+        }; // Return the name of the closest color
       }
     }
 
@@ -349,7 +365,7 @@ const Gallery = ({
             <Body4 className="selected" state="emphasis">
               {selectedImage.length}장의 사진이 선택됨
             </Body4>
-            <h1>color : {dominantColor}</h1>
+            <h1>color : {suggestionColor && suggestionColor.colorCode}</h1>
             <Carousel
               infinite={false}
               dots={true}
