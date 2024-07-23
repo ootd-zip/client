@@ -60,7 +60,7 @@ const PostingImage = styled.div`
   padding-bottom: 100%;
   .tag {
     position: absolute;
-    z-index: 5;
+    z-index: 1;
     left: 16px;
     bottom: 16px;
     color: white;
