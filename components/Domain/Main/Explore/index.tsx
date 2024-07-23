@@ -87,6 +87,7 @@ export default function Explore() {
   const [isVisible, setIsVisible] = useState<Boolean>(false);
 
   const scrollToTop = () => {
+    // FAB 버튼 함수
     const container = OOTDRef.current;
     container.scrollTo({
       top: 0,

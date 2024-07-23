@@ -22,6 +22,11 @@ interface followerProps {
   setFollowerTotalCount: Dispatch<SetStateAction<number>>;
 }
 
+/*
+이름: 팔로워 리스트
+역할: 마이페이지 팔로워 리스트
+*/
+
 export default function Follower({
   setSelectedUserName,
   setAlertOpen,
@@ -32,12 +37,14 @@ export default function Follower({
 }: followerProps) {
   const router = useRouter();
 
+  // 검색어
   const [keyword, setKeyword] = useState<string>('');
   const { getSearchUserFollower } = UserApi();
   const myId = useRecoilValue(userId);
 
   const { follow, unFollow } = PublicApi();
 
+  // 팔로우 버튼 누른 경우 발생되는 함수
   const onClickFollow = async (status: Boolean, id: number, index: number) => {
     let newFollowerList = [...followerList!];
 
@@ -52,6 +59,7 @@ export default function Follower({
     await unFollow(id);
   };
 
+  // 유저의 팔로워 리스트 API
   const fetchDataFunction = async (page: number, size: number) => {
     const data = await getSearchUserFollower({
       page,
@@ -81,6 +89,7 @@ export default function Follower({
     setFollowerList(newData);
   }, [data]);
 
+  // 유저 차단 함수
   const onClickDelete = (userName: string) => {
     setSelectedUserName(userName);
     setAlertOpen(true);
@@ -105,6 +114,7 @@ export default function Follower({
           followerList.map((item, index) => {
             return (
               <S.FollowBlockLayout key={item.userId}>
+                {/* 유저 프로필 이미지 */}
                 {item.userImage === '' ? (
                   <Avatar
                     onClick={() => router.push(`/mypage/${item.userId}`)}
@@ -120,6 +130,7 @@ export default function Follower({
                     alt=""
                   />
                 )}
+                {/* 유저의 닉네임 */}
                 <Body3
                   state="emphasis"
                   className="name"
@@ -127,6 +138,8 @@ export default function Follower({
                 >
                   {item.userName}
                 </Body3>
+                {/* 나의 팔로워 목록인 경우 */}
+                {/* 차단 or 팔로잉 버튼 활성화 */}
                 {myId === item.userId ? (
                   <></>
                 ) : router.isReady &&
@@ -147,6 +160,7 @@ export default function Follower({
                     팔로잉
                   </Button3>
                 ) : (
+                  // 나의 팔로워 목록이 아닌 경우 팔로우 버튼만 활성화
                   <Button3
                     className="following"
                     onClick={() =>

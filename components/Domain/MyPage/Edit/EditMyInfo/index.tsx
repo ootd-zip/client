@@ -41,6 +41,11 @@ interface MyInfoProps {
   setPossible: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 내 정보 수정 컴포넌트
+역할: 마이페이지 내 정보 수정하기 위한 컴포넌트
+*/
+
 export default function EditMyInfo({
   nickNameCheck,
   setNickNameCheck,
@@ -57,15 +62,19 @@ export default function EditMyInfo({
   possible,
   setPossible,
 }: MyInfoProps) {
+  // 닉네임 조건을 나타내는 helperText
   const [helperText, setHelperText] = useState<string>('입력해주세요');
+  // helperText의 상태로 색상 변화를 나타냄
   const [state, setState] = useState<number>(1);
   const { checkName } = RegisterApi();
 
+  // helperText 변환해주는 함수
   const updateHelperText = (text: string, newState: number) => {
     setHelperText(text);
     setState(newState);
   };
 
+  // 닉네임 중복 확인 API 함수 -> 이미 본인이 사용하고 있는 닉네임이면 중복 해당 x
   const checkNameApi = (name: string) => {
     const fetchCheckName = async () => {
       const result = await checkName(name);
@@ -76,8 +85,10 @@ export default function EditMyInfo({
     return fetchCheckName();
   };
 
+  // ID 사용 여부 확인 상태 값
   const [canUseId, setCanUseId] = useState<Boolean>(false);
 
+  // ID 작성 시 유효성 검증 함수수
   const idInputValidity = async (value: string) => {
     if (value !== undefined && value.length === 0) {
       updateHelperText(HELPER_TEXT_NULL, 1);
@@ -207,6 +218,7 @@ export default function EditMyInfo({
         </HelperText>
       </S.OpenStatus>
 
+      {/* 필수 값을 입력하지 않은 경우 helperText 사용 */}
       <S.StateLayout>
         {!possible && (
           <HelperText state={2}>

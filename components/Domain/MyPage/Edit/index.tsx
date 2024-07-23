@@ -20,16 +20,23 @@ interface ActionSheetProps {
   setOpenActionSheet: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 내 정보 수정 컴포넌트
+역할: 유저의 프로필과 정보 수정 가능한 컴포넌트
+*/
+
 export default function Edit({
   openActionSheet,
   setOpenActionSheet,
 }: ActionSheetProps) {
   const router = useRouter();
 
+  // 실제 보여지는 프로필 이미지
   const [profileImage, setProfileImage] = useState<string>(
     '/images/basicProfile.svg'
   );
 
+  // 페이지 최초 진입 시 프로필 이미지
   const [originProfile, setOriginProfile] = useState<string>(
     '/images/basicProfile.svg'
   );
@@ -43,20 +50,20 @@ export default function Edit({
 
   const { getProfile, patchProfile } = UserApi();
 
+  // 사진 촬영 후 바로 이미지 업로드 함수
   const takePicture = () => {
-    console.log('사진 촬영');
     sendReactNativeMessage({ type: 'TakeProfile' });
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
+  // 앨범에서 이미지 선택 후 업로드 함수
   const choosePicture = () => {
-    console.log('앨범에서 선택');
     sendReactNativeMessage({ type: 'Profile' });
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
+  // 기본 이미지로 변경하는 함수
   const deleteImage = () => {
-    console.log('기본 이미지로 변경');
     setProfileImage('/images/Avatar.svg');
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
@@ -67,6 +74,7 @@ export default function Edit({
     }
   }, []);
 
+  // ActionSheet 버튼 정의 및 함수
   const buttons = [
     // { name: '사진 촬영', buttonClick: takePicture }, // 2차 배포
     { name: '앨범에서 선택', buttonClick: choosePicture },
@@ -78,7 +86,6 @@ export default function Edit({
   useEffect(() => {
     const ferchData = async () => {
       const result = await getProfile();
-      console.log(result);
 
       setNickName(result.name);
       setIntroduction(result.description);
