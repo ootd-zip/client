@@ -11,6 +11,7 @@ interface ToastProps {
   actionText?: string;
   actionFunction?: () => void;
   isHelperText?: Boolean;
+  alertState?: Boolean;
 }
 
 export default function Toast({
@@ -21,6 +22,7 @@ export default function Toast({
   actionText,
   actionFunction,
   isHelperText,
+  alertState,
 }: ToastProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,7 +35,7 @@ export default function Toast({
   }, []);
 
   return (
-    <S.Layout className={className} state={state}>
+    <S.Layout className={className} state={state} alertState={alertState}>
       {isHelperText && <AiOutlineExclamationCircle />}
       <Body3 className="text">{text}</Body3>
       {actionText && actionFunction && (
