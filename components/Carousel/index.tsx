@@ -9,8 +9,8 @@ interface CarouselProps {
   ParentRef?: React.MutableRefObject<Slider | null>;
   afterChange?: (currentIndex: number) => void;
   beforeChange?: (currentIndex: number, nextIndex: number) => void;
-  swipe?: Boolean;
-  dots?: Boolean;
+  swipe?: boolean;
+  dots?: boolean;
   initialSlide?: number;
 }
 
