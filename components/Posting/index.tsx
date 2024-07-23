@@ -250,16 +250,12 @@ export default function Posting({
                           key={index}
                           clothTagOpen={clothTagOpen}
                           xrate={String(
-                            Number(items.coordinate?.xrate) -
-                              Number(
-                                items.deviceSize?.deviceWidth - componentWidth
-                              )
+                            (Number(items.coordinate?.xrate) * componentWidth) /
+                              items.deviceSize?.deviceWidth
                           )}
                           yrate={String(
-                            Number(items.coordinate?.yrate) -
-                              Number(
-                                items.deviceSize?.deviceHeight - componentHeight
-                              )
+                            (Number(items.coordinate?.yrate) * componentWidth) /
+                              items.deviceSize?.deviceWidth
                           )}
                         >
                           <TagInformation
