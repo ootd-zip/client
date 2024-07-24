@@ -84,12 +84,12 @@ export default function BrandModal({
   });
 
   return (
-    <Modal isOpen={brandModalIsOpen} height="90">
+    <Modal isOpen={brandModalIsOpen ?? false} height="90">
       <S.Layout>
         <S.Title>
           <Title1 className="title">브랜드</Title1>
           <AiOutlineClose
-            onClick={() => setBrandModalIsOpen(false)}
+            onClick={() => setBrandModalIsOpen && setBrandModalIsOpen(false)}
             className="close"
           />
         </S.Title>
