@@ -166,8 +166,9 @@ export default function BasicInfoFirst({
             </Input>
           </S.Information>
         </S.BasicInfo>
-        {true && (
+        {toastOpen && (
           <Toast
+            className="brandSuggestion"
             text={`브랜드 건의가 정상적으로 접수되었습니다.`}
             setState={setToastOpen}
             state={toastOpen}

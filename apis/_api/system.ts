@@ -44,7 +44,7 @@ export const postReport = async (payload: postReportPayload) => {
 };
 
 export const postBrand = async (payload: postBrandPayload) => {
-  const { data } = await fetcher.post('v1/brand', payload);
+  const { data } = await fetcher.post('v1/brand-request', payload);
 
   return data;
 };

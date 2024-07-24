@@ -142,5 +142,5 @@ export interface postUserBlockPayload {
 }
 
 export interface postBrandPayload {
-  name: string;
+  requestContents: string;
 }

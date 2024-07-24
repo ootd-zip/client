@@ -53,8 +53,10 @@ export default function BrandModal({
     if (noBrandState) {
       setClothBrand([{ id: 9999, name: '브랜드 없음' }]);
       setBrandModalIsOpen(false);
-      postBrand({ name: noBrandName });
-      setNoBrandSubmitStatus(true);
+      if (noBrandName !== '') {
+        postBrand({ requestContents: noBrandName });
+        setNoBrandSubmitStatus(true);
+      }
       return;
     }
     setClothBrand(selectedBrandList);
