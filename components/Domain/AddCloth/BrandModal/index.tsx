@@ -13,8 +13,8 @@ import CheckBoxFalse from '@/public/images/CheckBoxFalse.svg';
 import Input from '@/components/Input';
 
 interface BrandModalProps {
-  brandModalIsOpen: Boolean;
-  setBrandModalIsOpen: Dispatch<SetStateAction<Boolean>>;
+  brandModalIsOpen?: Boolean;
+  setBrandModalIsOpen?: Dispatch<SetStateAction<Boolean>>;
   setClothBrand: Dispatch<SetStateAction<BrandType[] | null>>;
   setNoBrandSubmitStatus: Dispatch<SetStateAction<Boolean>>;
 }
@@ -50,7 +50,7 @@ export default function BrandModal({
   };
 
   const onClickNextButton = () => {
-    if (noBrandState) {
+    if (noBrandState && setBrandModalIsOpen) {
       setClothBrand([{ id: 9999, name: '브랜드 없음' }]);
       setBrandModalIsOpen(false);
       if (noBrandName !== '') {
@@ -60,7 +60,6 @@ export default function BrandModal({
       return;
     }
     setClothBrand(selectedBrandList);
-    setBrandModalIsOpen(false);
   };
 
   useEffect(() => {
@@ -96,7 +95,6 @@ export default function BrandModal({
         </S.Title>
         <S.Search>
           <SearchBar
-            state={noBrandState ? 'disabled' : ''}
             placeholder="검색"
             letter={searchKeyword}
             setLetter={setSearchKeyword}
