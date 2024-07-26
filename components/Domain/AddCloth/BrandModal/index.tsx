@@ -16,7 +16,7 @@ interface BrandModalProps {
   brandModalIsOpen?: Boolean;
   setBrandModalIsOpen?: Dispatch<SetStateAction<Boolean>>;
   setClothBrand: Dispatch<SetStateAction<BrandType[] | null>>;
-  setNoBrandSubmitStatus: Dispatch<SetStateAction<Boolean>>;
+  setNoBrandSubmitStatus?: Dispatch<SetStateAction<Boolean>>;
 }
 
 export default function BrandModal({
