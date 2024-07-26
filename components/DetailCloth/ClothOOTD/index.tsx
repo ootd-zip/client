@@ -18,6 +18,11 @@ interface ClothOOTDProps {
   clothId: number;
 }
 
+/*
+이름: 이 옷을 활용한 OOTD 컴포넌트
+역할: 의류 상세 페이지에서 사용되는 이 옷을 활용한 OOTD 컴포넌트
+*/
+
 export default function ClothOOTD({ clothId }: ClothOOTDProps) {
   const [clicked, setClicked] = useState<string>('new');
   const [data, setData] = useState<OOTDDataProps[]>([]);

@@ -101,6 +101,7 @@ export default function Edit({
 
   const [possible, setPossible] = useState<Boolean>(false);
 
+  // 편
   useEffect(() => {
     if (
       nickName === '' ||
