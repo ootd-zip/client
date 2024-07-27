@@ -143,6 +143,7 @@ export default function EditMyInfo({
               onChange={setNickName}
               validity={idInputValidity}
             />
+            {/* 닉네임의 상태에 따라서 helperText 차이 */}
             {nickName?.length === 0 || state === 3 ? (
               <div className="hidden">
                 <Input.HelperText className="helperText" state={state}>

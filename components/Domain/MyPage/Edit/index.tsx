@@ -52,13 +52,13 @@ export default function Edit({
 
   // 사진 촬영 후 바로 이미지 업로드 함수
   const takePicture = () => {
-    sendReactNativeMessage({ type: 'TakeProfile' });
+    sendReactNativeMessage({ type: 'TakeProfile' }); // react-native 기능으로 사진 촬영 후 바로 이미지 업로드 하기 위한 통신 메시지
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
   // 앨범에서 이미지 선택 후 업로드 함수
   const choosePicture = () => {
-    sendReactNativeMessage({ type: 'Profile' });
+    sendReactNativeMessage({ type: 'Profile' }); // react-native 기능으로 앨범에서 이미지 선택하기 위한 통신 메시지
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
@@ -101,7 +101,7 @@ export default function Edit({
 
   const [possible, setPossible] = useState<Boolean>(false);
 
-  // 편
+  // 편집 완료 버튼 활성화를 위한 체크
   useEffect(() => {
     if (
       nickName === '' ||
@@ -117,11 +117,12 @@ export default function Edit({
     }
   }, [nickName, weight, height, nickNameCheck]);
 
+  // 편집 완료 버튼 함수
   const onClickNextButton = async () => {
     if (possible) {
       const payload = {
         name: nickName,
-        profileImage: profileImage === '/images/Avatar.svg' ? '' : profileImage,
+        profileImage: profileImage === '/images/Avatar.svg' ? '' : profileImage, // 프로필 이미지를 기본 값으로 설정한 경우 빈 스트링으로 전송
         description: introduction,
         height: Number(height),
         weight: Number(weight),
@@ -130,6 +131,7 @@ export default function Edit({
 
       const result = await patchProfile(payload);
 
+      // API 통신이 성공적이었다면 이전 페이지(마이페이지)에서 toast message 설정
       if (result) {
         router.push({
           pathname: `/mypage/${myId}`,
@@ -152,11 +154,13 @@ export default function Edit({
     <>
       <S.Layout>
         <S.Main>
+          {/* 프로필 이미지 */}
           <EditProfile
             imageURL={profileImage}
             setImageURL={setProfileImage}
             onClickImage={() => setOpenActionSheet(!openActionSheet)}
           />
+          {/* 내 정보 */}
           <EditMyInfo
             nickNameCheck={nickNameCheck}
             setNickNameCheck={setNickNameCheck}
@@ -174,6 +178,7 @@ export default function Edit({
             setPossible={setPossible}
           />
         </S.Main>
+        {/* 수정 완료 버튼 */}
         <Button
           className="editMyPageButton"
           backgroundColor={possible ? 'grey_00' : 'grey_90'}
