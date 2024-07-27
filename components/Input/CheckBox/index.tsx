@@ -18,6 +18,7 @@ interface CheckBoxProps {
 역할: 공용으로 사용되는 체크 박스 인풋 컴포넌트
 */
 const CheckBox = ({ state, setState }: CheckBoxProps) => {
+  //체크 박스 클릭 함수
   const onClickCheckBox = (index: number) => {
     const {
       state: currentValue,

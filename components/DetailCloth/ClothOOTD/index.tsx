@@ -1,5 +1,4 @@
 import S from './style';
-import { Headline1, Body2, Body3 } from '@/components/UI';
 import Header from '@/components/Header';
 import SubHead from '../SubHead';
 import ImageList from '@/components/ImageList';
@@ -17,12 +16,10 @@ interface OOTDDataProps {
 interface ClothOOTDProps {
   clothId: number;
 }
-
 /*
-이름: 이 옷을 활용한 OOTD 컴포넌트
-역할: 의류 상세 페이지에서 사용되는 이 옷을 활용한 OOTD 컴포넌트
+이름: 이 옷을 활용한 ootd
+역할: 옷 상세 페이지에서 해당 옷이 태그된 ootd를 모아서 보여주는 컴포넌트
 */
-
 export default function ClothOOTD({ clothId }: ClothOOTDProps) {
   const [clicked, setClicked] = useState<string>('new');
   const [data, setData] = useState<OOTDDataProps[]>([]);
