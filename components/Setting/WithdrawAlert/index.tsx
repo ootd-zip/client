@@ -6,6 +6,11 @@ interface WithdrawAlertProps {
   onClickNoButton: () => void;
 }
 
+/*
+이름: 탈퇴 확인 Alert 컴포넌트
+역할: 탈퇴 확인하는 Alert
+*/
+
 export default function WithdrawAlert({
   onClickNoButton,
   onClickYesButton,

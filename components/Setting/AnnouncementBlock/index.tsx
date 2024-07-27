@@ -7,6 +7,11 @@ interface AnnouncementBlockProps extends AnnoucementDataType {
   isLast: Boolean;
 }
 
+/*
+이름: 공지사항에서 사용되는 컴포넌트
+역할: 공지사항에서 최신 글 여부에 따른 글
+*/
+
 export default function AnnouncementBlock({
   date,
   headline,
