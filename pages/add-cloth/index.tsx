@@ -26,6 +26,12 @@ export interface ClothWhereBuy {
   type: 'Link' | 'Write';
 }
 
+export interface suggestionColorType {
+  id: number;
+  name: string;
+  colorCode: string;
+}
+
 const AddCloth: ComponentWithLayout = () => {
   const steps = ['편집', '제품명', '기본정보1', '기본정보2', '추가정보'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
@@ -92,6 +98,8 @@ const AddCloth: ComponentWithLayout = () => {
     }
   };
 
+  const [suggestionColor, setSuggestionColor] = useState<suggestionColorType>();
+
   return (
     <Funnel>
       <AppBar
@@ -106,6 +114,8 @@ const AddCloth: ComponentWithLayout = () => {
           handleStep={handleStep}
           nextStep="제품명"
           item="Cloth"
+          suggestionColor={suggestionColor}
+          setSuggestionColor={setSuggestionColor}
         />
       </Funnel.Steps>
       <Funnel.Steps name="제품명">

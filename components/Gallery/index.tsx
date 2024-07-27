@@ -2,7 +2,7 @@ import {
   getReactNativeMessage,
   sendReactNativeMessage,
 } from '@/utils/reactNativeMessage';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from 'react';
 import Carousel from '../Carousel';
 import { useRouter } from 'next/router';
 import { ImageWithTag } from '../Domain/AddOOTD/TagModal';
@@ -15,6 +15,14 @@ import Alert from '../Alert';
 import NextImage from '../NextImage';
 import PublicApi from '@/apis/domain/Public/PublicApi';
 import Background from '../Background';
+import ClothApi from '@/apis/domain/Cloth/ClothApi';
+import { ColorListType } from '../ColorList';
+import { suggestionColorType } from '@/pages/add-cloth';
+import {
+  findClosestColor,
+  kMeansClustering,
+  RGB,
+} from '@/utils/ColorExtraction';
 
 interface GalleryProps {
   imageAndTag: ImageWithTag | undefined;
@@ -22,6 +30,10 @@ interface GalleryProps {
   nextStep: string;
   handleStep: (next: string) => void;
   item: 'Cloth' | 'OOTD';
+  suggestionColor?: suggestionColorType | undefined;
+  setSuggestionColor?: Dispatch<
+    SetStateAction<suggestionColorType | undefined>
+  >;
 }
 
 const Gallery = ({
@@ -30,6 +42,8 @@ const Gallery = ({
   handleStep,
   nextStep,
   item,
+  suggestionColor,
+  setSuggestionColor,
 }: GalleryProps) => {
   const router = useRouter();
 
@@ -133,6 +147,70 @@ const Gallery = ({
     handleStep(nextStep);
   };
 
+  const { getColor } = ClothApi();
+
+  const [color, setColor] = useState<ColorListType | undefined>();
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const fetchColor = async () => {
+      const colorList = (await getColor()) as ColorListType;
+      setColor(colorList);
+    };
+
+    fetchColor();
+  }, []);
+
+  useEffect(() => {
+    if (imageLoaded && color) {
+      handleImageLoad();
+    }
+  }, [imageLoaded, color]);
+
+  const handleImageLoad = () => {
+    const img = document.getElementById('sourceImage') as HTMLImageElement;
+    const canvas = canvasRef.current;
+
+    if (!img || !canvas) return;
+
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    const pixels: RGB[] = [];
+    for (let i = 0; i < data.length; i += 4) {
+      pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
+    }
+
+    const k = 5;
+    const clusters = kMeansClustering(pixels, k);
+
+    const dominantCluster = clusters.reduce((prev, current) =>
+      prev.pixels.length > current.pixels.length ? prev : current
+    );
+
+    const averageColor = dominantCluster.centroid;
+
+    const hexCode = color
+      ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
+      : {
+          id: 24,
+          name: '화이트',
+          colorCode: '#FFFFFF',
+        };
+    if (setSuggestionColor) {
+      setSuggestionColor(hexCode || undefined);
+    }
+  };
+
   return (
     <>
       <Background
@@ -156,11 +234,14 @@ const Gallery = ({
               return (
                 <S.BigImage key={index}>
                   <NextImage
+                    id="sourceImage"
                     className="bigImage"
                     src={item.ootdImage}
                     alt=""
                     fill={true}
+                    onLoadingComplete={() => setImageLoaded(true)}
                   />
+                  <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
                 </S.BigImage>
               );
           })}
