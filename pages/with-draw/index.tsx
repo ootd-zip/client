@@ -12,6 +12,11 @@ import NextImage from '@/components/NextImage';
 import { UserApi } from '@/apis/domain/User/UserApi';
 import Background from '@/components/Background';
 
+/*
+이름: 탈퇴 페이지
+역할: 탈퇴 페이지
+*/
+
 export default function Withdraw() {
   const { deleteUser } = UserApi();
 
@@ -33,11 +38,13 @@ export default function Withdraw() {
     }
   }, [check1, check2, check3, check4]);
 
+  // 탈퇴 Alert 예스 버튼
   const onClickYesButton = async () => {
     const result = await deleteUser();
     if (result) router.push('/onboarding');
   };
 
+  // 탈퇴 Alert 취소 버튼
   const onClickNoButton = () => {
     if (alertOpen) setAlertOpen(false);
   };

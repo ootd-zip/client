@@ -29,14 +29,20 @@ export type BookmarkListType = {
   isLast: Boolean;
 };
 
+/*
+이름: 북마크 페이지
+역할: 북마크 페이지
+*/
+
 export default function Bookmark() {
   const router = useRouter();
 
-  const [editing, setEditing] = useState<Boolean>(false);
+  const [editing, setEditing] = useState<Boolean>(false); // 편집하기 상태
 
-  const [isVisible, setIsVisible] = useState<Boolean>(false);
-  const [toastOpen, setToastOpen] = useState<Boolean>(false);
+  const [isVisible, setIsVisible] = useState<Boolean>(false); // FAB 버튼 상태
+  const [toastOpen, setToastOpen] = useState<Boolean>(false); // 북마크 toast 버튼
 
+  // FAB 버튼을 누른 경우 최상단으로 이동 함수
   const scrollToTop = () => {
     const container = bookmarkRef.current;
     container.scrollTo({
@@ -49,6 +55,7 @@ export default function Bookmark() {
 
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = container;
+      // 스크롤 위치에 다른 FAB 버튼 상태 변화
       if (scrollTop >= 50) {
         setIsVisible(true);
       }
@@ -68,10 +75,12 @@ export default function Bookmark() {
 
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
 
+  // 북마크 취소 버튼
   const onClickNoButton = () => {
     setAlertOpen(false);
   };
 
+  // 북마크 예스 버튼
   const onClickYesButton = async () => {
     const result = await deleteBookmarkList(checkedItems);
     if (result) {
@@ -94,6 +103,7 @@ export default function Bookmark() {
   const { getUserBookmarkList, deleteBookmarkList } = BookmarkApi();
   const [bookmarkList, setBookmarkList] = useState<OOTDdataType[]>([]);
 
+  // 북마크 리스트 API 호출
   const fetchDataFunction = async (bookmarkPage: number, size: number) => {
     if (!router.isReady) return;
 
@@ -128,6 +138,7 @@ export default function Bookmark() {
     key: 'bookmark',
   });
 
+  // 북마크 리스트 스크롤 위치 저장
   useRememberScroll({
     key: 'bookmark',
     containerRef: bookmarkRef,

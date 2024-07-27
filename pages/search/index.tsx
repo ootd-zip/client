@@ -11,6 +11,11 @@ export interface keywordsInterface {
   text: string;
 }
 
+/*
+이름: 검색 페이지
+역할: 검색 페이지
+*/
+
 export default function Search() {
   const [keywords, setKeywords] = useState<keywordsInterface[]>([]);
   const [state, setState] = useState<Boolean>(false);
@@ -18,12 +23,14 @@ export default function Search() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // localStorage에 keywords가 있으면 저장 아니면 빈 배열
       const result = localStorage.getItem('keywords') || '[]';
       setKeywords(JSON.parse(result));
     }
   }, []);
 
   useEffect(() => {
+    // keywords는 최대 15개로 저장
     if (keywords.length > 15) {
       const updatedKeywords = keywords.slice(0, 15);
       setKeywords(updatedKeywords);
@@ -54,6 +61,7 @@ export default function Search() {
     setKeywords([newKeyword, ...updatedKeywords]); // 새로운 키워드를 배열의 맨 앞에 추가
   };
 
+  // 키워드 삭제 함수
   const handleRemoveKeyword = (id: number) => {
     const nextKeyword = keywords.filter((thisKeyword) => {
       return thisKeyword.id != id;
@@ -61,6 +69,7 @@ export default function Search() {
     setKeywords(nextKeyword);
   };
 
+  // 키워드 클릭 시 검색어 설정 검색 결과 노출
   const handleSearch = (text: string) => {
     setSearchValue(text);
     router.push(`/search?q=${encodeURIComponent(text)}`);
@@ -77,6 +86,7 @@ export default function Search() {
 
   return (
     <S.Layout>
+      {/* 검색바 */}
       <S.SearchField>
         <RecentsSearchBar
           onAddKeyword={handleAddKeyword}

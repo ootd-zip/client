@@ -12,6 +12,11 @@ interface ComponentWithLayout extends FC {
   Layout?: FC<AppLayoutProps>;
 }
 
+/*
+이름: 내 정보 수정 페이지
+역할: 마이페이지 내 정보 수정 페이지
+*/
+
 const EditMyPage: ComponentWithLayout = () => {
   const router = useRouter();
 

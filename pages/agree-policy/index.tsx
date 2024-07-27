@@ -6,6 +6,11 @@ import { Body2, Body4 } from '@/components/UI';
 import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';
 
+/*
+이름: 약관 페이지
+역할: 설정 약관 페이지
+*/
+
 const AgreePolicy: ComponentWithLayout = () => {
   const router = useRouter();
 

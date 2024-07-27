@@ -22,6 +22,11 @@ export interface UserBlockListDataType {
   profileImage: string;
 }
 
+/*
+이름: 차단한 계정 페이지
+역할: 설정 차단한 계정 페이지
+*/
+
 export default function BlockedAccount() {
   const router = useRouter();
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
@@ -31,6 +36,7 @@ export default function BlockedAccount() {
 
   const { getUserBlock } = BlockApi();
 
+  // 차단한 계정 리스트 호출 API
   const fetchDataFunction = async (page: number, size: number) => {
     const data = await getUserBlock({
       page,

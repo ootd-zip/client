@@ -6,6 +6,11 @@ import { Body2, Body4 } from '@/components/UI';
 import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';
 
+/*
+이름: 개인정보처리방침 페이지
+역할: 개인정보처리방침 페이지
+*/
+
 const PrivacyPolicy: ComponentWithLayout = () => {
   const router = useRouter();
 
