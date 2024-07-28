@@ -7,7 +7,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import FollowBlock from '@/components/FollowBlock';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/Spinner';
 import Button from '@/components/Button';
