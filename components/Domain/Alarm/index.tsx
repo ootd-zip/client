@@ -19,7 +19,10 @@ export interface AlarmType {
   userId: number;
   className: string;
 }
-
+/*
+이름: 알림
+역할: 단일 알림 컴포넌트
+*/
 export default function Alarms({
   id,
   profileImage,
@@ -35,18 +38,21 @@ export default function Alarms({
   const router = useRouter();
   const { readAlarm } = AlarmApi();
 
+  //알림 클릭 함수
   const onClickAlarm = async () => {
-    await readAlarm(id);
+    await readAlarm(id); //읽음처리
     router.push(`/${goUrl}`);
   };
 
+  //유저 이름 클릭 함수
   const onClickUserName = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // 유저 이름과 알림이 둘 다 클릭되는 현상 방지
     if (userId !== 0) router.push(`/mypage/${userId}`);
   };
 
   return (
     <S.Layout className={className}>
+      {/*알림을 유발한 유저의 프로필 사진 */}
       <S.Left onClick={() => router.push(`/mypage/${userId}`)}>
         {profileImage && (
           <Image
@@ -58,6 +64,7 @@ export default function Alarms({
         )}
         {!profileImage && <Avatar />}
       </S.Left>
+      {/*알림 본문 */}
       <S.Middle onClick={onClickAlarm}>
         <S.Message>
           <Body4
@@ -72,6 +79,7 @@ export default function Alarms({
         {content && <Body4 className="content">{content}</Body4>}
         <Caption2 className="timeStamp">{timeStamp}</Caption2>
       </S.Middle>
+      {/*알림 이미지 */}
       <S.Right onClick={onClickAlarm}>
         {contentImage && (
           <Image

@@ -11,6 +11,11 @@ import { UserApi } from '@/apis/domain/User/UserApi';
 import { ComponentWithLayout } from '../sign-up';
 import { AppLayoutProps } from '@/AppLayout';
 
+/*
+이름: 취향 정보 페이지
+역할: 설정 내 취향 정보 페이지
+*/
+
 const LikeInfo: ComponentWithLayout = () => {
   const router = useRouter();
 
@@ -27,15 +32,17 @@ const LikeInfo: ComponentWithLayout = () => {
 
   const { putStyle } = UserApi();
 
+  // 수정 완료 버튼 함수
   const onClickSubmitButton = async () => {
     if (selectedStyle.length >= 3) {
+      // 스타일 3개 이상 선택한 경우 수정
       const selectedIds = selectedStyle.map((item) => item.id);
       const payload = {
         styleIds: selectedIds,
       };
 
       const editStyleSuccess = await putStyle(payload);
-
+      // 수정 완료된 경우 이전 페이지 (설정) 에서 toast 메시지
       if (editStyleSuccess) {
         router.push({
           pathname: `/settings`,

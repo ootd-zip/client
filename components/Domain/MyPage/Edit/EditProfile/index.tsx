@@ -11,13 +11,17 @@ interface EditProfileProps {
   onClickImage: () => void;
 }
 
+/*
+이름: 내 프로필 이미지 수정 컴포넌트
+역할: 유저의 프로필 이미지 수정 하기 위한 컴포넌트
+*/
+
 export default function EditProfile({
   imageURL,
   setImageURL,
   onClickImage,
 }: EditProfileProps) {
-  const [openActionSheet, setOpenActionSheet] = useState<Boolean>(false);
-
+  // 이미지 클릭한 경우 발생되는 함수
   const onClickPicutre = () => {
     onClickImage();
   };

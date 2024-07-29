@@ -1,6 +1,6 @@
 import { Body4, Caption2 } from '@/components/UI';
 import S from './style';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageList from '@/components/ImageList';
 import { useRouter } from 'next/router';
 import { AiOutlineDown } from 'react-icons/ai';
@@ -37,25 +37,32 @@ export interface FilterData {
     woman: Boolean;
   };
 }
-
+/*
+이름: 마이페이지 옷
+역할: 마이페이지에서 사용되는 유저의 옷 컴포넌트
+*/
 export default function ClosetCloth({ showingId }: ClosetClothProps) {
   const router = useRouter();
-  const localUserId = useRecoilValue(userId);
+  const localUserId = useRecoilValue(userId); //현재 로그인한 유저 아이디
 
+  //옷 필터 모달 렌더링 여부
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<Boolean>(false);
 
+  //옷 필터 상태
   const [filter, setFilter] = useState<FilterData>({
     category: null,
     color: null,
     brand: null,
     isOpen: null,
   });
-  const [searchResult, setSearchResult] = useState([]);
+
+  const [searchResult, setSearchResult] = useState([]); //옷 검색 결과 리스트
   const [filterModalInitialIndex, setFilterModalInitialIndex] =
-    useState<number>(1);
+    useState<number>(1); //옷 필터 모달의 첫 렌더링 인덱스
 
   const { getUserClothList } = ClothApi();
 
+  //유저의 옷 리스트 조회 api 호출 함수
   const fetchDataFunction = async (page: number, size: number) => {
     const data = await getUserClothList({
       userId: Number(router.query.UserId![0]),
@@ -79,10 +86,12 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     return data;
   };
 
+  //정렬 조건이 변경되면 옷 초기화
   useEffectAfterMount(() => {
     reset();
   }, [filter]);
 
+  //무한 스크롤을 위한 훅
   const {
     data: clothData,
     isLoading,
@@ -101,6 +110,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     key: `mypage-${showingId}-cloth`,
   });
 
+  //유저의 옷 리스트 스크롤을 기억하기 위한 훅
   useRememberScroll({
     key: `mypage-${showingId}-cloth`,
     containerRef,
@@ -108,6 +118,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     list: searchResult,
   });
 
+  //유저의 옷 조회 api 호출 후 검색 결과 상태 업데이트
   useEffect(() => {
     const newClothData = clothData.map((item: ClothDataType) => {
       return { clothId: item.id, clothImage: item.imageUrl };
@@ -115,15 +126,18 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     setSearchResult(newClothData);
   }, [clothData]);
 
+  //이미지 리스트 클릭 함수
   const onClickImageList = (index: number) => {
     router.push(`/cloth/${index}/closet`);
   };
 
+  //필터 열기 버튼 클릭 함수 (클릭 하는 필터에 따라 모달 시작 위치가 달라짐)
   const onClickFilterSpan = (index: number) => {
     setFilterModalIsOpen(true);
     setFilterModalInitialIndex(index);
   };
 
+  //초기화 버튼 클릭 함수
   const onClickInitButton = () => {
     setFilter({
       category: null,
@@ -133,17 +147,18 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     });
   };
 
+  //스크롤 이벤트 감지
   useEffect(() => {
-    //add eventlistener to window
     window.addEventListener('scroll', onScroll);
-    // remove event on unmount to prevent a memory leak with the cleanup
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
 
+  //옷 리스트 스크롤 가능 상태
   const [listScrollState, setListScrollState] = useState<Boolean>(false);
 
+  //전체 스크롤이 일정 영역을 넘지 않으면 옷 리스트의 스크롤 상태는 false
   const onScroll = () => {
     const { scrollY } = window;
     if (scrollY === 0) return;
@@ -155,6 +170,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     }
   };
 
+  //스크롤을 기억하고 해당 위치로 돌려보내주는 함수
   useEffect(() => {
     const memoScroll = sessionStorage.getItem(`mypage-${showingId}`);
 
@@ -172,6 +188,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
         onClick={() => setFilterModalIsOpen(false)}
       />
       <S.Layout>
+        {/*옷 검색 필터 컴포넌트*/}
         <S.SearchFilter>
           <S.Span
             state={
@@ -234,6 +251,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
           </S.FilterSpan>
         </S.SearchFilter>
         {isLoading && hasNextPage && <Spinner />}
+        {/*옷 조회 결과 리스트*/}
         <S.ClothList ref={containerRef} state={listScrollState}>
           <ImageList
             onClick={onClickImageList}
@@ -242,6 +260,7 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
           />
         </S.ClothList>
       </S.Layout>
+      {/*옷 검색 필터 모달*/}
       {filterModalIsOpen && (
         <FilterModal
           isOpen={filterModalIsOpen}

@@ -11,6 +11,11 @@ interface SubHeadProps {
   setState: Dispatch<SetStateAction<string>>;
 }
 
+/*
+이름: 소 타이틀 컴포넌트
+역할: 게시물 개수와 정렬 기준의 소 타이틀 컴포넌트
+*/
+
 export default function SubHead({
   count,
   style,

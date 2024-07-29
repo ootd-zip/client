@@ -1,6 +1,9 @@
 import S from './style';
 import { Headline2, Body3 } from '../UI';
-
+/*
+이름: 빈 검색 결과
+역할: 검색 결과가 없다고 알려주는 컴포넌트
+*/
 export default function EmptySearch() {
   return (
     <S.Layout>

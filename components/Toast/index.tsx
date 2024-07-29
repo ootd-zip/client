@@ -14,6 +14,11 @@ interface ToastProps {
   alertState?: Boolean;
 }
 
+/*
+이름: Toast 컴포넌트
+역할: 하단의 Toast 메시지에서 사용되는 공통 컴포넌트
+*/
+
 export default function Toast({
   text,
   state,

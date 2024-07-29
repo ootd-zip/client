@@ -13,6 +13,10 @@ interface ErrorLayoutPropsType {
   setURLState?: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 에러 레이아웃
+역할: 에러 바운더리 페이지에서 사용되는 에러 레이아웃
+*/
 export default function ErrorLayout({
   headline,
   body,

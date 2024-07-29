@@ -16,14 +16,18 @@ interface ComponentWithLayout extends FC {
   Layout?: FC<AppLayoutProps>;
 }
 
+/*
+이름: 동의 페이지
+역할: 회원가입 시 동의 페이지
+*/
+
 const Agree: ComponentWithLayout = () => {
   const router = useRouter();
 
-  const [check1, setCheck1] = useState<boolean>(false);
-  const [check2, setCheck2] = useState<boolean>(false);
+  const [check1, setCheck1] = useState<boolean>(false); // 이용약관 동의
+  const [check2, setCheck2] = useState<boolean>(false); // 개인정보처리방침 동의
 
   const [possible, setPossible] = useState<boolean>(false);
-  const [alertOpen, setAlertOpen] = useState<Boolean>(false);
 
   useEffect(() => {
     if (check1 && check2) {
@@ -33,6 +37,7 @@ const Agree: ComponentWithLayout = () => {
     }
   }, [check1, check2]);
 
+  // 다음 버튼 함수
   const onClickNextButton = async () => {
     if (possible) {
       router.push('/sign-up');

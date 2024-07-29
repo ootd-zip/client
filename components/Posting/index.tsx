@@ -56,26 +56,27 @@ export default function Posting({
   setGoBackAfterBlock,
   setBlockStatus,
 }: PostingProps) {
-  const [followState, setFollowState] = useState<Boolean>(false);
-  const [heartState, setHeartState] = useState<Boolean>(false);
-  const [bookMarkState, setBookMarkState] = useState<Boolean>(false);
+  const [followState, setFollowState] = useState<Boolean>(false); //팔로잉 상태
+  const [heartState, setHeartState] = useState<Boolean>(false); //좋아요 상태
+  const [bookMarkState, setBookMarkState] = useState<Boolean>(false); //북마크 상태
   const [componentWidth, setComponentWidth] = useState(0); //컴포넌트 길이
   const [componentHeight, setComponentHeight] = useState(0); //컴포넌트 높이
-  const [clothTagOpen, setClothTagOpen] = useState<Boolean>(true);
-  const [reportModalIsOpen, setReportModalIsOpen] = useState<Boolean>(false);
-  const [declaration, setDeclaration] = useState<Boolean>(false); // 신고 Modal
+  const [clothTagOpen, setClothTagOpen] = useState<Boolean>(true); //옷 태그 렌더링 여부
+  const [reportModalIsOpen, setReportModalIsOpen] = useState<Boolean>(false); //신고 모달 렌더링 여부
+  const [declaration, setDeclaration] = useState<Boolean>(false); // 신고 Modal 렌더링 여부
   const [receivedDeclaration, setReceivedDeclaration] =
-    useState<Boolean>(false); // 신고 후 차단 Modal
-  const [fixModalIsOpen, setFixModalIsOpen] = useState<Boolean>(false);
+    useState<Boolean>(false); // 신고 후 차단 Modal 렌더링 여부
+  const [fixModalIsOpen, setFixModalIsOpen] = useState<Boolean>(false); //더보기 모달 렌더링 여부
   const [toastOpen, setToastOpen] = useState<Boolean>(false);
 
   const imgRef = useRef<HTMLDivElement>(null);
-  const myId = useRecoilValue(userId);
+  const myId = useRecoilValue(userId); //로그인한 유저 id
   const { postOOTDLike, deleteOOTDLike, postOOTDBookmark, deleteOOTDBookmark } =
     OOTDApi();
   const { follow, unFollow } = PublicApi();
   const router = useRouter();
 
+  //좋아요, 북마크, 팔로잉 여부 업데이트
   useEffect(() => {
     setHeartState(data.isLike);
     setBookMarkState(data.isBookmark);
@@ -93,6 +94,7 @@ export default function Posting({
     }
   }, [data]);
 
+  //좋아요 버튼 클릭 함수
   const onClickHeartButton = async () => {
     if (!heartState) await postOOTDLike(Number(router.query.OOTDNumber![0]));
     if (heartState) await deleteOOTDLike(Number(router.query.OOTDNumber![0]));
@@ -135,6 +137,7 @@ export default function Posting({
     // }
   };
 
+  //북마크 버튼 클릭 함수
   const onClickBookmarkButton = async () => {
     if (!bookMarkState)
       await postOOTDBookmark(Number(router.query.OOTDNumber![0]));
@@ -143,12 +146,14 @@ export default function Posting({
     setBookMarkState(!bookMarkState);
   };
 
+  //팔로우 버튼 클릭 함수
   const onClickFollowButton = async () => {
     setFollowState(!followState);
     if (!followState) await follow(data.userId);
     if (followState) await unFollow(data.userId);
   };
 
+  //배경 클릭 함수
   const onClickBackground = () => {
     if (reportModalIsOpen) {
       setReportModalIsOpen(false);
@@ -167,6 +172,7 @@ export default function Posting({
     }
   };
 
+  //더보기 버튼 클릭 함수
   const onClickKebabButton = () => {
     if (myId === data.userId) {
       setFixModalIsOpen(true);
@@ -193,6 +199,7 @@ export default function Posting({
       />
       <S.Layout>
         <S.PostingTop>
+          {/*ootd를 작성한 유저의 프로필*/}
           {data.userImage !== '' ? (
             <NextImage
               onClick={() => router.push(`/mypage/${data.userId}`)}
@@ -228,6 +235,7 @@ export default function Posting({
           )}
           <AiOutlineEllipsis onClick={onClickKebabButton} />
         </S.PostingTop>
+        {/*ootd 이미지*/}
         <S.PostingImage ref={imgRef}>
           <AiFillTag
             onClick={() => setClothTagOpen(!clothTagOpen)}
@@ -247,6 +255,7 @@ export default function Posting({
                     alt="포스팅 이미지"
                     fill={true}
                   />
+                  {/*해당 ootd에 태그된 옷 정보*/}
                   {item.ootdImageClothesList &&
                     item.ootdImageClothesList.map((items, index) => {
                       return (
@@ -282,6 +291,7 @@ export default function Posting({
             })}
           </Carousel>
         </S.PostingImage>
+        {/*ootd에 대한 좋아요, 북마크 등 커뮤니케이션 기능*/}
         <S.PostingCommunication>
           <LikeToggle
             state={heartState}
@@ -312,6 +322,7 @@ export default function Posting({
             />
           )}
         </S.PostingCommunication>
+        {/*ootd에 대한 설명*/}
         <S.PostingExplanation>
           <S.LikeCount>
             <Body4 state="emphasis">좋아요</Body4>
@@ -320,6 +331,7 @@ export default function Posting({
           <Body2 className="description">{data.contents}</Body2>
           <Body4 className="date">{data.createAt}</Body4>
         </S.PostingExplanation>
+        {/*ootd스타일 태그*/}
         <S.PostingStyleTag>
           <Body3 className="styletag">스타일태그</Body3>
           {data.styles &&
@@ -334,6 +346,7 @@ export default function Posting({
               );
             })}
         </S.PostingStyleTag>
+        {/*다른 유저 ootd더보기 모달*/}
         {reportModalIsOpen && (
           <ReportModal
             reportModalIsOpen={reportModalIsOpen}
@@ -341,6 +354,7 @@ export default function Posting({
             setDeclaration={setDeclaration}
           />
         )}
+        {/*내 ootd더보기 모달*/}
         <FixModal
           setToastOpen={setToastOpen}
           reportModalIsOpen={fixModalIsOpen}
@@ -349,6 +363,7 @@ export default function Posting({
           setGetPostReRender={setGetPostReRender}
           getPostReRender={getPostReRender}
         />
+        {/*ootd 차단 모달*/}
         {declaration && (
           <DeclarationModal
             type="OOTD"
@@ -360,6 +375,7 @@ export default function Posting({
             setReportStatus={setReportStatus}
           />
         )}
+        {/*ootd 신고 모달*/}
         {receivedDeclaration && (
           <ReceivedDeclarationModal
             ID={data.userId}
@@ -371,6 +387,7 @@ export default function Posting({
             setBlockStatus={setBlockStatus}
           />
         )}
+        {/*비공개 -> 공개*/}
         {toastOpen && !data.isPrivate && (
           <Toast
             text="다른 사람이 이 ootd를 볼 수 있도록 변경되었습니다."
@@ -378,6 +395,7 @@ export default function Posting({
             state={toastOpen}
           />
         )}
+        {/*공개 -> 비공개*/}
         {toastOpen && data.isPrivate && (
           <Toast
             text="다른 사람이 이 ootd를 볼 수 없도록 변경되었습니다."

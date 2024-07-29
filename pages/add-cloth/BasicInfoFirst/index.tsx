@@ -26,7 +26,10 @@ interface BaiscInfoFirst {
   setClothWhereBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
   handleStep: (next: string) => void;
 }
-
+/*
+이름: 필수 정보 첫단계
+역할: 옷 등록 단계 중 필수 정보를 입력하는 첫번째 단계
+*/
 export default function BasicInfoFirst({
   clothName,
   clothImage,
@@ -38,14 +41,17 @@ export default function BasicInfoFirst({
   setClothWhereBuy,
   handleStep,
 }: BaiscInfoFirst) {
+  //카테고리 선택 모달 렌더링 유무
   const [categoryModalOpen, setCategoryModalOpen] = useState<Boolean>(false);
+  //다음 단계 버튼 활성화 유무
   const [nextButtonState, setNextButtonState] = useState<Boolean>(false);
-
+  //구매처 작성 모달 렌더링 유무
   const [whereToBuyModalOpen, setWhereToBuyModalOpen] =
     useState<Boolean>(false);
-
+  //브랜드 모달 렌더링 유무
   const [brandModalOpen, setBrandModalOpen] = useState<Boolean>(false);
 
+  //카테고리, 브랜드, 구매처 변동이 있으면 확인 후 다음 단계 버튼 상태 업데이트
   useEffect(() => {
     if (
       clothCategory !== null &&
@@ -58,6 +64,7 @@ export default function BasicInfoFirst({
     setNextButtonState(false);
   }, [clothCategory, clothBrand, clothWhereBuy]);
 
+  //카테고리 선택시 나타나는 카테고리 컴포넌트
   const Category = clothCategory && (
     <S.Category>
       <Body3>
@@ -74,8 +81,10 @@ export default function BasicInfoFirst({
     </S.Category>
   );
 
+  //브랜드 선택시 나타나는 브랜드 컴포넌트
   const Brand = <Body3>{clothBrand && clothBrand[0].name}</Body3>;
 
+  //구매처 선택시 나타나는 구매처 컴포넌트
   const WhereToBuy = clothWhereBuy && (
     <Body3
       style={{
@@ -87,10 +96,12 @@ export default function BasicInfoFirst({
     </Body3>
   );
 
+  //다음단계 버튼 클릭 이벤트
   const onClickNextButton = () => {
     handleStep('기본정보2');
   };
 
+  //배경 클릭 함수
   const onClickBackground = () => {
     if (categoryModalOpen) setCategoryModalOpen(false);
     if (whereToBuyModalOpen) setWhereToBuyModalOpen(false);
@@ -104,9 +115,11 @@ export default function BasicInfoFirst({
         onClick={onClickBackground}
       />
       <S.Layout>
+        {/*옷 이름*/}
         <S.ClothName>
           <Body2>{clothName}</Body2>
         </S.ClothName>
+        {/*옷 이미지*/}
         <S.ClothImage>
           <NextImage
             width={106}
@@ -164,6 +177,7 @@ export default function BasicInfoFirst({
           다음
         </NextButton>
       </S.Layout>
+      {/*카테고리 선택 모달*/}
       {categoryModalOpen && (
         <ClothCategoryModal
           isOpen={categoryModalOpen}
@@ -176,6 +190,7 @@ export default function BasicInfoFirst({
           }
         />
       )}
+      {/*브랜드 선택 모달*/}
       {brandModalOpen && (
         <BrandModal
           brandModalIsOpen={brandModalOpen}
@@ -183,6 +198,7 @@ export default function BasicInfoFirst({
           setBrandModalIsOpen={setBrandModalOpen}
         />
       )}
+      {/*구매처 작성 모달*/}
       {whereToBuyModalOpen && (
         <WhereToBuyModal
           isOpen={whereToBuyModalOpen}

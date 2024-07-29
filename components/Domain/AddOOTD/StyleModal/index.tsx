@@ -14,17 +14,24 @@ interface StyleModalProps {
   setSelectedStyle: Dispatch<SetStateAction<Style[]>>;
   styleInitial?: Style[];
 }
-
+/*
+이름: 스타일 선택 모달
+역할: ootd 등록 시 사용되는 스타일 선택 모달
+*/
 export default function StyleModal({
   setStyleModalIsOpen,
   styleModalIsOpen,
   setSelectedStyle,
   styleInitial,
 }: StyleModalProps) {
+  //스타일
   const [style, setStyle] = useState<Style[]>([]);
-  const [currentStyle, setCurrentStyle] = useState<Style[]>();
+  //선택된 스타일
+  const [selectedStyle, setSelectedStyleStyle] = useState<Style[]>();
 
   const { getStyle } = OOTDApi();
+
+  //스타일 조회 api 호출 및 기존에 선택된 스타일 업데이트
   useEffect(() => {
     const ferchData = async () => {
       let result = (await getStyle()).map((item: Style) => {
@@ -54,8 +61,9 @@ export default function StyleModal({
     }
   };
 
+  //스타일 상태 변화 시 선택된 스타일 상태 업데이트
   useEffect(() => {
-    setCurrentStyle(style.filter((item) => item.state));
+    setSelectedStyleStyle(style.filter((item) => item.state));
   }, [style]);
 
   return (
@@ -69,7 +77,7 @@ export default function StyleModal({
           <S.CheckBox>
             <Input>
               <Input.CheckBox state={style!} setState={setStyle} />
-              {currentStyle && currentStyle.length === 0 && (
+              {selectedStyle && selectedStyle.length === 0 && (
                 <Input.HelperText className="helperText" state={2}>
                   최소 1개 이상 선택해주세요
                 </Input.HelperText>
@@ -78,7 +86,7 @@ export default function StyleModal({
           </S.CheckBox>
           <NextButton
             className="nextButton"
-            state={!(currentStyle !== undefined && currentStyle.length === 0)}
+            state={!(selectedStyle !== undefined && selectedStyle.length === 0)}
             onClick={onClickStyleCompleteButton}
           >
             선택완료

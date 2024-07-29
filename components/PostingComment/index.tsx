@@ -2,7 +2,6 @@ import React, {
   Dispatch,
   MutableRefObject,
   SetStateAction,
-  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -44,7 +43,10 @@ interface PostingCommentProps {
   setGoBackAfterBlock: Dispatch<SetStateAction<Boolean>>;
   setBlockStatus: Dispatch<SetStateAction<Boolean>>;
 }
-
+/*
+이름: ootd 댓글
+역할: ootd 상세페이지의 댓글 컴포넌트
+*/
 function PostingComment({
   reRender,
   setReRender,
@@ -58,19 +60,23 @@ function PostingComment({
   setGoBackAfterBlock,
   setBlockStatus,
 }: PostingCommentProps) {
+  //댓글 타입(미리보기/모두보기)로 나뉘어짐
   const [commentType, setCommentType] = useState<'preview' | 'all'>('preview');
-  const localUserId = useRecoilValue(userId);
+  const localUserId = useRecoilValue(userId); //로그인한 유저의 id
   const router = useRouter();
 
+  //댓글 더보기/닫기 버튼 클릭 함수
   const onClickCommentButton = () => {
     if (commentType === 'preview') setCommentType('all');
     if (commentType === 'all') setCommentType('preview');
   };
-  const [data, setData] = useState<PostingCommentData[]>([]);
-  const [totalCount, setTotalCount] = useState<Number>(0);
+
+  const [data, setData] = useState<PostingCommentData[]>([]); //댓글 리스트
+  const [totalCount, setTotalCount] = useState<Number>(0); //댓글 총 개수
 
   const { getOOTDComment } = OOTDApi();
 
+  //댓글 조회 api 호출 후 전처리한 뒤 댓글 리스트 상태 업데이트
   useEffect(() => {
     const fetchData = async () => {
       if (!router.isReady) return;
@@ -106,6 +112,7 @@ function PostingComment({
     fetchData();
   }, [router.isReady, reRender, router.query.OOTDNumber]);
 
+  //대댓글 달기 버튼 클릭 함수
   const onClickReplyButton = (userName: string, commentId: number) => {
     setComment((previous) => {
       return {
@@ -119,6 +126,7 @@ function PostingComment({
     commentRef.current.focus();
   };
 
+  //댓글 2개 미리보기 컴포넌트
   const ComentPreview = () => {
     return (
       <S.Layout>
@@ -154,12 +162,14 @@ function PostingComment({
   const [reportID, setReportID] = useState<number>(0); // 신고할 ID
   const [blockID, setBlockID] = useState<number>(0); // 사용자 차단할 ID
 
+  //댓글 모두 보기 컴포넌트
   const ComentAll = () => {
     return (
       <S.Layout>
         <Body4 className="commentLength">총{String(totalCount)}개의 댓글</Body4>
         {data!.map((item, index) => (
           <>
+            {/*본댓글*/}
             <Comment
               key={item.id}
               userId={item.userId}
@@ -179,7 +189,7 @@ function PostingComment({
               setReportID={setReportID}
               setBlockID={setBlockID}
             />
-
+            {/*대댓글*/}
             {item &&
               item.childComment?.map((items, indexs) => (
                 <>
@@ -225,6 +235,7 @@ function PostingComment({
         <S.CommentOpenButton onClick={onClickCommentButton}>
           <Caption1>댓글 접기</Caption1>
         </S.CommentOpenButton>
+        {/*댓글 신고 모달*/}
         {declaration && (
           <DeclarationModal
             type="COMMENT"
@@ -236,6 +247,7 @@ function PostingComment({
             setReportStatus={setReportStatus}
           />
         )}
+        {/*댓글 차단 모달*/}
         {receivedDeclaration && (
           <ReceivedDeclarationModal
             type="댓글"
@@ -250,6 +262,9 @@ function PostingComment({
       </S.Layout>
     );
   };
+  {
+    /*댓글이 없는 경우 보이는 컴포넌트*/
+  }
   if (data.length === 0) {
     return (
       <S.CommentNone>

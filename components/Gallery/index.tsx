@@ -4,7 +4,6 @@ import {
 } from '@/utils/reactNativeMessage';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Carousel from '../Carousel';
-import { useRouter } from 'next/router';
 import { ImageWithTag } from '../Domain/AddOOTD/TagModal';
 import S from './style';
 import NextButton from '../NextButton';
@@ -31,33 +30,33 @@ const Gallery = ({
   nextStep,
   item,
 }: GalleryProps) => {
-  const router = useRouter();
-
-  const [realTouch, setRealTouch] = useState<number>(100);
-  const [storedImage, setStoredImage] = useRecoilState(storedImageKey);
+  const [realTouch, setRealTouch] = useState<number>(100); //현재 클릭한 사진 id
+  const [storedImage, setStoredImage] = useRecoilState(storedImageKey); //임시저장 전역상태
   const [isOpenStoredImageAlert, setIsOpenStoredImageAlert] =
-    useState<Boolean>(false);
+    useState<Boolean>(false); //임시저장 Alert 오픈 여부 상태
+  const [selectedImage, setSelectedImage] = useState<ImageWithTag>([]); // 선택한 이미지 리스트
 
   //임시 저장된 데이터 사용 o
   const getStoredImage = () => {
-    setImageAndTag(storedImage);
     if (storedImage!.length > 0) {
-      setSelectedImage(storedImage!);
-      setRealTouch(storedImage![storedImage!.length - 1].ootdId);
-      setIsOpenStoredImageAlert(false);
-      handleStep(nextStep);
+      setImageAndTag(storedImage); //이미지 리스트에 임시저장 전역상태 업데이트
+      setSelectedImage(storedImage!); //선택한 이미지 리스트에 임시저장 전역상태 업데이트
+      setRealTouch(storedImage![storedImage!.length - 1].ootdId); //현재 클릭한 사진 id를 이미지 마지막 사진의 id로 업데이트
+      setIsOpenStoredImageAlert(false); //임시저장 Alert 닫음
+      handleStep(nextStep); //태그 단계로 스킵
     }
   };
 
   //임시 저장된 데이터 사용x
   const dontGetStoredImage = () => {
-    sendReactNativeMessage({ type: item });
-    setImageAndTag([]);
-    setSelectedImage([]);
-    setStoredImage(undefined);
-    setIsOpenStoredImageAlert(false);
+    sendReactNativeMessage({ type: item }); //사진 선택 단계 실행
+    setImageAndTag([]); //이미지 리스트 초기화
+    setSelectedImage([]); //선택한 이미지 리스트 초기화
+    setStoredImage(undefined); //임시저장 전역상태 초기화
+    setIsOpenStoredImageAlert(false); //임시저장 Alert 닫음
   };
 
+  //새로운 JWT 토큰 발급 : native 단계에서 액세스 토큰이 만료되는 현상을 막기 위함
   const getToken = async () => {
     const { getNewToken } = PublicApi();
     await getNewToken();
@@ -71,21 +70,26 @@ const Gallery = ({
     });
   };
 
+  //갤러리 페이지 진입 시
   useEffect(() => {
-    getToken();
+    getToken(); //새로운 JWT 토큰 발급
     if (storedImage !== undefined && item === 'OOTD') {
+      //임시저장 상태가 o -> 임시저장 Alert 오픈
       setIsOpenStoredImageAlert(true);
     } else {
+      //임시저장 상태가 x -> 이미지 선택 단계 실행
       sendReactNativeMessage({ type: item });
     }
   }, []);
 
+  //react-native의 메세지를 받는 로직, 이미지 저장 후 경로 받는 용도
   useEffect(() => {
     if (typeof window !== 'undefined') {
       getReactNativeMessage(setImageAndTag);
     }
   }, []);
 
+  //native 에서 이미지를 가져온 뒤 현재 선택 id를 맨 앞 사진으로 업데이트
   useEffect(() => {
     if (imageAndTag) {
       setSelectedImage(imageAndTag);
@@ -93,18 +97,19 @@ const Gallery = ({
     }
   }, [imageAndTag]);
 
-  const [selectedImage, setSelectedImage] = useState<ImageWithTag>([]);
-
+  //이미지 리스트 클릭 시
   const onClickImage = (ootdId: number, ootdImage: string) => {
+    //realTouch와 클릭한 이미지의 id가 다르다면 realTouch를 업데이트
     if (ootdId !== realTouch) {
       setRealTouch(ootdId);
 
-      const alive = selectedImage.filter(
+      //선택된 이미지 중 클릭한 이미지와 같은 id를 가진 이미지가 있는지 확인
+      const isImageAlreadySelected = selectedImage.some(
         (item) => item.ootdId === ootdId
-      ).length;
+      );
 
-      if (!alive) {
-        setRealTouch(ootdId);
+      // 만약 같은 id를 가진 이미지가 없다면 이미지의 마지막 인덱스로 push
+      if (!isImageAlreadySelected) {
         setSelectedImage([
           ...selectedImage,
           { ootdImage: ootdImage, ootdId: ootdId },
@@ -113,21 +118,23 @@ const Gallery = ({
       return;
     }
 
-    const newSelectedImage = selectedImage.filter((item) => {
-      if (item.ootdId !== ootdId) {
-        return item;
-      }
-    });
+    //선택된 이미지 중 클릭한 이미지와 같은 id를 가진 이미지 추출
+    const newSelectedImage = selectedImage.filter(
+      (item) => item.ootdId !== ootdId
+    );
 
-    if (selectedImage.length === 1) {
+    //같은 id를 가진 이미지가 없다면 realTouch를 100으로 업데이트
+    if (!newSelectedImage.length) {
       setRealTouch(100);
     } else {
+      //있다면 마지막 인덱스의 ootdId로 업데이트
       setRealTouch(newSelectedImage[newSelectedImage.length - 1].ootdId);
     }
 
     setSelectedImage(newSelectedImage);
   };
 
+  //다음 버튼 클릭 함수
   const onClickNextButton = () => {
     setImageAndTag(selectedImage);
     handleStep(nextStep);
@@ -135,11 +142,13 @@ const Gallery = ({
 
   return (
     <>
+      {/*임시 저장 Alert창 오픈시의 배경*/}
       <Background
         isOpen={isOpenStoredImageAlert}
         onClick={() => setIsOpenStoredImageAlert(false)}
       />
       <S.Layout>
+        {/*선택한 사진이 없을 시 회색 이미지 렌더링*/}
         {selectedImage.length === 0 && (
           <S.BigImage>
             <NextImage
@@ -150,6 +159,8 @@ const Gallery = ({
             />
           </S.BigImage>
         )}
+
+        {/*realTouch인덱스에 해당하는 사진을 렌더링*/}
         {selectedImage &&
           selectedImage.map((item, index) => {
             if (item.ootdId === realTouch)
@@ -164,8 +175,10 @@ const Gallery = ({
                 </S.BigImage>
               );
           })}
+
+        {/*선택한 이미지 리스트 렌더링*/}
         {imageAndTag && (
-          <S.ImageList imageListlength={imageAndTag?.length}>
+          <S.ImageList imageListlength={imageAndTag.length}>
             <Body4 className="selected" state="emphasis">
               {selectedImage.length}장의 사진이 선택됨
             </Body4>
@@ -174,51 +187,36 @@ const Gallery = ({
               dots={true}
               slidesToShow={imageAndTag.length <= 3 ? imageAndTag!.length : 3.2}
             >
-              {imageAndTag &&
-                imageAndTag.map((item, index) => {
-                  let flag = 1;
-                  return (
-                    <S.SmallImage key={index} state={item.ootdId === realTouch}>
-                      <NextImage
-                        className="smallImage"
-                        onClick={() =>
-                          onClickImage(item.ootdId, item.ootdImage)
-                        }
-                        src={item.ootdImage}
-                        alt=""
-                        fill={false}
-                        width={106}
-                        height={106}
-                      />
-                      {selectedImage.map((items, indexs) => {
-                        if (item.ootdId === items.ootdId) flag = 0;
-                        return (
-                          item.ootdId === items.ootdId && (
-                            <S.ImageNumber
-                              onClick={() =>
-                                onClickImage(item.ootdId, item.ootdImage)
-                              }
-                              state={true}
-                              key={indexs}
-                            >
-                              <Caption1>{indexs + 1}</Caption1>
-                            </S.ImageNumber>
-                          )
-                        );
-                      })}
-                      {flag === 1 && (
-                        <S.ImageNumber
-                          onClick={() =>
-                            onClickImage(item.ootdId, item.ootdImage)
-                          }
-                          state={false}
-                        >
-                          {''}
-                        </S.ImageNumber>
+              {imageAndTag.map((item, index) => {
+                const selectedIndex = selectedImage.findIndex(
+                  (selected) => selected.ootdId === item.ootdId
+                );
+                const isSelected = selectedIndex !== -1;
+
+                return (
+                  <S.SmallImage key={index} state={item.ootdId === realTouch}>
+                    <NextImage
+                      className="smallImage"
+                      onClick={() => onClickImage(item.ootdId, item.ootdImage)}
+                      src={item.ootdImage}
+                      alt=""
+                      fill={false}
+                      width={106}
+                      height={106}
+                    />
+                    <S.ImageNumber
+                      onClick={() => onClickImage(item.ootdId, item.ootdImage)}
+                      state={isSelected}
+                    >
+                      {isSelected ? (
+                        <Caption1>{selectedIndex + 1}</Caption1>
+                      ) : (
+                        ''
                       )}
-                    </S.SmallImage>
-                  );
-                })}
+                    </S.ImageNumber>
+                  </S.SmallImage>
+                );
+              })}
             </Carousel>
           </S.ImageList>
         )}
@@ -230,6 +228,8 @@ const Gallery = ({
         >
           다음
         </NextButton>
+
+        {/*임시저장 Alert창*/}
         {isOpenStoredImageAlert && (
           <Alert
             headline="작성 중이던 게시글이 있습니다."

@@ -18,7 +18,9 @@ interface AdditionalInfo {
   setClothBuyDate: Dispatch<SetStateAction<string>>;
   onClickSubmitButton: () => void;
 }
-
+/*
+이름: 옷 등록 추가 정보 
+*/
 export default function AdditionalInfo({
   clothName,
   clothImage,
@@ -29,6 +31,7 @@ export default function AdditionalInfo({
   onClickSubmitButton,
   setClothBuyDate,
 }: AdditionalInfo) {
+  //카테고리 컴포넌트
   const Category = () => {
     return (
       <S.Category>
@@ -46,6 +49,7 @@ export default function AdditionalInfo({
   return (
     <S.Layout>
       <S.Main>
+        {/*이전 선택 값들*/}
         <S.BasicInfoFirst>
           <Category />
           <Headline1>{clothBrand && clothBrand[0].name}</Headline1>
@@ -59,6 +63,7 @@ export default function AdditionalInfo({
           />
           <hr />
         </S.BasicInfoFirst>
+        {/*추가 정보*/}
         <S.AdditionalInfo>
           <S.Title>
             <Title1 className="title">추가 정보</Title1>
@@ -90,6 +95,7 @@ export default function AdditionalInfo({
           </S.Information>
         </S.AdditionalInfo>
       </S.Main>
+      {/*등록 완료 버튼*/}
       <NextButton
         state={true}
         onClick={onClickSubmitButton}

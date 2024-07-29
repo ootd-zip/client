@@ -21,6 +21,11 @@ export type SizeItem = {
 
 export type SizeListType = SizeItem[][];
 
+/*
+이름: 옷 사이즈 모달
+역할: 옷 등록 페이지에서 사용된 옷 사이즈 모달
+특이사항: 옷 카테고리에 따라 다른 사이즈 등장
+*/
 export default function ClothSizeModal({
   isOpen,
   setClothSize,
@@ -28,18 +33,20 @@ export default function ClothSizeModal({
   categoryId,
   clothSizeInitial,
 }: ClothSizeProps) {
+  //선택된 옷 사이즈
   const [selectedClothSize, setSelectedClothSize] = useState<SizeItem | null>(
     null
   );
 
+  //사이즈 리스트
   const [sizeList, setSizeList] = useState<SizeListType | null>(null);
 
   const { getSize } = ClothApi();
 
+  //사이즈 조회 api 를 가져와 기존에 선택된 사이즈를 업데이트
   useEffect(() => {
     const fetchData = async () => {
       const result = await getSize(categoryId);
-      console.log('a', result);
       const newSizeList = [] as SizeListType;
       if (clothSizeInitial) setSelectedClothSize(clothSizeInitial);
 
@@ -49,6 +56,7 @@ export default function ClothSizeModal({
           continue;
         }
 
+        //lineNo에 의해 줄이 결정됨, 같은 lineNo끼리 모아줌
         if (newSizeList.length === size.lineNo) {
           newSizeList[newSizeList.length - 1].push({
             id: size.id,
@@ -68,10 +76,12 @@ export default function ClothSizeModal({
     fetchData();
   }, []);
 
+  //사이즈 버튼 클릭 함수
   const onClickSize = (row: number, col: number) => {
     setSelectedClothSize(sizeList![row][col]);
   };
 
+  //다음 단계 버튼 클릭 함수
   const onClickNextButton = () => {
     setClothSize(selectedClothSize);
     setIsOpen(false);

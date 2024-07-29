@@ -20,10 +20,15 @@ interface UserClosetProps {
     }[];
   };
 }
-
+/*
+이름: 내가 좋아요한 ootd
+역할: 내가 좋아요한 ootd 리스트를 보여주는 컴포넌트
+특이사항: 현재는 사용하지 않음
+*/
 export default function UserCloset({ isUser, userOOTD }: UserClosetProps) {
   return (
     <S.Layout>
+      {/*유저 프로필*/}
       <MyProfile
         isUser={isUser}
         userImage={userOOTD.user.userImage}
@@ -31,6 +36,7 @@ export default function UserCloset({ isUser, userOOTD }: UserClosetProps) {
         follow={userOOTD.user.follow}
         myCloth={userOOTD.user.myCloth}
       />
+      {/*옷장 요소들을 보여주는 슬라이드*/}
       <Carousel slidesToShow={2.3} infinite={false} dots={false}>
         {userOOTD.data.map((item, index) => {
           return (

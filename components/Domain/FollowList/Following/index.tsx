@@ -17,6 +17,11 @@ interface followingProps {
   setFollowingTotalCount: Dispatch<SetStateAction<number>>;
 }
 
+/*
+이름: 팔로잉 리스트
+역할: 마이페이지 팔로잉 리스트
+*/
+
 export default function Following({
   followingList,
   setFollowingList,
@@ -24,10 +29,12 @@ export default function Following({
 }: followingProps) {
   const router = useRouter();
 
+  // 검색어
   const [keyword, setKeyword] = useState<string>('');
 
   const { follow, unFollow } = PublicApi();
 
+  // 팔로우 팔로잉 버튼 누른 경우 발생되는 토글 함수
   const onClickFollow = async (status: Boolean, id: number, index: number) => {
     let newFollowingList = [...followingList];
 
@@ -44,6 +51,7 @@ export default function Following({
 
   const { getSearchUserFollowing } = UserApi();
 
+  // 유저의 팔로잉 리스트 API
   const fetchDataFunction = async (page: number, size: number) => {
     const data = await getSearchUserFollowing({
       page,
@@ -92,6 +100,7 @@ export default function Following({
           followingList.map((item, index) => {
             return (
               <S.FollowBlockLayout key={index}>
+                {/* 유저 프로필 이미지 */}
                 {item.userImage === '' ? (
                   <Avatar
                     onClick={() => router.push(`/mypage/${item.userId}`)}
@@ -107,6 +116,7 @@ export default function Following({
                     alt=""
                   />
                 )}
+                {/* 유저의 닉네임 */}
                 <Body3
                   state="emphasis"
                   className="name"
@@ -114,7 +124,7 @@ export default function Following({
                 >
                   {item.userName}
                 </Body3>
-
+                {/* 팔로우하는 경우 팔로잉 버튼 활성화 */}
                 {item.isFollow ? (
                   <Button3
                     className="unfollow"
@@ -125,6 +135,7 @@ export default function Following({
                     팔로잉
                   </Button3>
                 ) : (
+                  // 팔로우 하지 않는 경우 팔로우 버튼 활성화
                   <Button3
                     className="following"
                     onClick={() =>

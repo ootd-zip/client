@@ -29,6 +29,9 @@ const BigImage = styled.div<ImageProps>`
 
 const SmallImage = styled.div<ImageProps>`
   position: relative;
+  width: 106px !important;
+  height: 106px;
+  margin-right: 4px;
   .smallImage {
     width: 106px;
     height: 106px;
@@ -63,7 +66,7 @@ interface ImageNumberProps {
 const ImageNumber = styled.div<ImageNumberProps>`
   position: absolute;
   top: 4px;
-  right: 8px;
+  right: 4px;
   width: 20px;
   height: 20px;
   border-radius: 50%;

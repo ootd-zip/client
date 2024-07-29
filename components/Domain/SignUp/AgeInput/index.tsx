@@ -6,6 +6,10 @@ interface InputComponentProps {
   age: string;
 }
 
+/*
+이름: 나이 인풋
+역할: 회원가입에서 사용되는 나이를 기입하는 인풋 컴포넌트
+*/
 export default function AgeInput({ onChange, age }: InputComponentProps) {
   return (
     <Input>

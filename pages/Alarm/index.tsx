@@ -15,20 +15,26 @@ interface FetchedAlarmType {
   data: AlarmType[];
 }
 
+/*
+이름: 알림 페이지
+*/
 export default function Alarm() {
+  //읽지 않은 알림
   const [notIsReadAlarm, setNotIsReadAlarm] = useState<AlarmType[] | null>(
     null
   );
+  //읽은 알림
   const [isReadAlarm, setIsReadAlarm] = useState<FetchedAlarmType[] | null>(
     null
   );
 
-  const map = new Map<string, AlarmType[]>();
+  const map = new Map<string, AlarmType[]>(); //전처리를 위한 map 자료구조
 
   const router = useRouter();
 
   const { getIsReadAlarm, getNotIsReadAlarm } = AlarmApi();
 
+  //읽은 알림 조회 api 호출 함수
   const fetchIsReadAlarm = async (page: number, size: number) => {
     const data = await getIsReadAlarm({ page, size });
 
@@ -59,6 +65,7 @@ export default function Alarm() {
     return newData;
   };
 
+  //읽지 않은 알림 조회 api 호출 함수
   const fetchNotIsReadAlarm = async () => {
     const { content: notIsReadData } = await getNotIsReadAlarm({
       page: 0,
@@ -72,12 +79,14 @@ export default function Alarm() {
     fetchNotIsReadAlarm();
   }, []);
 
+  //읽은 댓글을 무한 스크롤 하기 위한 훅
   const { data: isReadAlarmList, containerRef } = useInfiniteScroll({
     fetchDataFunction: fetchIsReadAlarm,
     initialData: [],
     size: 20,
   });
 
+  //읽은 댓글을 전처리 하는 함수
   useEffect(() => {
     const map = new Map();
     isReadAlarmList.length > 0 &&
