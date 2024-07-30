@@ -19,7 +19,8 @@ export const getReactNativeMessage = (
     }
     if (parsedData!.type === 'Cloth') {
       const banana = parsedData?.payload;
-      setState([{ ootdImage: banana[0], ootdId: 0 }]);
+      setState(banana);
+      // setState([{ ootdImage: banana[0], ootdId: 0 }]);
     }
     if (parsedData!.type === 'TakeProfile') {
       const banana = parsedData?.payload;

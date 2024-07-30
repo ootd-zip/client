@@ -94,9 +94,11 @@ const Gallery = ({
     }
   }, []);
 
+  const [data, setData] = useState();
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      getReactNativeMessage(setImageAndTag);
+      getReactNativeMessage(setData);
     }
   }, []);
 
