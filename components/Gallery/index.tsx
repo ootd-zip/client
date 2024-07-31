@@ -233,13 +233,11 @@ const Gallery = ({
             if (item.ootdId === realTouch)
               return (
                 <S.BigImage key={index}>
-                  <img
-                    id="sourceImage"
+                  <NextImage
                     className="bigImage"
                     src={item.ootdImage}
                     alt=""
                     fill={true}
-                    onLoadingComplete={() => setImageLoaded(true)}
                   />
                   <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
                 </S.BigImage>
