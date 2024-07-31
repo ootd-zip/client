@@ -10,6 +10,10 @@ import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 import { Title1 } from '@/components/UI';
 import { useRouter } from 'next/router';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import {
+  getReactNativeMessage,
+  sendReactNativeMessage,
+} from '@/utils/reactNativeMessage';
 
 export interface Style {
   id: number;
@@ -55,6 +59,13 @@ const AddOOTD: ComponentWithLayout = () => {
     }
     setComplete(false);
   }, [string, imageAndTag, selectedStyle]);
+
+  const [realImageURL, setRealImageURL] = useState<string[]>([]);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      getReactNativeMessage(setRealImageURL);
+    }
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

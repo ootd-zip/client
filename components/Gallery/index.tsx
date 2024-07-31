@@ -94,11 +94,9 @@ const Gallery = ({
     }
   }, []);
 
-  const [data, setData] = useState();
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      getReactNativeMessage(setData);
+      getReactNativeMessage(setImageAndTag);
     }
   }, []);
 
@@ -235,7 +233,7 @@ const Gallery = ({
             if (item.ootdId === realTouch)
               return (
                 <S.BigImage key={index}>
-                  <NextImage
+                  <img
                     id="sourceImage"
                     className="bigImage"
                     src={item.ootdImage}
@@ -332,9 +330,6 @@ const Gallery = ({
             yes="확인"
           />
         )}
-        이미지
-        <p>{data}</p>
-        <img src={data} />
       </S.Layout>
     </>
   );

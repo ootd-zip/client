@@ -20,6 +20,10 @@ import { BrandType } from '@/components/BrandList/Brand';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import useRememberScroll from '@/hooks/useRememberScroll';
+import {
+  getReactNativeMessage,
+  sendReactNativeMessage,
+} from '@/utils/reactNativeMessage';
 
 export interface ClothWhereBuy {
   letter: string;
@@ -56,6 +60,7 @@ const AddCloth: ComponentWithLayout = () => {
 
   const { postCloth } = ClothApi();
   const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
+  const [realImageURL, setRealImageURL] = useState<string>('');
 
   const onClickSubmitButton = async () => {
     //옷 등록 api
@@ -67,7 +72,7 @@ const AddCloth: ComponentWithLayout = () => {
       colorIds: [...clothColor!].map((item) => item.id),
       isPrivate: !open,
       sizeId: clothSize!.id,
-      clothesImageUrl: clothImage![0].ootdImage,
+      clothesImageUrl: realImageURL,
       name: clothName,
       purchaseDate: clothBuyDate,
       clothMemo,
@@ -99,6 +104,12 @@ const AddCloth: ComponentWithLayout = () => {
   };
 
   const [suggestionColor, setSuggestionColor] = useState<suggestionColorType>();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      getReactNativeMessage(setRealImageURL);
+    }
+  }, []);
 
   return (
     <Funnel>
