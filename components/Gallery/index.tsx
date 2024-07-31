@@ -332,6 +332,9 @@ const Gallery = ({
             yes="확인"
           />
         )}
+        이미지
+        <p>{data}</p>
+        <img src={data} />
       </S.Layout>
     </>
   );
