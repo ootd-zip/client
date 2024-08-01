@@ -4,6 +4,8 @@ const Layout = styled.div`
   padding: 0 20px;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 48px);
+  overflow-y: hidden;
 `;
 
 const Category = styled.div`
@@ -41,7 +43,7 @@ const AdditionalInfo = styled.div`
   .title {
     padding: 21px 0px;
   }
-  padding-bottom: 90px;
+  padding-bottom: 96px;
 `;
 const Title = styled.div`
   margin-bottom: 16px;
@@ -56,7 +58,6 @@ const Information = styled.div`
 `;
 
 const Main = styled.div`
-  height: calc(100vh - 116px);
   overflow-y: scroll;
   overflow-x: hidden;
 `;

@@ -19,16 +19,16 @@ export interface patchOOTDIsPrivatePayload {
 }
 
 export interface postClothPayload {
-  purchaseStore: string;
-  purchaseStoreType: string;
-  brandId: number;
+  name: string;
+  clothesImageUrl: string;
   categoryId: number;
+  brandId: number;
   colorIds: number[];
   isPrivate: Boolean;
-  sizeId: number;
-  clothesImageUrl: string;
-  name: string;
+  sizeId?: number;
   memo?: string;
+  purchaseStore?: string;
+  purchaseStoreType?: string;
   purchaseDate?: string;
 }
 

@@ -17,6 +17,7 @@ export default function useRememberScroll({
   useEffect(() => {
     if (!containerRef) return;
     const container = containerRef.current;
+    if (!container) return;
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight } = container;
@@ -41,6 +42,7 @@ export default function useRememberScroll({
   useEffectAfterMount(() => {
     if (!containerRef) return;
     const container = containerRef.current;
+    if (!container) return;
 
     const memoScroll = sessionStorage.getItem(`${key}-scroll`);
     const memeoScrollHeight = sessionStorage.getItem(`${key}-component-height`);

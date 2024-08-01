@@ -33,7 +33,7 @@ export interface suggestionColorType {
 }
 
 const AddCloth: ComponentWithLayout = () => {
-  const steps = ['편집', '제품명', '기본정보1', '기본정보2', '추가정보'];
+  const steps = ['편집', '제품명', '기본정보', '추가정보'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
   const [clothImage, setClothImage] = useState<ImageWithTag | undefined>();
   const [clothName, setClothName] = useState<string>('');
@@ -47,7 +47,7 @@ const AddCloth: ComponentWithLayout = () => {
   });
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
-  const [open, setOpen] = useState<Boolean>(true);
+  const [clothIsOpen, setClothIsOpen] = useState<Boolean>(true);
   const [clothBuyDate, setClothBuyDate] = useState('');
   const [clothMemo, setClothMemo] = useState('');
 
@@ -82,12 +82,10 @@ const AddCloth: ComponentWithLayout = () => {
   const onClickAppbarLeftButton = () => {
     if (currentStep === '제품명') {
       handleStep('편집');
-    } else if (currentStep === '기본정보1') {
+    } else if (currentStep === '기본정보') {
       handleStep('제품명');
-    } else if (currentStep === '기본정보2') {
-      handleStep('기본정보1');
     } else {
-      handleStep('기본정보2');
+      handleStep('기본정보');
     }
   };
   const AppbarLeftProps = () => {
@@ -126,34 +124,19 @@ const AddCloth: ComponentWithLayout = () => {
           handleStep={handleStep}
         />
       </Funnel.Steps>
-      <Funnel.Steps name="기본정보1">
+      <Funnel.Steps name="기본정보">
         <BasicInfoFirst
           clothName={clothName}
           clothImage={clothImage}
           clothCategory={clothCategory}
           clothBrand={clothBrand}
-          clothWhereBuy={clothWhereBuy!}
+          clothColor={clothColor}
+          clothIsOpen={clothIsOpen}
           setClothCategory={setClothCategory}
           setClothBrand={setClothBrand}
-          setClothWhereBuy={setClothWhereBuy}
           handleStep={handleStep}
-        />
-      </Funnel.Steps>
-      <Funnel.Steps name="기본정보2">
-        <BasicInfoSecond
-          clothWhereBuy={clothWhereBuy}
-          clothName={clothName}
-          clothImage={clothImage}
-          clothCategory={clothCategory}
-          clothBrand={clothBrand}
-          handleStep={handleStep}
-          clothColor={clothColor}
+          setClothIsOpen={setClothIsOpen}
           setClothColor={setClothColor}
-          clothSize={clothSize}
-          setClothSize={setClothSize}
-          open={open}
-          setOpen={setOpen}
-          onClickSubmitButton={onClickSubmitButton}
         />
       </Funnel.Steps>
       <Funnel.Steps name="추가정보">
@@ -163,9 +146,13 @@ const AddCloth: ComponentWithLayout = () => {
           clothCategory={clothCategory}
           clothImage={clothImage}
           clothMemo={clothMemo}
+          clothWhereBuy={clothWhereBuy}
+          clothSize={clothSize}
           setClothBuyDate={setClothBuyDate}
           setClothMemo={setClothMemo}
           onClickSubmitButton={onClickSubmitButton}
+          setClothWhereBuy={setClothWhereBuy}
+          setClothSize={setClothSize}
         />
       </Funnel.Steps>
     </Funnel>
