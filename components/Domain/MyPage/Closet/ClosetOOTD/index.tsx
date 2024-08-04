@@ -1,6 +1,6 @@
 import { Caption1 } from '@/components/UI';
 import S from './style';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageList from '@/components/ImageList';
 import { useRouter } from 'next/router';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
@@ -17,21 +17,29 @@ export type MyPageOOTDType = {
 interface ClosetOOTDProps {
   showingId: number;
 }
+/*
+이름: 마이페이지 ootd
+역할: 마이페이지에서 사용되는 유저의 ootd 컴포넌트
+*/
 export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
   const router = useRouter();
 
+  //ootd리스트
   const [myPageOOTDList, setMyPageOOTDList] = useState<MyPageOOTDType[]>([]);
 
+  //이미지 클릭 함수
   const onClickImageList = (index: number) => {
     router.push(`/ootd/${index}`);
   };
 
   const { getOOTD } = OOTDApi();
 
+  //ootd 정렬 기준
   const [sortStandard, setSortStandard] = useState<'오래된 순' | '최신순'>(
     '최신순'
   );
 
+  //ootd 조회 api 호출 함수
   const fetchDataFunction = async (ootdPage: number, size: number) => {
     if (!router.isReady) return;
     const data = await getOOTD({
@@ -45,6 +53,7 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
     return data;
   };
 
+  //ootd 리스트 무한 스크롤을 위한 훅
   const {
     data: ootdData,
     isLoading: ootdIsLoading,
@@ -63,6 +72,7 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
     key: `mypage-${showingId}-ootd`,
   });
 
+  //ootd 리스트 조회 api 호출 후 ootd 리스트 상태 업데이트
   useEffect(() => {
     setMyPageOOTDList(
       ootdData.map((item: any) => {
@@ -71,13 +81,16 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
     );
   }, [ootdData]);
 
+  //옷장 주인, 정렬 기준이 변하면 ootd 리스트 초기화
   useEffectAfterMount(() => {
     setMyPageOOTDList([]);
     reset();
-  }, [sortStandard]);
+  }, [sortStandard, router.query.UserId![0]]);
 
+  //ootd리스트 스크롤 가능 상태
   const [listScrollState, setListScrollState] = useState<Boolean>(false);
 
+  //ootd리스트 스크롤을 기억하기 위한 훅
   useRememberScroll({
     key: `mypage-${showingId}-ootd`,
     containerRef: ootdRef,
@@ -85,15 +98,15 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
     list: myPageOOTDList,
   });
 
+  //스크롤 감지 이벤트
   useEffect(() => {
-    //add eventlistener to window
     window.addEventListener('scroll', onScroll);
-    // remove event on unmount to prevent a memory leak with the cleanup
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
 
+  //전체 스크롤과 ootd리스트 스크롤을 분리하기 위한 함수
   const onScroll = () => {
     const { scrollY } = window;
     if (scrollY === 0) return;
@@ -105,6 +118,7 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
     }
   };
 
+  //스크롤 위치를 기억하고 해당 위치로 보내주는 함수
   useEffect(() => {
     const memoScroll = sessionStorage.getItem(`mypage-${showingId}`);
 
@@ -117,6 +131,7 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
 
   return (
     <S.Layout>
+      {/*ootd 리스트 정렬 기준*/}
       <S.OOTDSort state={sortStandard === '오래된 순'}>
         <Caption1 onClick={() => setSortStandard('오래된 순')} className="old">
           오래된 순
@@ -126,6 +141,7 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
           최신순
         </Caption1>
       </S.OOTDSort>
+      {/*ootd 리스트*/}
       <S.OOTDList ref={ootdRef} state={listScrollState}>
         <ImageList
           type="column"

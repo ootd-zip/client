@@ -8,12 +8,16 @@ import { storedImageKey } from '@/utils/recoil/atom';
 interface NewRegisterProps {
   imageAndTag: ImageWithTag | undefined;
 }
-
+/*
+이름: 새로운 옷 등록
+역할: 태그 모달에서 사용되는 새로운 옷 등록 컴포넌트
+*/
 export default function NewRegister({ imageAndTag }: NewRegisterProps) {
   const router = useRouter();
 
-  const setStoredImage = useSetRecoilState(storedImageKey);
+  const setStoredImage = useSetRecoilState(storedImageKey); //임시저장된 ootd
 
+  //옷 추가 버튼 클릭 함수
   const onClickAddClothButton = () => {
     setStoredImage(imageAndTag);
     router.push(`/add-cloth`);

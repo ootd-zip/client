@@ -17,6 +17,11 @@ interface ReceivedDeclarationModalProps {
   setBlockStatus: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 차단 모달 컴포넌트
+역할: 차단에서 사용되는 모달
+*/
+
 export default function ReceivedDeclarationModal({
   type,
   reportStatus,
@@ -29,10 +34,11 @@ export default function ReceivedDeclarationModal({
   const { postUserBlock } = BlockApi();
   const router = useRouter();
 
+  // 차단 버튼을 눌렀을 때의 함수
   const blockUserButton = async () => {
     const blockUser = await postUserBlock({ userId: ID });
-    console.log(blockUser);
 
+    // 동일인을 차단한 경우
     if (blockUser.divisionCode === 'UB003') {
       setReceivedDeclaration(false); // 차단 모달 닫기
       setBlockStatus(false);
@@ -55,6 +61,7 @@ export default function ReceivedDeclarationModal({
         </S.Header>
         <S.Frame>
           <AiOutlineExclamationCircle className="infoIcon" />
+          {/* 동일인을 신고한 경우 상황 변화 */}
           <Headline2 className="reportTitle">
             {reportStatus === true
               ? '신고가 완료되었습니다.'

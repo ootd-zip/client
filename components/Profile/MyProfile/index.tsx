@@ -4,6 +4,10 @@ import Title1 from '@/components/UI/TypoGraphy/Title1';
 import Body from '@/components/UI/TypoGraphy/Body4';
 import { ProfileType } from '../type';
 
+/*
+이름: 내 프로필
+역할: 내 프로필 컴포넌트
+*/
 export default function MyProfile({
   isUser,
   userImage,

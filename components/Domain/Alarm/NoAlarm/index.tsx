@@ -1,6 +1,9 @@
 import { Body3, Headline2 } from '@/components/UI';
 import S from './style';
-
+/*
+이름: 알림 없음
+역할: 유저에게 알림이 없다고 알려주는 컴포넌트
+*/
 export default function NoAlarm() {
   return (
     <S.Layout>

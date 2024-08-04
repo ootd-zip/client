@@ -14,11 +14,17 @@ interface ImageListProps {
   onClick?: (index: number) => void;
   type: 'row' | 'column';
 }
-
+/*
+이름: 이미지 리스트
+역할: 공용으로 사용되는 이미지 리스트 컴포넌트
+*/
 export default function ImageList({ data, onClick, type }: ImageListProps) {
   return (
     <S.Layout type={type}>
       {data.map((item, index) => {
+        {
+          /*이미지 리스트가 옷일 경우*/
+        }
         if (item.clothId !== undefined) {
           return (
             <S.Image key={index}>
@@ -30,6 +36,9 @@ export default function ImageList({ data, onClick, type }: ImageListProps) {
               />
             </S.Image>
           );
+        }
+        {
+          /*이미지 리스트가 ootd일 경우*/
         }
         if (item.ootdId !== undefined) {
           return (

@@ -5,7 +5,10 @@ interface LabelSize {
   children: React.ReactNode;
   className?: string;
 }
-
+/*
+이름: 라벨
+역할: 어떤 인풋인지 알려주는 텍스트
+*/
 export default function Label({ size, children, className }: LabelSize) {
   return (
     <div className={className}>
