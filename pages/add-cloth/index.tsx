@@ -50,6 +50,7 @@ const AddCloth: ComponentWithLayout = () => {
   const [clothIsOpen, setClothIsOpen] = useState<Boolean>(true);
   const [clothBuyDate, setClothBuyDate] = useState('');
   const [clothMemo, setClothMemo] = useState('');
+  const [suggestionColor, setSuggestionColor] = useState<suggestionColorType>();
 
   const router = useRouter();
   const myId = useRecoilValue(userId);
@@ -96,8 +97,6 @@ const AddCloth: ComponentWithLayout = () => {
     }
   };
 
-  const [suggestionColor, setSuggestionColor] = useState<suggestionColorType>();
-
   return (
     <Funnel>
       <AppBar
@@ -137,6 +136,7 @@ const AddCloth: ComponentWithLayout = () => {
           handleStep={handleStep}
           setClothIsOpen={setClothIsOpen}
           setClothColor={setClothColor}
+          suggestionColor={suggestionColor}
         />
       </Funnel.Steps>
       <Funnel.Steps name="추가정보">

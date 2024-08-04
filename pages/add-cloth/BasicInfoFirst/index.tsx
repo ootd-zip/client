@@ -12,7 +12,7 @@ import BrandModal from '@/components/Domain/AddCloth/BrandModal';
 import NextImage from '@/components/NextImage';
 import ArrowLeft from '@/public/images/ArrowLeft.svg';
 import Background from '@/components/Background';
-import ColorSpan from '@/components/ColorList/ColorSpan';
+import ColorSpan from '@/components/ColorList/BigColor';
 import PlusButton from '@/components/PlusButton';
 import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
@@ -22,6 +22,8 @@ import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import { ColorListType } from '@/components/ColorList';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
+import { suggestionColorType } from '..';
+import RecommendColor from '@/components/Domain/AddCloth/RecommendColor';
 
 interface BaiscInfoFirst {
   clothName: string;
@@ -35,6 +37,7 @@ interface BaiscInfoFirst {
   setClothBrand: Dispatch<SetStateAction<BrandType[] | null>>;
   setClothIsOpen: Dispatch<SetStateAction<Boolean>>;
   handleStep: (next: string) => void;
+  suggestionColor?: suggestionColorType;
 }
 
 export default function BasicInfoFirst({
@@ -49,6 +52,7 @@ export default function BasicInfoFirst({
   handleStep,
   setClothColor,
   setClothIsOpen,
+  suggestionColor,
 }: BaiscInfoFirst) {
   const [categoryModalOpen, setCategoryModalOpen] = useState<Boolean>(false);
   const [nextButtonState, setNextButtonState] = useState<Boolean>(false);
@@ -188,6 +192,12 @@ export default function BasicInfoFirst({
                     })}
                   <PlusButton onClickPlusButton={onClickColorPlusButton} />
                 </S.ClothColorSpanList>
+                {suggestionColor && !clothColor && (
+                  <RecommendColor
+                    suggestionColor={suggestionColor!}
+                    setClothColor={setClothColor}
+                  />
+                )}
               </Input>
               <Input>
                 <Input.Label size="small" className="label">

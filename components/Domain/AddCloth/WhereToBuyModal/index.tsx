@@ -11,7 +11,7 @@ interface WhereToBuyModal {
   storedClothWhereBuy?: ClothWhereBuy;
   isOpen: Boolean;
   setIsOpen: Dispatch<SetStateAction<Boolean>>;
-  setWhereToBuy: Dispatch<SetStateAction<ClothWhereBuy | undefined>>;
+  setWhereToBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
 }
 
 export default function WhereToBuyModal({

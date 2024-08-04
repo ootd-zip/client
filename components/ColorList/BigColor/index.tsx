@@ -1,20 +1,20 @@
 import { Body3 } from '../../UI';
 import S from './style';
 
-interface ColorSpan {
+interface BigColorProps {
   color: string;
   name: string;
   state: Boolean;
   onClick?: (index: number) => void;
   index: number;
 }
-export default function ColorSpan({
+export default function BigColor({
   color,
   name,
   state,
   onClick,
   index,
-}: ColorSpan) {
+}: BigColorProps) {
   return (
     <S.Layout>
       {!state && (
