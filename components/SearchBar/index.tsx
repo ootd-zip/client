@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Layout, SearchIcon, SearchInput, Input, CloseIcon } from './style';
 import { AiOutlineSearch, AiFillCloseCircle } from 'react-icons/ai';
-import useDebounce from '@/hooks/useDebouce';
 
 interface SearchProps {
   placeholder: string;
@@ -10,14 +9,17 @@ interface SearchProps {
   onChange?: any;
 }
 
+/*
+이름: 검색 바
+역할: 공용으로 사용되는 검색어가 바뀔때 마다 검색을 하는 검색창 컴포넌트
+*/
 export default function SearchBar({
   placeholder,
   letter,
   setLetter,
-  onChange,
 }: SearchProps) {
+  //포커싱 상태
   const [focusState, setFocusState] = useState<Boolean>(false);
-  //input의 value
 
   //input 입력 시 letter를 업데이트 하는 함수
   const onChangeInput = (value: string) => {
@@ -38,13 +40,6 @@ export default function SearchBar({
   useEffect(() => {
     search();
   }, [letter]);
-
-  //input 입력 시 실행되는 검색 api 함수에 디바운싱을 건 함수
-  // useDebounce({
-  //   func: () => search(),
-  //   delay: 500,
-  //   deps: [letter],
-  // });
 
   return (
     <>

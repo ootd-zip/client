@@ -9,7 +9,9 @@ export interface QueryParams {
   state?: string;
   callback?: string[];
 }
-
+/*
+이름: 로그인 콜백 페이지 
+*/
 export default function SignUpCallbackPage() {
   const router = useRouter();
   const { code } = router.query as QueryParams;

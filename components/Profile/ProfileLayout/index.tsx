@@ -11,6 +11,10 @@ interface ProfileLayoutProps {
   className?: string;
 }
 
+/*
+이름: 프로필 레이아웃
+역할: 유저의 정보를 자식으로 갖는 프로필 레이아웃
+*/
 export default function ProfileLayout({
   children,
   isUser,

@@ -26,6 +26,11 @@ export type followListType = {
   isFollow: Boolean;
 };
 
+/*
+이름: 팔로우 팔로잉 리스트
+역할: 유저의 팔로우 팔로잉 리스트
+*/
+
 export default function FollowList() {
   const router = useRouter();
 
@@ -38,9 +43,11 @@ export default function FollowList() {
   const [openActionSheet, setOpenActionSheet] = useState<Boolean>(false);
   const [toastOpen, setToastOpen] = useState<Boolean>(false);
 
+  // 차단한 계정 이동 함수
   const goBlockedList = () => {
     router.push('/blocked-account');
   };
+
   const buttons = [{ name: '차단한 계정 관리', buttonClick: goBlockedList }];
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
   const [selectedUserName, setSelectedUserName] = useState<string>('');
@@ -54,12 +61,13 @@ export default function FollowList() {
     }
   };
 
+  // 팔로우 예스 함수
   const onClickYesButton = () => {
-    console.log('팔로우');
     setAlertOpen(false);
     setToastOpen(true);
   };
 
+  // 팔로우 취소 함수
   const onClickNoButton = () => {
     setAlertOpen(false);
   };
@@ -89,6 +97,7 @@ export default function FollowList() {
             }
           />
         )}
+        {/* 팔로워 팔로잉 리스트 탭뷰 */}
         <TabView>
           <TabView.TabBar
             tab={['팔로워', '팔로잉']}

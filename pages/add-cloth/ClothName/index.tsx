@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import NextButton from '@/components/NextButton';
 import NextImage from '@/components/NextImage';
-import Portal from '@/components/Portal';
 
 interface ClothNameProps {
   clothImage: ImageWithTag;
@@ -13,7 +12,10 @@ interface ClothNameProps {
   setClothName: Dispatch<SetStateAction<string>>;
   handleStep: (next: string) => void;
 }
-
+/*
+이름: 옷 이름
+역할: 옷 등록 중 옷 이름을 작성하는 컴포넌트
+*/
 export default function ClothName({
   clothImage,
   clothName,

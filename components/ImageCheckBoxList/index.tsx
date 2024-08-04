@@ -22,6 +22,11 @@ interface ImageCheckBoxListProps {
   editing?: Boolean;
 }
 
+/*
+이름: 이미지와 체크 박스가 함께 있는 컴포넌트
+역할: 이미지와 체크 박스로 이루어져 토글 형식의 컴포넌트
+*/
+
 export default function ImageCheckBoxList({
   data,
   checkBox,
@@ -29,6 +34,7 @@ export default function ImageCheckBoxList({
   setCheckedItems,
   editing,
 }: ImageCheckBoxListProps) {
+  // 이미지 아이디에 따라서 체크 박스 토글
   const toggleChecked = (ootdBookmarkId: number) => {
     if (checkedItems.includes(ootdBookmarkId)) {
       setCheckedItems(checkedItems.filter((id) => id !== ootdBookmarkId));
@@ -39,10 +45,13 @@ export default function ImageCheckBoxList({
 
   const router = useRouter();
 
+  // 이미지 클릭 함수
   const handleClick = (item: ImageData) => {
     if (editing) {
+      // 편집 중인 경우 체크 박스 토글
       toggleChecked(item.ootdBookmarkId!);
     } else {
+      // 미편집인 경우 ootd 페이지로 이동
       router.push(`ootd/${item.ootdId}`);
     }
   };
@@ -63,6 +72,7 @@ export default function ImageCheckBoxList({
                 fill={true}
               />
               {checkBox &&
+                // 체크인 경우 토글 형식
                 (isChecked ? (
                   <S.Icon onClick={() => toggleChecked(item.ootdBookmarkId!)}>
                     <AiFillCheckSquare />

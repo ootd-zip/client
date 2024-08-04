@@ -14,6 +14,11 @@ interface AgreeBlockProps {
   lastItem?: Boolean;
 }
 
+/*
+이름: 약관 동의 block 컴포넌트
+역할: 유저 약관 동의 block 컴포넌트
+*/
+
 const AgreeBlock = ({
   title,
   buttonClick,
@@ -33,6 +38,7 @@ const AgreeBlock = ({
 
   return (
     <S.Layout onClick={buttonClick} state={lastItem}>
+      {/* 동의 여부 체크 박스 */}
       <S.IconSpan>
         {checked ? (
           <CheckBoxTrue
@@ -46,6 +52,7 @@ const AgreeBlock = ({
           />
         )}
       </S.IconSpan>
+      {/* 동의 내용 부분 */}
       <S.TextWrap>
         <Body3 className="title">{title}</Body3>
         <Body3 state="underline" className="content" onClick={clickContent}>

@@ -10,7 +10,11 @@ interface ModalProps {
   type?: 'Link' | 'Write';
   action?: 'write';
 }
-
+/*
+이름: 인풋 모달
+역할: 클릭 시 모달로 넘어가는 인풋
+특이사항: 값 선택전에는 disable한 상태
+*/
 export default function Modal({
   result,
   setModalOpen,

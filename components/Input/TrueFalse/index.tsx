@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import S from './style';
 import { Button3 } from '@/components/UI';
 
@@ -9,6 +9,10 @@ interface TrueFalseProps {
   setState: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 왼쪽 혹은 오른쪽
+역할: 둘중 하나만 선택이 가능한 버튼 컴포넌트
+*/
 export default function TrueFalse({
   left,
   right,

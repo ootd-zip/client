@@ -83,14 +83,19 @@ export interface OOTDType {
   }[];
 }
 
+/*
+이름: ootd 상세 페이지 
+*/
 const OOTD: ComponentWithLayout = () => {
   const { getOOTDDetail, postOOTDComment } = OOTDApi();
 
   const router = useRouter();
 
+  //재 호출을 위한 상태
   const [reRender, setReRender] = useState(0);
   const [getPostReRender, setGetPostReRender] = useState(0);
 
+  //뒤로 가기 버튼 클릭 함수
   const onClickBackButton = () => {
     if (router.query.OOTDNumber![1] === 'explore') {
       router.push('/main/explore');
@@ -101,6 +106,7 @@ const OOTD: ComponentWithLayout = () => {
     }
   };
 
+  //ootd 상세 정보 조회 api
   useEffect(() => {
     const fetchData = async () => {
       if (!router.isReady) return;
@@ -125,17 +131,23 @@ const OOTD: ComponentWithLayout = () => {
     fetchData();
   }, [router.isReady, getPostReRender, router.query.OOTDNumber]);
 
+  //ootd 상세 정보
   const [data, setData] = useState<OOTDType | null>(null);
 
+  //ootd 댓글 리스트
   const [comment, setComment] = useState<CommentStateType>({
     ootdId: 0,
     parentDepth: 0,
     content: '',
   });
+
+  //ootd 댓글 작성중 상태
   const [commentWriting, setCommentWriting] = useState<Boolean>(false);
+  //댓글 작성 완료 상태
   const [commentFinish, setCommentFinish] = useState<Boolean>(false);
   const commentRef = useRef<any>();
 
+  //댓글 작성 완료 함수
   const registerComment = async () => {
     if (comment.content === '') return;
     await postOOTDComment(comment);
@@ -151,6 +163,7 @@ const OOTD: ComponentWithLayout = () => {
 
   const myId = useRecoilValue(userId);
 
+  //대댓글 작성이 끝나면 댓글 초기화
   useEffect(() => {
     if (!commentWriting) setComment({ ...comment, parentDepth: 0 });
   }, [commentWriting]);
@@ -159,6 +172,7 @@ const OOTD: ComponentWithLayout = () => {
   const [receivedDeclaration, setReceivedDeclaration] =
     useState<Boolean>(false);
 
+  //배경 클릭 함수
   const onClickBackground = () => {
     if (declaration) setDeclaration(false);
     if (receivedDeclaration) setReceivedDeclaration(false);
@@ -167,9 +181,9 @@ const OOTD: ComponentWithLayout = () => {
   const [goBackAfterBlock, setGoBackAfterBlock] = useState<Boolean>(false); // 사용자 차단 이후 스낵바 이용하여 이동
   const [blockStatus, setBlockStatus] = useState<Boolean>(false); // 사용자 차단 상태 값
 
+  // 사용자 차단 이후 이전 페이지로 이동
   useEffect(() => {
     if (goBackAfterBlock) {
-      // 사용자 차단 이후 이전 페이지로 이동
       if (router.query.OOTDNumber![1] === 'explore') {
         router.push(`/main/explore?block=${blockStatus}`);
       } else if (router.query.OOTDNumber![1] === 'curation') {

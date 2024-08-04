@@ -15,7 +15,10 @@ export interface MainFavoriteCardProps {
   writerName: string;
   onClick?: () => void;
 }
-
+/*
+이름: 메인 찜 카드
+역할: 메인에서 사용되는 내가 좋아요 한 ootd를 보여주는 카드 
+*/
 export default function MainFavoriteCard({
   ootdId,
   ootdImageUrl,
@@ -28,6 +31,7 @@ export default function MainFavoriteCard({
   const [favoriteState, setFavoriteState] = useState<Boolean>(true);
   const { postOOTDLike, deleteOOTDLike } = OOTDApi();
 
+  //좋아요 버튼 클릭 함수
   const onClickLikeToggle = async () => {
     if (favoriteState) {
       deleteOOTDLike(ootdId);

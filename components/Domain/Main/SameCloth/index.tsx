@@ -23,28 +23,36 @@ type SameClothData = {
     imageCount: number;
   }[];
 }[];
-
+/*
+이름: 같은 옷 다른 느낌
+역할: 유저의 옷장에 있는 옷들과 색상, 카테고리가 같은 옷을 포함하고 있는 
+ootd 리스트를 보여주는 컴포넌트
+*/
 export default function SameCloth() {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [sameClothData, setSameClothData] = useState<SameClothData>([]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0); //현재 선택 인덱스
+  const [sameClothData, setSameClothData] = useState<SameClothData>([]); //유저의 옷 리스트
 
   const { getSameClothDifferentOOTD } = MainApi();
 
+  //유저의 옷 리스트 조회 api 호출 함수
   const fetchDataFunction = async () => {
     const data = await getSameClothDifferentOOTD();
     setSameClothData(data);
   };
 
+  //옷 이미지 클릭 함수
   const onClickImage = (index: number) => {
     setCurrentIndex(index);
   };
 
   const router = useRouter();
 
+  //ootd 리스트 클릭 함수
   const onClickListImage = (ootdId: number) => {
     router.push(`/ootd/${ootdId}/curation`);
   };
 
+  //페이지 진입 시 옷 리스트 조회 api 호출 함수 실행
   useEffect(() => {
     fetchDataFunction();
   }, []);
@@ -57,6 +65,7 @@ export default function SameCloth() {
           다른 사용자들은 어떻게 활용하고 있을까요?
         </Body3>
       </S.Label>
+      {/*유저의 옷 리스트*/}
       <S.Filter>
         {sameClothData.length > 0 &&
           sameClothData.map((item, index) => {
@@ -83,7 +92,7 @@ export default function SameCloth() {
             );
           })}
       </S.Filter>
-
+      {/*유저의 ootd 리스트*/}
       {sameClothData.length > 0 && (
         <S.List>
           {sameClothData[currentIndex].ootds[0] && (

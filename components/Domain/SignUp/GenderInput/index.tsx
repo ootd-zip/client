@@ -6,7 +6,10 @@ interface GenderInputProps {
   gender: Boolean;
   setGender: Dispatch<SetStateAction<Boolean>>;
 }
-
+/*
+이름: 성별 선택
+역할: 회원가입에서 사용되는 성별을 선택하는 컴포넌트
+*/
 export default function GenderInput({ gender, setGender }: GenderInputProps) {
   return (
     <S.Layout>

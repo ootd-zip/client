@@ -6,7 +6,10 @@ interface WeightOpenProps {
   state: Boolean;
   setState: Dispatch<SetStateAction<Boolean>>;
 }
-
+/*
+이름: 체형 공개 여부
+역할: 회원가입에서 사용되는 체형 공개 여부 선택 컴포넌트
+*/
 export default function WeightOpen({ state, setState }: WeightOpenProps) {
   return (
     <S.Layout>

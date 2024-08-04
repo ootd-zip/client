@@ -11,7 +11,9 @@ interface BodyInfoProps {
   weight: string;
   height: string;
 }
-
+/*
+이름: 체형 정보 페이지
+*/
 export default function BodyInfo({
   open,
   setOpen,

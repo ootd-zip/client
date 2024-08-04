@@ -24,6 +24,11 @@ interface SearchProps {
   searchValue: string;
 }
 
+/*
+이름: 검색바 컴포넌트
+역할: 검색 페이지에서 사용되는 검색바
+*/
+
 export default function SearchBar({
   onAddKeyword,
   state,
@@ -46,11 +51,13 @@ export default function SearchBar({
     []
   );
 
+  // 검색한 경우 실행되는 함수
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 검색어가 빈 문자열이 아닌 경우에만 실행
     onAddKeyword(value);
     setSearchValue(value);
+    sessionStorage.clear();
 
     // URL에 검색어 추가
     router.push({

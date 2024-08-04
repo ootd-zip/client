@@ -1,14 +1,7 @@
 import S from '@/pageStyle/add-ootd/ClothTag/style';
 import { Body3 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import TagInformation from '@/components/ClothInformation/TagInformation';
 import Carousel from '@/components/Carousel';
@@ -20,12 +13,20 @@ interface ClothTagProps {
   setImageAndTag: Dispatch<SetStateAction<ImageWithTag | undefined>>;
   handleStep: (next: string) => void;
   imageAndTag: ImageWithTag | undefined;
+  setTagSelectedState: Dispatch<SetStateAction<Boolean>>;
+  tagSelectedState: Boolean;
 }
 
+/*
+이름: 옷 태그
+역할: ootd 등록 단계에서 사용되는 옷 태그 컴포넌트
+*/
 export default function ClothTag({
   setImageAndTag,
   handleStep,
   imageAndTag,
+  setTagSelectedState,
+  tagSelectedState,
 }: ClothTagProps) {
   const dragRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -34,7 +35,6 @@ export default function ClothTag({
   const [componentHeight, setComponentHeight] = useState(0); //컴포넌트 높이
   const [addTag, setAddTag] = useState<Boolean>(false); //옷 추가 모달 (열기/닫기)
   const [slideIndex, setSlideIndex] = useState<number>(0); //OOTD 슬라이드 인덱스
-  const [nextButtonState, setNextButtonState] = useState<Boolean>(false); //다음 버튼 상태
   const [isDragging, setIsDragging] = useState(false);
 
   //컴포넌트 크기 계산
@@ -50,10 +50,14 @@ export default function ClothTag({
   //다음 버튼 활성화 함수
   useEffect(() => {
     const filterdSamplData = imageAndTag!.filter(
-      (item) => item.ootdImageClothesList
+      (item) =>
+        item.ootdImageClothesList && item.ootdImageClothesList.length > 0
     );
-    if (filterdSamplData.length) setNextButtonState(true);
-    else setNextButtonState(false);
+    if (filterdSamplData.length) {
+      setTagSelectedState(true);
+    } else {
+      setTagSelectedState(false);
+    }
   }, [imageAndTag]);
 
   //드래그 함수
@@ -95,7 +99,7 @@ export default function ClothTag({
 
   //다음 버튼 클릭
   const onClickNextButton = () => {
-    if (nextButtonState) {
+    if (tagSelectedState) {
       handleStep('게시하기');
       setImageAndTag(imageAndTag);
     }
@@ -184,7 +188,7 @@ export default function ClothTag({
       {/* 다음버튼 */}
       <NextButton
         className="nextButton"
-        state={nextButtonState}
+        state={tagSelectedState}
         onClick={onClickNextButton}
       >
         다음단계

@@ -16,12 +16,18 @@ interface searchResultProps {
   keywordsValue: string;
 }
 
+/*
+이름: 검색 결과 컴포넌트
+역할: 검색 결과에서 사용되는 컴포넌트
+*/
+
 export default function SearchResult({ keywordsValue }: searchResultProps) {
   const [profileList, setProfileList] = useState<ProfileListType[]>([]);
 
   const router = useRouter();
   const { getSearchUser } = UserApi();
 
+  // 검색 결과에 따른 프로필 리스트 API
   const fetchDataFunction = async (
     profilePage: number,
     profileSize: number
@@ -37,6 +43,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     return data;
   };
 
+  // 검색 결과 저장
   const {
     data: profileData,
     isLoading: profileIsLoading,
@@ -55,6 +62,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     key: 'search-user',
   });
 
+  // 검색 결과 스크롤 저장
   useRememberScroll({
     key: 'search-user',
     containerRef: profileRef,
@@ -76,11 +84,13 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     );
   }, [profileData]);
 
+  // 조건 변경시 초기화
   useEffectAfterMount(() => {
     setProfileList([]);
     reset();
   }, [keywordsValue]);
 
+  // 검색 결과 옷집 필터
   const [filter, setFilter] = useState<FilterData>({
     category: null,
     color: null,
@@ -110,6 +120,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     });
   }, [keywordsValue]);
 
+  // 검색 결과에 따른 OOTD 리스트 API
   const fetchOOTDDataFunction = async (ootdPage: number, ootdSize: number) => {
     if (!router.isReady) return;
 
@@ -142,6 +153,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     return data;
   };
 
+  // 무한 스크롤 훅
   const {
     data: OOTDData,
     isLoading: OOTDIsLoading,
@@ -174,6 +186,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     );
   }, [OOTDData]);
 
+  // 조건 변경시 초기화
   useEffectAfterMount(() => {
     setOOTDList([]);
     ootdReset();
@@ -189,6 +202,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     }
   }, [filter]);
 
+  // 탭바 클릭 시 스크롤 위치 저장
   const onChangeTabBarIndex = () => {
     const storedSearchType = sessionStorage.getItem('search-type');
     if (storedSearchType) {

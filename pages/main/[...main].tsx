@@ -1,6 +1,6 @@
 import S from '@/pageStyle/main/style';
 import AppBar from '@/components/Appbar';
-import { AiOutlineBell, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineBell } from 'react-icons/ai';
 import SameCloth from '@/components/Domain/Main/SameCloth';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,17 @@ import LikeOOTD from '@/components/Domain/Main/LikeOOTD';
 import Explore from '@/components/Domain/Main/Explore';
 import Toast from '@/components/Toast';
 
+/*
+이름: 메인 페이지
+*/
 export default function Main() {
   const router = useRouter();
+  //읽지 않은 알림 존재 여부
   const [isExistNotReadAlarm, setIsExistNotReadAlarm] =
     useState<Boolean>(false);
   const { getExistIsNotReadAlarm } = AlarmApi();
 
+  //읽지 않은 알림 조회 api 호출
   useEffect(() => {
     const fetchData = async () => {
       const result = await getExistIsNotReadAlarm();
@@ -32,6 +37,7 @@ export default function Main() {
     }
   }, []);
 
+  //메인 컨텐츠 탭바 변경 함수
   const onChangeTabBarIndex = () => {
     if (router.query.main![0] === 'explore') {
       router.replace('/main/curation');

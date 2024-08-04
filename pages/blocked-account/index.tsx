@@ -2,16 +2,13 @@ import AppBar from '@/components/Appbar';
 import S from '@/pageStyle/blocked-account/style';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { Body3, Button3, Title1 } from '@/components/UI';
+import { Body3, Button3 } from '@/components/UI';
 import Header from '@/components/Header';
-import { use, useEffect, useState } from 'react';
-import FollowBlock from '@/components/FollowBlock';
-import BlockAlert from '@/components/Setting/BlockAlert';
+import { useEffect, useState } from 'react';
 import Toast from '@/components/Toast';
 import Background from '@/components/Background';
 import { BlockApi } from '@/apis/domain/Block/BlockApi';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import NextImage from '@/components/NextImage';
 import Avatar from '@/public/images/Avatar.svg';
@@ -25,6 +22,11 @@ export interface UserBlockListDataType {
   profileImage: string;
 }
 
+/*
+이름: 차단한 계정 페이지
+역할: 설정 차단한 계정 페이지
+*/
+
 export default function BlockedAccount() {
   const router = useRouter();
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
@@ -34,6 +36,7 @@ export default function BlockedAccount() {
 
   const { getUserBlock } = BlockApi();
 
+  // 차단한 계정 리스트 호출 API
   const fetchDataFunction = async (page: number, size: number) => {
     const data = await getUserBlock({
       page,

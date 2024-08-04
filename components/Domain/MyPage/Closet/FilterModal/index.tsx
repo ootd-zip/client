@@ -29,7 +29,10 @@ interface FilterModalProps {
   page: 'mypage' | 'search';
   gender?: GenderTypes;
 }
-
+/*
+이름: 마이페이지 옷 검색 필터 모달
+역할: 마이페이지에서 사용되는 유저의 옷을 구분하기 위한 필터 모달 컴포넌트
+*/
 export default function FilterModal({
   isOpen,
   setFilterModalIsOpen,
@@ -41,21 +44,27 @@ export default function FilterModal({
   page,
   gender,
 }: FilterModalProps) {
+  //선택된 색상 리스트
   const [selectedColorList, setSelectedColorList] =
     useState<ColorListType | null>(null);
 
+  //선택된 브랜드
   const [selectedBrand, setSelectedBrand] = useState<BrandType[] | null>(null);
 
+  //선택된 카테고리
   const [selectedCategory, setSelectedCategory] = useState<
     CategoryListType[] | null
   >(null);
 
+  //카테고리 리스트
   const [categoryList, setCategoryList] = useState<CategoryListType[] | null>(
     null
   );
 
+  //색상 리스트
   const [colorList, setColorList] = useState<ColorListType>([]);
 
+  //브랜드 리스트
   const [brandList, setBrandList] = useState<BrandType[] | null>(null);
 
   const { getUserBrand } = MyPageApi();
@@ -63,7 +72,8 @@ export default function FilterModal({
 
   const router = useRouter();
 
-  const fetchDataFunction = async () => {
+  //유저가 가지고 있는 브랜드 조회 api 호출 함수
+  const fetchBrandDataFunction = async () => {
     if (!router.isReady) return;
     if (page === 'mypage') {
       const data = await getUserBrand(Number(router.query.UserId![0]));
@@ -75,10 +85,12 @@ export default function FilterModal({
   };
 
   useEffect(() => {
-    fetchDataFunction();
+    fetchBrandDataFunction();
   }, []);
 
+  //완료 버튼 클릭 함수
   const onClickSubmitButton = () => {
+    //마이페이지와 검색 모두 사용되는 컴포넌트, 구분해줌
     if (page === 'mypage') {
       setFilter({
         category: selectedCategory,
@@ -99,6 +111,7 @@ export default function FilterModal({
     setFilterModalIsOpen(false);
   };
 
+  //초기화 버튼 클릭 함수
   const onClickInitButton = () => {
     setSelectedBrand(null);
     setSelectedCategory(null);
@@ -128,11 +141,13 @@ export default function FilterModal({
     );
   };
 
+  //선택된 카테고리 해제 버튼 클릭 함수
   const onClickCloseCategoryButton = (
     categoryId: number,
     type: 'big' | 'small'
   ) => {
     let newCategoryList = [] as CategoryListType[] | undefined;
+    //상위 카테고리인 경우
     if (type === 'big') {
       newCategoryList = categoryList?.map((item) => {
         if (item.id === categoryId) {
@@ -140,7 +155,8 @@ export default function FilterModal({
         }
         return item;
       });
-    } else {
+    } //하위 카테고리인 경우
+    else {
       newCategoryList = categoryList?.map((item) => {
         return {
           ...item,
@@ -154,6 +170,7 @@ export default function FilterModal({
     setCategoryList(newCategoryList ? newCategoryList : null);
   };
 
+  //선택된 색상 해제 버튼 클릭 함수
   const onClickCloseColorButton = (colorId: number) => {
     const newColorList = colorList.map((item) => {
       if (item.id === colorId) {
@@ -165,6 +182,7 @@ export default function FilterModal({
     setColorList(newColorList!);
   };
 
+  //선택된 브랜드 해제 버튼 클릭 함수
   const onClickCloseBrandButton = (brandId: number) => {
     const newBrandList = brandList!.map((item) => {
       if (item.id === brandId) {
@@ -179,6 +197,7 @@ export default function FilterModal({
   return (
     <Modal isOpen={isOpen} height="65">
       <S.Layout>
+        {/*슬라이드를 통해 옆 필터로 이동하기 위해 TabView 사용 */}
         <TabView initialIndex={initialIndex}>
           <TabView.TabBar
             tab={['카테고리', '색상', '브랜드']}
@@ -187,6 +206,7 @@ export default function FilterModal({
           <div className="main">
             <TabView.Tabs>
               <TabView.Tab>
+                {/*카테고리*/}
                 <ClothCategory
                   type="many"
                   categoryList={categoryList}
@@ -196,6 +216,7 @@ export default function FilterModal({
                 />
               </TabView.Tab>
               <TabView.Tab>
+                {/*색상*/}
                 <ColorList
                   setSelectedColorList={setSelectedColorList}
                   className="colorList"
@@ -205,6 +226,7 @@ export default function FilterModal({
                 />
               </TabView.Tab>
               <TabView.Tab>
+                {/*브랜드*/}
                 <Body4 className="top" state="emphasis">
                   {brandList
                     ? `총 ${brandList!.length}개의 브랜드`
@@ -223,6 +245,7 @@ export default function FilterModal({
             </TabView.Tabs>
           </div>
         </TabView>
+        {/*선택된 필터들*/}
         {
           <S.SelectedFilter
             state={
@@ -231,6 +254,7 @@ export default function FilterModal({
               (selectedColorList !== null && selectedColorList.length !== 0)
             }
           >
+            {/*카테고리*/}
             {selectedCategory?.map((item, index) => {
               return (
                 <S.SelectedFilterSpan key={index}>
@@ -251,6 +275,7 @@ export default function FilterModal({
                 </S.SelectedFilterSpan>
               );
             })}
+            {/*색상*/}
             {selectedColorList?.map((item, index) => {
               return (
                 <S.SelectedFilterSpan key={index}>
@@ -262,6 +287,7 @@ export default function FilterModal({
                 </S.SelectedFilterSpan>
               );
             })}
+            {/*브랜드*/}
             {selectedBrand?.map((item, index) => {
               return (
                 <S.SelectedFilterSpan key={index}>
@@ -275,6 +301,7 @@ export default function FilterModal({
             })}
           </S.SelectedFilter>
         }
+        {/*버튼*/}
         <S.SelectedButton
           state={
             (selectedCategory !== null && selectedCategory.length > 0) ||

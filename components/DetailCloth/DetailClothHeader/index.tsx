@@ -11,7 +11,12 @@ interface ClothInfoProps {
   clothByName: string;
 }
 
-export default function DetailClothDiscription({
+/*
+이름: 의류 상세 Header 컴포넌트
+역할: 분류, 공개 여부, 이름을 표현하는 의류 상세 Header 컴포넌트
+*/
+
+export default function DetailClothHeader({
   state,
   isPublic,
   bigCategory,
@@ -23,11 +28,13 @@ export default function DetailClothDiscription({
     <S.Layout>
       <S.Container>
         <S.Category>
+          {/* 대분류 */}
           <Body2>{bigCategory}</Body2>
           <S.IconSpan>
             <AiOutlineRight />
           </S.IconSpan>
-          <Body2 style={{ fontWeight: '600' }}>{smallCategory}</Body2>
+          {/* 소분류 */}
+          <Body2 state="emphasis">{smallCategory}</Body2>
         </S.Category>
         {state && (
           <S.OpenTag state={isPublic}>
@@ -38,7 +45,7 @@ export default function DetailClothDiscription({
         )}
       </S.Container>
       <Headline1>{brand}</Headline1>
-      <Body2 style={{ color: '#BBBBBB' }}>{clothByName}</Body2>
+      <Body2 className="clothName">{clothByName}</Body2>
     </S.Layout>
   );
 }

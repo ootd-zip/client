@@ -9,6 +9,12 @@ interface StyleInputProps {
   selectedStyle: Style[];
   setSelectedStyle: Dispatch<SetStateAction<Style[]>>;
 }
+
+/*
+이름: 내가 선호하는 스타일 컴포넌트
+역할: 설정 페이지에서 내가 선호하는 스타일 컴포넌트
+*/
+
 export default function LikeInfoStyleInput({
   selectedStyle,
   setSelectedStyle,
@@ -18,6 +24,7 @@ export default function LikeInfoStyleInput({
 
   const { getUserStyle } = UserApi();
 
+  // 내 선호 스타일 리스트 조회 API
   useEffect(() => {
     const ferchData = async () => {
       const userStyle = (await getUserStyle()).map((item: Style) => {
@@ -44,6 +51,7 @@ export default function LikeInfoStyleInput({
     ferchData();
   }, []);
 
+  // 스타일 리스트 선택마다 리스트 변동
   useEffect(() => {
     const newStyle = style.filter((item) => item.state);
 
