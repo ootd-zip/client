@@ -4,6 +4,7 @@ import {
   getUserTaggedClothListParams,
   patchClothIsPrivateType,
   postClothPayload,
+  postBrandPayload,
 } from '@/apis/_api/type';
 import { systemService, userService } from '@/apis/_service';
 import { useState } from 'react';
@@ -114,6 +115,13 @@ export default function ClothApi() {
     return result;
   };
 
+  //브랜드 추가 제안하기
+  const postBrand = async (keyword: postBrandPayload) => {
+    const { result } = await systemService.postBrand(keyword);
+
+    return result;
+  };
+
   //사이즈 가져오기
   const getSize = async (id: number) => {
     const result = await systemService.getSize(id);
@@ -158,6 +166,7 @@ export default function ClothApi() {
     getClothCategory,
     getColor,
     getBrand,
+    postBrand,
     getSize,
     getOOTDWithCloth,
     getUserTaggedClothList,

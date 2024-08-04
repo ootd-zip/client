@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface LayoutProps {
   state: Boolean;
+  className?: string;
   alertState?: Boolean;
 }
 
@@ -10,7 +11,8 @@ const Layout = styled.div<LayoutProps>`
   display: flex;
   width: calc(100% - 16px);
   position: fixed;
-  bottom: ${(props) => (props.alertState ? '127px' : '71px')};
+  bottom: ${(props) =>
+    props.className === 'brandSuggestion' ? '90px' : '71px'};
   margin: 0px 8px;
   padding: 10px 16px;
   align-items: flex-start;
