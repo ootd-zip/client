@@ -32,17 +32,8 @@ export interface suggestionColorType {
   colorCode: string;
 }
 
-export interface suggestionColorType {
-  id: number;
-  name: string;
-  colorCode: string;
-}
-
-/*
-이름: 옷 추가 페이지 
-*/
 const AddCloth: ComponentWithLayout = () => {
-  const steps = ['편집', '제품명', '기본정보1', '기본정보2', '추가정보'];
+  const steps = ['편집', '제품명', '기본정보', '추가정보'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
   //옷 이미지
   const [clothImage, setClothImage] = useState<ImageWithTag | undefined>();
@@ -63,7 +54,7 @@ const AddCloth: ComponentWithLayout = () => {
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   //옷 사이즈
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
-  const [open, setOpen] = useState<Boolean>(true);
+  const [clothIsOpen, setClothIsOpen] = useState<Boolean>(true);
   const [clothBuyDate, setClothBuyDate] = useState('');
   //옷 메모
   const [clothMemo, setClothMemo] = useState('');
