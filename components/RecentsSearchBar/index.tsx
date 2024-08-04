@@ -51,6 +51,7 @@ export default function SearchBar({
     // 검색어가 빈 문자열이 아닌 경우에만 실행
     onAddKeyword(value);
     setSearchValue(value);
+    sessionStorage.clear();
 
     // URL에 검색어 추가
     router.push({

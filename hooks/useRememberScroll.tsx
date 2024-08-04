@@ -19,6 +19,7 @@ export default function useRememberScroll({
     const container = containerRef.current;
     if (!container) return;
 
+    if (!container) return;
     const handleScroll = () => {
       const { scrollTop, scrollHeight } = container;
 

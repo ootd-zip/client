@@ -313,6 +313,10 @@ export default function Posting({
           )}
         </S.PostingCommunication>
         <S.PostingExplanation>
+          <S.LikeCount>
+            <Body4 state="emphasis">좋아요</Body4>
+            <Body4 state="emphasis">{data.likeCount}개</Body4>
+          </S.LikeCount>
           <Body2 className="description">{data.contents}</Body2>
           <Body4 className="date">{data.createAt}</Body4>
         </S.PostingExplanation>

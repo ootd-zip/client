@@ -113,7 +113,7 @@ const PostingExplanation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 20px;
+  padding: 0px 20px 16px 20px;
   .date {
     color: ${(props) => props.theme.color.grey_40};
   }
@@ -137,6 +137,12 @@ const PostingStyleTagSpan = styled.div`
   }
 `;
 
+const LikeCount = styled.div`
+  display: flex;
+
+  gap: 2px;
+`;
+
 const S = {
   Layout,
   PostingTop,
@@ -147,6 +153,7 @@ const S = {
   PostingExplanation,
   PostingStyleTag,
   PostingStyleTagSpan,
+  LikeCount,
 };
 
 export default S;

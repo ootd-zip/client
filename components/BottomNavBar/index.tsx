@@ -78,6 +78,7 @@ export default function BottomNavBar({
         click: () => {
           router.push(routes[index]);
           setAddModalState(false);
+          sessionStorage.clear();
         },
       }))
     );
@@ -88,6 +89,7 @@ export default function BottomNavBar({
       click: () => {
         router.push(routes[index]);
         setAddModalState(false);
+        sessionStorage.clear();
       },
     }));
     setBottomNavBarLinkers(newLinkers);

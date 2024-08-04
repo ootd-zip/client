@@ -7,7 +7,7 @@ import { AppLayoutProps } from '@/AppLayout';
 import { ComponentWithLayout } from '../sign-up';
 import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
-import { Title1 } from '@/components/UI';
+import { Button3, Title1 } from '@/components/UI';
 import { useRouter } from 'next/router';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 
@@ -26,7 +26,7 @@ const AddOOTD: ComponentWithLayout = () => {
   const [open, setOpen] = useState<Boolean>(true); //공개여부
   const [complete, setComplete] = useState<Boolean>(false); //게시 완료 여부
   const router = useRouter();
-
+  const [tagSelectedState, setTagSelectedState] = useState<Boolean>(false); //ootd에 옷 태그 여부
   //앱바 왼쪽 네비게이션 관리
   const AppbarLeftProps = () => {
     if (currentStep === '편집') {
@@ -56,12 +56,22 @@ const AddOOTD: ComponentWithLayout = () => {
     setComplete(false);
   }, [string, imageAndTag, selectedStyle]);
 
+  const onClickSkipButton = () => {
+    handleStep('게시하기');
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <AppBar
         leftProps={<AppbarLeftProps />}
         middleProps={<Title1>{currentStep}</Title1>}
-        rightProps={<></>}
+        rightProps={
+          <>
+            {!tagSelectedState && currentStep === '태그' && (
+              <Button3 onClick={onClickSkipButton}>건너뛰기</Button3>
+            )}
+          </>
+        }
       />
       <Funnel>
         <Funnel.Steps name="편집">
@@ -78,6 +88,8 @@ const AddOOTD: ComponentWithLayout = () => {
             setImageAndTag={setImageAndTag}
             imageAndTag={imageAndTag!}
             handleStep={handleStep}
+            setTagSelectedState={setTagSelectedState}
+            tagSelectedState={tagSelectedState}
           />
         </Funnel.Steps>
         <Funnel.Steps name="게시하기">

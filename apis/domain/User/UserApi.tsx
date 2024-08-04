@@ -137,6 +137,7 @@ export const UserApi = () => {
 
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      sessionStorage.clear();
       sendReactNativeMessage({ type: 'logout' });
       if (status === 200) return true;
       return false;
