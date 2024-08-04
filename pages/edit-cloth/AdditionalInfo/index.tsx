@@ -29,7 +29,7 @@ interface AdditionalInfo {
   setClothMemo: Dispatch<SetStateAction<string>>;
   setClothBuyDate: Dispatch<SetStateAction<string>>;
   setClothImage: Dispatch<SetStateAction<ImageWithTag | undefined>>;
-  setClothWhereBuy: Dispatch<SetStateAction<ClothWhereBuy | undefined>>;
+  setClothWhereBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
   setClothSize: Dispatch<SetStateAction<SizeItem | null>>;
   handleStep: (next: string) => void;
   onClickSubmitButton: () => void;

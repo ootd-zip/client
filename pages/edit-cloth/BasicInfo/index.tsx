@@ -14,7 +14,7 @@ import { ColorListType } from '@/components/ColorList';
 import ClothSizeModal, {
   SizeItem,
 } from '@/components/Domain/AddCloth/ClothSizeModal';
-import ColorSpan from '@/components/ColorList/ColorSpan';
+import ColorSpan from '@/components/ColorList/BigColor';
 import PlusButton from '@/components/PlusButton';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
 import PrevNextButton from '@/components/PrevNextButton';

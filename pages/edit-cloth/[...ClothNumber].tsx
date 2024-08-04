@@ -30,12 +30,10 @@ const EditCloth: ComponentWithLayout = () => {
     null
   );
   const [clothBrand, setClothBrand] = useState<BrandType[] | null>(null);
-  const [clothWhereBuy, setClothWhereBuy] = useState<ClothWhereBuy | undefined>(
-    {
-      letter: '',
-      type: 'Link',
-    }
-  );
+  const [clothWhereBuy, setClothWhereBuy] = useState<ClothWhereBuy>({
+    letter: '',
+    type: 'Link',
+  });
   const [clothColor, setClothColor] = useState<ColorListType | null>(null);
   const [clothSize, setClothSize] = useState<SizeItem | null>(null);
   const [clothOpen, setClothOpen] = useState<Boolean>(true);
