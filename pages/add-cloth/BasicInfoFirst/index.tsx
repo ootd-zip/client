@@ -24,6 +24,7 @@ import { ColorListType } from '@/components/ColorList';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
 import { suggestionColorType } from '..';
 import RecommendColor from '@/components/Domain/AddCloth/RecommendColor';
+import Toast from '@/components/Toast';
 
 interface BaiscInfoFirst {
   clothName: string;
@@ -135,6 +136,19 @@ export default function BasicInfoFirst({
     }
   };
 
+  const [brandSubmitStatus, setNoBrandSubmitStatus] = useState<Boolean>(false);
+  const [toastOpen, setToastOpen] = useState<Boolean>(false);
+
+  useEffect(() => {
+    if (!brandModalOpen && brandSubmitStatus) {
+      setToastOpen(true);
+    }
+  }, [brandSubmitStatus, brandModalOpen]);
+
+  useEffect(() => {
+    console.log(suggestionColor);
+  }, [suggestionColor]);
+
   return (
     <>
       <Background
@@ -225,6 +239,14 @@ export default function BasicInfoFirst({
             </S.Information>
           </S.BasicInfo>
         </div>
+        {toastOpen && (
+          <Toast
+            className="brandSuggestion"
+            text={`브랜드 건의가 정상적으로 접수되었습니다.`}
+            setState={setToastOpen}
+            state={toastOpen}
+          />
+        )}
         <NextButton
           className="nextButton"
           state={nextButtonState}
@@ -252,6 +274,7 @@ export default function BasicInfoFirst({
           brandModalIsOpen={brandModalOpen}
           setClothBrand={setClothBrand}
           setBrandModalIsOpen={setBrandModalOpen}
+          setNoBrandSubmitStatus={setNoBrandSubmitStatus}
         />
       )}
       {colorModalOpen && (

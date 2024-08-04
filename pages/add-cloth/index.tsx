@@ -2,7 +2,7 @@ import AppBar from '@/components/Appbar';
 import Gallery from '@/components/Gallery/';
 import { Title1 } from '@/components/UI';
 import { useFunnel } from '@/hooks/use-funnel';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 import BasicInfoFirst from './BasicInfoFirst';
 import { ComponentWithLayout } from '../sign-up';
@@ -20,6 +20,10 @@ import { BrandType } from '@/components/BrandList/Brand';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import useRememberScroll from '@/hooks/useRememberScroll';
+import {
+  getReactNativeMessage,
+  sendReactNativeMessage,
+} from '@/utils/reactNativeMessage';
 
 export interface ClothWhereBuy {
   letter: string;
@@ -32,6 +36,9 @@ export interface suggestionColorType {
   colorCode: string;
 }
 
+/*
+이름: 옷 추가 페이지 
+*/
 const AddCloth: ComponentWithLayout = () => {
   const steps = ['편집', '제품명', '기본정보', '추가정보'];
   const [Funnel, currentStep, handleStep] = useFunnel(steps);
@@ -67,6 +74,7 @@ const AddCloth: ComponentWithLayout = () => {
 
   //스크롤 위치를 기억하기 위한 훅
   const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
+  const [realImageURL, setRealImageURL] = useState<string>('');
 
   //옷 등록 api 함수
   const onClickSubmitButton = async () => {
@@ -78,7 +86,7 @@ const AddCloth: ComponentWithLayout = () => {
       colorIds: [...clothColor!].map((item) => item.id),
       isPrivate: !open,
       sizeId: clothSize!.id,
-      clothesImageUrl: clothImage![0].ootdImage,
+      clothesImageUrl: realImageURL,
       name: clothName,
       purchaseDate: clothBuyDate,
       clothMemo,
@@ -109,6 +117,12 @@ const AddCloth: ComponentWithLayout = () => {
       return <AiOutlineArrowLeft onClick={onClickAppbarLeftButton} />;
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      getReactNativeMessage(setRealImageURL);
+    }
+  }, []);
 
   return (
     <Funnel>

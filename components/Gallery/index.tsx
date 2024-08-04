@@ -245,12 +245,10 @@ const Gallery = ({
               return (
                 <S.BigImage key={index}>
                   <NextImage
-                    id="sourceImage"
                     className="bigImage"
                     src={item.ootdImage}
                     alt=""
                     fill={true}
-                    onLoadingComplete={() => setImageLoaded(true)}
                   />
                   <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
                 </S.BigImage>

@@ -24,11 +24,10 @@ interface ComponentWithLayout extends FC {
 const Agree: ComponentWithLayout = () => {
   const router = useRouter();
 
-  const [check1, setCheck1] = useState<Boolean>(false);
-  const [check2, setCheck2] = useState<Boolean>(false);
+  const [check1, setCheck1] = useState<Boolean>(false); // 이용약관 동의
+  const [check2, setCheck2] = useState<Boolean>(false); // 개인정보처리방침 동의
 
   const [possible, setPossible] = useState<Boolean>(false);
-  const [alertOpen, setAlertOpen] = useState<Boolean>(false);
 
   useEffect(() => {
     if (check1 && check2) {

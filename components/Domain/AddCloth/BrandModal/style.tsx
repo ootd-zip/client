@@ -85,6 +85,18 @@ const SelectedBrandSpan = styled.div`
   }
 `;
 
+const NoBrandInput = styled.div`
+  margin-top: 40px;
+  padding: 0px 20px;
+
+  .noBrandinfo1 {
+    margin-top: 8px;
+  }
+  .noBrandinfo2 {
+    margin-bottom: 16px;
+  }
+`;
+
 const S = {
   Layout,
   Title,
@@ -93,6 +105,7 @@ const S = {
   SelectedBrand,
   SelectedBrandSpan,
   NoBrand,
+  NoBrandInput,
 };
 
 export default S;
