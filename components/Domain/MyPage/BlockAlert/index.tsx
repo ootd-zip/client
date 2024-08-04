@@ -1,12 +1,15 @@
 import Alert from '@/components/Alert';
-import { Body3, Title1 } from '@/components/UI';
+import { Body3 } from '@/components/UI';
 
 export interface BlockAlertProps {
   blockUserName: string;
   onClickYesButton: () => void;
   onClickNoButton: () => void;
 }
-
+/*
+이름: 차단 Alert
+역할: 유저에게 차단 행위를 한번 더 확인하는 Alert 컴포넌트
+*/
 export default function BlockAlert({
   blockUserName,
   onClickNoButton,

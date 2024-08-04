@@ -3,6 +3,7 @@ import styled from 'styled-components';
 interface LayoutProps {
   state: Boolean;
   className?: string;
+  alertState?: Boolean;
 }
 
 const Layout = styled.div<LayoutProps>`

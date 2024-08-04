@@ -6,6 +6,10 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+
+  .clothName {
+    color: ${(props) => props.theme.color.grey_50};
+  }
 `;
 
 const Container = styled.div`

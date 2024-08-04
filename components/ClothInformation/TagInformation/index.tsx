@@ -4,6 +4,10 @@ import Image from 'next/image';
 import { ClothInformationProps } from '../type';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
+/*
+이름: 태그 정보
+역할: ootd에 옷 태그 시 사용되는 태그 컴포넌트  
+*/
 export default function TagInformation({
   clothImage,
   brand,
@@ -24,6 +28,7 @@ export default function TagInformation({
         <Body4>{name}</Body4>
         {clothSize && <Body4>{clothSize}</Body4>}
       </S.Information>
+      {/*드래그와 클릭을 구분하기 위해 onTouchEnd 이벤트 사용*/}
       <S.Close onTouchEnd={onTouchEnd} state={state!}>
         {type !== 'view' && (
           <div>

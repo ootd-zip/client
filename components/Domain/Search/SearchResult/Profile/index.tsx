@@ -7,7 +7,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import FollowBlock from '@/components/FollowBlock';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/Spinner';
 import Button from '@/components/Button';
@@ -30,6 +29,11 @@ interface ProfileProps {
   profileHasNextPage: Boolean;
 }
 
+/*
+이름: 검색 결과 사용자 컴포넌트
+역할: 검색 결과에 따른 사용자
+*/
+
 export default function Profile({
   profileList,
   setProfileList,
@@ -41,6 +45,7 @@ export default function Profile({
 
   const { follow, unFollow } = PublicApi();
 
+  // 팔로우 또는 팔로잉 버튼을 눌렀을 경우의 토글 함수
   const onClickFollow = async (
     isFollow: Boolean,
     index: number,
@@ -50,10 +55,12 @@ export default function Profile({
     newProfileList[index].isFollow = !newProfileList[index].isFollow;
     setProfileList(newProfileList);
 
+    // 팔로우 중이라면 언팔로우 API
     if (isFollow) {
       await unFollow(userId);
       return;
     }
+    // 미팔로우 중이라면 팔로우 API
     await follow(userId);
   };
 
@@ -67,6 +74,7 @@ export default function Profile({
                 <S.Profile
                   onClick={() => router.push(`/mypage/${item.id}/search`)}
                 >
+                  {/* 프로필 이미지 */}
                   {item.profileImage === '' ? (
                     <Avatar className="userImage" />
                   ) : (
@@ -83,7 +91,7 @@ export default function Profile({
                     <Body3 state="emphasis">{item.name}</Body3>
                   </S.NameText>
                 </S.Profile>
-
+                {/* 팔로잉 팔로우 버튼 */}
                 {item.isFollow ? (
                   <Button
                     border={false}

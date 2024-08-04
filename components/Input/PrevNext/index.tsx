@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction, useState } from 'react';
 import S from './style';
 import { Button3 } from '@/components/UI';
 
@@ -8,7 +7,10 @@ interface PrevNextProps {
   leftButtonOnClick: () => void;
   rightButtonOnClick: () => void;
 }
-
+/*
+이름: 두가지 선택 버튼
+역할: 두가지 선택 중 한가지만 선택이 가능한 버튼
+*/
 export default function TrueFalse({
   left,
   right,

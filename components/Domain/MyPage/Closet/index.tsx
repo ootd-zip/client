@@ -14,7 +14,10 @@ interface ClosetType {
   clothesCount: number;
   isMyProfile: Boolean;
 }
-
+/*
+이름: 유저의 옷장
+역할: 마이페이지에서 사용되는 유저의 옷장 컴포넌트
+*/
 export default function Closet({
   showingId,
   ootdCount,
@@ -22,15 +25,19 @@ export default function Closet({
   clothesCount,
   isMyProfile,
 }: ClosetType) {
+  //슬라이드를 허용하지 않고 각 단계를 처리하기 위한 Funnel 사용
   const [Funnel, currentStep, handleStep] = useFunnel(['OOTD', 'Cloth']);
   const router = useRouter();
 
+  //처음 보여지는 컨텐츠를 url에 기반해 선택해주는 로직
   useEffect(() => {
     if (!router.isReady) return;
     if (router.query.UserId![1] === 'cloth') {
       handleStep('Cloth');
+      return;
     }
-  }, [router.isReady]);
+    handleStep('OOTD');
+  }, [router.isReady, router.query.UserId]);
 
   return (
     <>

@@ -17,6 +17,17 @@ export const getReactNativeMessage = (
       });
       setState(imageArray);
     }
+    if (parsedData?.type === 'OOTDPreview') {
+      const banana = parsedData?.payload;
+      const imageArray = banana.map((item: any, index: number) => {
+        return { ootdImage: item, ootdId: index };
+      });
+      setState(imageArray);
+    }
+    if (parsedData!.type === 'ClothPreview') {
+      const banana = parsedData?.payload;
+      setState([{ ootdImage: banana[0], ootdId: 0 }]);
+    }
     if (parsedData!.type === 'Cloth') {
       const banana = parsedData?.payload;
       setState([{ ootdImage: banana[0], ootdId: 0 }]);

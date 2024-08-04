@@ -13,6 +13,11 @@ interface ErrorFallbackProps {
   resetErrorBoundary: () => void;
 }
 
+/*
+이름: 에러 바운더리
+역할: 에러 발생 시 에러 화면이 아닌 에러 발생 화면을 보여주기 위한 컴포넌트
+특이사항: 비동기 에러는 잡지 못하기 때문에, api 호출에서 throw error를 해줘야한다.
+*/
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   const [URLState, setURLState] = useState<Boolean>(false);
 

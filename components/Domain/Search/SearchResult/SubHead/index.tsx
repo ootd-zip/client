@@ -11,6 +11,11 @@ interface SubHeadProps {
   setState: Dispatch<SetStateAction<string>>;
 }
 
+/*
+이름: 검색 페이지 소 타이틀 컴포넌트
+역할: 검색 페이지에서 사용되는 소 타이틀 컴포넌트
+*/
+
 export default function SubHead({
   count,
   style,

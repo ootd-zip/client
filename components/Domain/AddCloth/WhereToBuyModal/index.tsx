@@ -1,7 +1,7 @@
 import { Body3, Title1 } from '@/components/UI';
 import S from './style';
 import Input from '@/components/Input';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import Modal from '@/components/Modal';
 import NextButton from '@/components/NextButton';
 import { ClothWhereBuy } from '@/pages/add-cloth';
@@ -14,24 +14,31 @@ interface WhereToBuyModal {
   setWhereToBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
 }
 
+/*
+이름: 구매처 모달
+역할: 옷 등록 시 사용되는 구매처 모달 컴포넌트
+특이사항: default는 둘 다 선택 가능한 모습, 한쪽 선택 시 다른쪽 인풋을 disable
+*/
 export default function WhereToBuyModal({
   storedClothWhereBuy,
   isOpen,
   setIsOpen,
   setWhereToBuy,
 }: WhereToBuyModal) {
+  //링크 입력 input
   const [linkLetter, setLinkLetter] = useState<string>(
     storedClothWhereBuy && storedClothWhereBuy.type === 'Link'
       ? storedClothWhereBuy.letter
       : ''
   );
+  //직접 입력 input
   const [writeLetter, setWriteLetter] = useState<string>(
     storedClothWhereBuy && storedClothWhereBuy.type === 'Write'
       ? storedClothWhereBuy.letter
       : ''
   );
 
-  //true === 링크입력 , false === 직접입력
+  //직접 입력인지 링크 입력인지 구분하기 위한 상태 링크라면 1
   const [selectedLetter, setSelectedLetter] = useState<number | null>(
     storedClothWhereBuy && storedClothWhereBuy.type === 'Link' ? 1 : 2
   );
@@ -41,18 +48,21 @@ export default function WhereToBuyModal({
   const linkRef = useRef<any>(null);
   const writeRef = useRef<any>(null);
 
+  //링크 인풋 클릭 함수
   const onClickLinkLetter = () => {
     setSelectedLetter(1);
     setWriteLetter('');
     setOnClickInputState(true);
   };
 
+  //직접 입력 인풋 클릭 함수
   const onClickWriteLetter = () => {
     setSelectedLetter(2);
     setLinkLetter('');
     setOnClickInputState(true);
   };
 
+  //다음 단계 버튼 클릭 함수
   const onClickNextButton = () => {
     setIsOpen(false);
     if (linkLetter.length > 0)

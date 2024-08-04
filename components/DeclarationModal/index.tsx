@@ -21,6 +21,11 @@ interface DeclarationModalProps {
   setReportStatus: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 신고 모달 컴포넌트
+역할: 유저가 다른 유저를 신고할 때 사용되는 모달
+*/
+
 export default function DeclarationModal({
   type,
   userName,
@@ -30,7 +35,7 @@ export default function DeclarationModal({
   setReceivedDeclaration,
   setReportStatus,
 }: DeclarationModalProps) {
-  const [checks, setChecks] = useState<Array<boolean>>([
+  const [checks, setChecks] = useState<Array<Boolean>>([
     false,
     false,
     false,
@@ -40,14 +45,16 @@ export default function DeclarationModal({
     false,
     false,
   ]);
-  const [possible, setPossible] = useState<boolean>(false);
+  const [possible, setPossible] = useState<Boolean>(false);
 
+  // 신고 사유 어느 한 개라도 해당되면 신고하기 버튼 활성화 가능
   useEffect(() => {
     setPossible(checks.some((check) => check));
   }, [checks]);
 
   const { getReport, postReport } = ReportApi();
 
+  // 신고 사유 API 데이터
   const [withdrawBlockTitles, setWithdrawBlockTitles] =
     useState<withdrawBlockType>([]);
 
@@ -61,9 +68,10 @@ export default function DeclarationModal({
     fetchReport();
   }, []);
 
+  // 신고 사유 클릭 후 최종 신고하기 버튼
   const onClickDeclarationButton = async () => {
     const trueIndices: number[] = checks.reduce(
-      (acc: number[], currentValue: boolean, currentIndex: number) => {
+      (acc: number[], currentValue: Boolean, currentIndex: number) => {
         if (currentValue === true) {
           acc.push(currentIndex);
         }

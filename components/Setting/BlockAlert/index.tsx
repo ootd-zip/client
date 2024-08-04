@@ -6,6 +6,11 @@ interface BlockAlertProps {
   onClickNoButton: () => void;
 }
 
+/*
+이름: 차단 해제 Alert 컴포넌트
+역할: 차단 해제 할 때 나타나는 Alert
+*/
+
 export default function BlockAlert({
   onClickNoButton,
   onClickYesButton,

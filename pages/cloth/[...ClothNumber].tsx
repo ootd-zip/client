@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import S from '@/pageStyle/cloth/style';
 import AppBar from '@/components/Appbar';
 import { AiOutlineArrowLeft, AiOutlineEllipsis } from 'react-icons/ai';
@@ -43,6 +43,9 @@ export interface ClothDataType {
   userId: number;
 }
 
+/*
+이름: 옷 상세페이지 
+*/
 const Cloth = () => {
   const router = useRouter();
   const [data, setData] = useState<ClothDataType | null>(null);

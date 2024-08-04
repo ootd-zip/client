@@ -20,16 +20,23 @@ interface ActionSheetProps {
   setOpenActionSheet: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: 내 정보 수정 컴포넌트
+역할: 유저의 프로필과 정보 수정 가능한 컴포넌트
+*/
+
 export default function Edit({
   openActionSheet,
   setOpenActionSheet,
 }: ActionSheetProps) {
   const router = useRouter();
 
+  // 실제 보여지는 프로필 이미지
   const [profileImage, setProfileImage] = useState<string>(
     '/images/basicProfile.svg'
   );
 
+  // 페이지 최초 진입 시 프로필 이미지
   const [originProfile, setOriginProfile] = useState<string>(
     '/images/basicProfile.svg'
   );
@@ -43,20 +50,20 @@ export default function Edit({
 
   const { getProfile, patchProfile } = UserApi();
 
+  // 사진 촬영 후 바로 이미지 업로드 함수
   const takePicture = () => {
-    console.log('사진 촬영');
-    sendReactNativeMessage({ type: 'TakeProfile' });
+    sendReactNativeMessage({ type: 'TakeProfile' }); // react-native 기능으로 사진 촬영 후 바로 이미지 업로드 하기 위한 통신 메시지
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
+  // 앨범에서 이미지 선택 후 업로드 함수
   const choosePicture = () => {
-    console.log('앨범에서 선택');
-    sendReactNativeMessage({ type: 'Profile' });
+    sendReactNativeMessage({ type: 'Profile' }); // react-native 기능으로 앨범에서 이미지 선택하기 위한 통신 메시지
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
 
+  // 기본 이미지로 변경하는 함수
   const deleteImage = () => {
-    console.log('기본 이미지로 변경');
     setProfileImage('/images/Avatar.svg');
     setOpenActionSheet(false); // 액션 시트 자동 종료
   };
@@ -67,6 +74,7 @@ export default function Edit({
     }
   }, []);
 
+  // ActionSheet 버튼 정의 및 함수
   const buttons = [
     // { name: '사진 촬영', buttonClick: takePicture }, // 2차 배포
     { name: '앨범에서 선택', buttonClick: choosePicture },
@@ -78,7 +86,6 @@ export default function Edit({
   useEffect(() => {
     const ferchData = async () => {
       const result = await getProfile();
-      console.log(result);
 
       setNickName(result.name);
       setIntroduction(result.description);
@@ -94,6 +101,7 @@ export default function Edit({
 
   const [possible, setPossible] = useState<Boolean>(false);
 
+  // 편집 완료 버튼 활성화를 위한 체크
   useEffect(() => {
     if (
       nickName === '' ||
@@ -109,11 +117,12 @@ export default function Edit({
     }
   }, [nickName, weight, height, nickNameCheck]);
 
+  // 편집 완료 버튼 함수
   const onClickNextButton = async () => {
     if (possible) {
       const payload = {
         name: nickName,
-        profileImage: profileImage === '/images/Avatar.svg' ? '' : profileImage,
+        profileImage: profileImage === '/images/Avatar.svg' ? '' : profileImage, // 프로필 이미지를 기본 값으로 설정한 경우 빈 스트링으로 전송
         description: introduction,
         height: Number(height),
         weight: Number(weight),
@@ -122,6 +131,7 @@ export default function Edit({
 
       const result = await patchProfile(payload);
 
+      // API 통신이 성공적이었다면 이전 페이지(마이페이지)에서 toast message 설정
       if (result) {
         router.push({
           pathname: `/mypage/${myId}`,
@@ -144,11 +154,13 @@ export default function Edit({
     <>
       <S.Layout>
         <S.Main>
+          {/* 프로필 이미지 */}
           <EditProfile
             imageURL={profileImage}
             setImageURL={setProfileImage}
             onClickImage={() => setOpenActionSheet(!openActionSheet)}
           />
+          {/* 내 정보 */}
           <EditMyInfo
             nickNameCheck={nickNameCheck}
             setNickNameCheck={setNickNameCheck}
@@ -166,6 +178,7 @@ export default function Edit({
             setPossible={setPossible}
           />
         </S.Main>
+        {/* 수정 완료 버튼 */}
         <Button
           className="editMyPageButton"
           backgroundColor={possible ? 'grey_00' : 'grey_90'}

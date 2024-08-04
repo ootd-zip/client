@@ -9,6 +9,10 @@ interface PrevNextButtonProps {
   className?: string;
 }
 
+/*
+이름: 이전 다음 버튼
+역할: 이전과 다음 두가지로 이루어진 버튼
+*/
 export default function PrevNextButton({
   onClickPrevButton,
   onClickNextButton,

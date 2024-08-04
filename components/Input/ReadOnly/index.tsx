@@ -7,7 +7,10 @@ interface ReadOnlyProps {
   type?: 'Link' | 'Write';
   onClick?: any;
 }
-
+/*
+이름: 읽기 전용 인풋
+역할: 입력이 불가능하고 값을 나타내기만 하는 인풋 컴포넌트
+*/
 export default function ReadOnly({
   state,
   result,

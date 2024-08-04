@@ -11,10 +11,15 @@ interface WithdrawBlockProps {
   content?: React.ReactNode;
   content2?: React.ReactNode;
   buttonClick?: () => void;
-  checked: boolean;
-  setChecked: Dispatch<SetStateAction<boolean>>;
+  checked: Boolean;
+  setChecked: Dispatch<SetStateAction<Boolean>>;
   lastItem?: Boolean;
 }
+
+/*
+이름: 탈퇴 Block 컴포넌트
+역할: 탈퇴 페이지에서 사용되는 Block
+*/
 
 const WithdrawBlock = ({
   title,
@@ -35,6 +40,7 @@ const WithdrawBlock = ({
         <Body4 className="content">{content2}</Body4>
       </S.TextWrap>
       <S.IconSpan>
+        {/* 체크 박스 토글 형식 */}
         {checked ? (
           <CheckBoxTrue
             className="checkBoxIcon"

@@ -13,6 +13,11 @@ interface BookmarkSubHeadProps {
   total: number;
 }
 
+/*
+이름: 북마크 소 타이틀 컴포넌트
+역할: 북마크 게시글 개수, 삭제와 편집에 관한 버튼 존재
+*/
+
 export default function BookmarSubHead({
   editing,
   setEditing,
@@ -23,6 +28,7 @@ export default function BookmarSubHead({
   return (
     <>
       <S.headLayout>
+        {/* 게시글 편집 상태에 따른 멘트 변경 */}
         <S.Frame>
           <Body4 state="emphasis" className="bookmarkSubHeadText">
             {editing && count > 0 ? `${count}개의 게시글이 선택됨` : ``}
@@ -30,6 +36,7 @@ export default function BookmarSubHead({
           </Body4>
         </S.Frame>
         <S.Wrap>
+          {/* 편집 여부에 따른 버튼 변경 */}
           {editing ? (
             <>
               <button
