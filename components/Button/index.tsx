@@ -11,6 +11,10 @@ interface ButtonProps {
   className?: string;
 }
 
+/*
+이름: 버튼 컴포넌트
+역할: 공용으로 사용되는 버튼 컴포넌트 
+*/
 export default function Button(props: ButtonProps) {
   return (
     <>

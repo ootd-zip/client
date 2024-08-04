@@ -1,7 +1,7 @@
 import Modal from '@/components/Modal';
 import S from './style';
 import { Button1 } from '@/components/UI';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface ReportModalProps {
   reportModalIsOpen: Boolean;
@@ -9,6 +9,10 @@ interface ReportModalProps {
   setDeclaration: Dispatch<SetStateAction<Boolean>>;
 }
 
+/*
+이름: ootd신고 모달
+역할: ootd 상세 페이지에서 사용되는 ootd 신고 모달
+*/
 export default function ReportModal({
   reportModalIsOpen,
   setReportModalIsOpen,

@@ -10,7 +10,6 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { storedImageKey, userId } from '@/utils/recoil/atom';
-import { UserClothDataType } from '../../OOTD/UserCloth';
 import Spinner from '@/components/Spinner';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 import Toast from '@/components/Toast';
@@ -56,6 +55,10 @@ interface UserTagDataType {
   memo: string;
 }
 
+/*
+이름: 태그 추가 모달
+역할: ootd 등록 시 옷 태그를 추가하는 컴포넌트 모달
+*/
 export default function AddTag({
   setAddTag,
   addTag,
@@ -65,9 +68,12 @@ export default function AddTag({
   componentHeight,
   componentWidth,
 }: AddTagProps) {
+  //옷 검색 결과
   const [searchResult, setSearchResult] = useState<UserTagDataType[] | null>(
     null
   );
+
+  //카테고리 상위 리스트
   const categoryList = [
     '외투',
     '상의',
@@ -78,24 +84,30 @@ export default function AddTag({
     '신발',
     '가방',
   ];
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const [clicked, setClicked] = useState<number | null>();
-  const [notOpenState, setNotOpenState] = useState<Boolean>(false);
+
+  const [searchKeyword, setSearchKeyword] = useState<string>(''); //검색어
+  const [clickedCategoryIndex, setClickedCategorIndex] = useState<
+    number | null
+  >(); //현재 선택된 카테고리 인덱스
+  const [notOpenState, setNotOpenState] = useState<Boolean>(false); // 비공개 클릭 시 토스트 렌더링 유무
   const [goToMypageAlertState, setGoToMypageAlertState] =
-    useState<Boolean>(false);
+    useState<Boolean>(false); //마이페이지로 이동 Alert 창 렌더링 유무
 
-  const setStoredImage = useSetRecoilState(storedImageKey);
+  const setStoredImage = useSetRecoilState(storedImageKey); // 임시저장된 ootd
   const router = useRouter();
+  const { getUserClothList } = ClothApi();
+  const myId = useRecoilValue(userId); //로그인한 유저 id
 
+  //카테고리 버튼 클릭 함수
   const onClickCategory = (index: number) => {
-    if (clicked === index) {
-      setClicked(null);
+    if (clickedCategoryIndex === index) {
+      setClickedCategorIndex(null);
       return;
     }
-    setClicked(index);
+    setClickedCategorIndex(index);
   };
 
-  //태그 추가
+  //옷 태그 추가
   const onClickClothInformation = (index: number) => {
     if (imageAndTag) {
       const newTag = JSON.parse(JSON.stringify(imageAndTag));
@@ -143,20 +155,22 @@ export default function AddTag({
     }
   };
 
-  const { getUserClothList } = ClothApi();
-  const myId = useRecoilValue(userId);
-
+  //카테고리 선택 인덱스나, 검색어가 변경되면 재검색
   useEffectAfterMount(() => {
     setSearchResult(null);
     reset();
-  }, [clicked, searchKeyword]);
+  }, [clickedCategoryIndex, searchKeyword]);
 
+  //옷 조회 api 호출 함수
   const fetchDataFunction = async (page: number, size: number) => {
     const data = await getUserClothList({
       page,
       size,
       userId: myId,
-      categoryIds: typeof clicked === 'number' ? [clicked + 1] : undefined,
+      categoryIds:
+        typeof clickedCategoryIndex === 'number'
+          ? [clickedCategoryIndex + 1]
+          : undefined,
       searchText: searchKeyword,
       isPrivate: true,
     });
@@ -164,6 +178,7 @@ export default function AddTag({
     return data;
   };
 
+  //인피니티 스크롤
   const {
     data: fetchData,
     isLoading,
@@ -173,13 +188,15 @@ export default function AddTag({
   } = useInfiniteScroll({
     fetchDataFunction,
     initialData: [],
-    size: 7,
+    size: 12,
   });
 
+  //api 호출이 완료되면 검색 결과로 업데이트
   useEffect(() => {
     setSearchResult(fetchData);
   }, [fetchData]);
 
+  //마이페이지로 이동하기 버튼 클릭 이벤트
   const onClickGoToMypageYesButton = () => {
     setStoredImage(imageAndTag);
     router.push(`/mypage/${myId}/cloth`);
@@ -193,17 +210,20 @@ export default function AddTag({
           isOpen={goToMypageAlertState}
         />
         <S.Layout>
+          {/*TabView를 활용해 슬라이드 컴포넌트 구현*/}
           <TabView>
             <TabView.TabBar tab={['내 옷장', '신규 등록']} display="block" />
             <TabView.Tabs>
               <TabView.Tab>
                 <S.MyCloset>
+                  {/*검색 컴포넌트*/}
                   <SearchBar
                     letter={searchKeyword}
                     setLetter={setSearchKeyword}
                     placeholder="이름, 카테고리 등"
                     onChange={reset}
                   />
+                  {/*검색에 사용되는 필터*/}
                   <S.SearchFilter>
                     <S.IsOpenSpan state={true}>
                       <Body4 state="emphasis">공개</Body4>
@@ -217,13 +237,14 @@ export default function AddTag({
                       </Body4>
                     </S.IsOpenSpan>
                     <S.Divider />
+                    {/*검색에 사용되는 필터 - 카테고리*/}
                     <S.Category>
                       {categoryList.map((item, index) => {
                         return (
                           <S.CategorySpan
                             onTouchMove={(e) => e.stopPropagation()}
                             onClick={() => onClickCategory(index)}
-                            state={index === clicked}
+                            state={index === clickedCategoryIndex}
                             key={index}
                           >
                             <Body4 state="emphasis">{item}</Body4>
@@ -232,6 +253,7 @@ export default function AddTag({
                       })}
                     </S.Category>
                   </S.SearchFilter>
+                  {/*검색 결과 리스트*/}
                   <S.List ref={containerRef}>
                     {searchResult?.map((item, index) => {
                       return (
@@ -259,11 +281,13 @@ export default function AddTag({
                   {isLoading && hasNextPage && <Spinner />}
                 </S.MyCloset>
               </TabView.Tab>
+              {/*새로운 등록 탭*/}
               <TabView.Tab>
                 <NewRegister imageAndTag={imageAndTag} />
               </TabView.Tab>
             </TabView.Tabs>
           </TabView>
+          {/*비공개 버튼 클릭시 보여지는 Toast*/}
           {notOpenState && (
             <Toast
               className="toast"
@@ -275,6 +299,7 @@ export default function AddTag({
               isHelperText={true}
             />
           )}
+          {/*마이페이지로 이동 Alert 창*/}
           {goToMypageAlertState && (
             <Alert
               headline="현재 페이지를 벗어납니다."

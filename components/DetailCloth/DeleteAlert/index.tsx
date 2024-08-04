@@ -6,6 +6,11 @@ interface DeleteAlertProps {
   onClickNoButton: () => void;
 }
 
+/*
+이름: 옷 삭제 Alert 모달
+역할: 의류 상세 페이지 ActionSheet에서의 옷 삭제 Alert 모달
+*/
+
 export default function DeleteAlert({
   onClickNoButton,
   onClickYesButton,

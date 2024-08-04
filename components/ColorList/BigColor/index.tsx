@@ -9,6 +9,10 @@ interface BigColorProps {
   index: number;
 }
 export default function BigColor({
+  /*
+이름: 색상
+역할: 옷 색상과 이름을 나타는 색상 컴포넌트
+*/
   color,
   name,
   state,
@@ -17,6 +21,7 @@ export default function BigColor({
 }: BigColorProps) {
   return (
     <S.Layout>
+      {/*선택한 상태*/}
       {!state && (
         <S.ColorSpan
           onClick={() => (onClick ? onClick(index) : '')}
@@ -24,6 +29,7 @@ export default function BigColor({
           name={name}
         />
       )}
+      {/*미선택한 상태*/}
       {state && (
         <S.BigColorSpan>
           <S.SmallColorSpan

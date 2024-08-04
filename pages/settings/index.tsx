@@ -13,17 +13,23 @@ import Toast from '@/components/Toast';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UserApi } from '@/apis/domain/User/UserApi';
 
+/*
+이름: 설정 페이지
+역할: 설정 페이지
+*/
+
 export default function Setting() {
   const router = useRouter();
 
-  const [queryState, setQueryState] = useState<Boolean>(false);
-  const [URLState, setURLState] = useState<any>(false);
-  const [platform, setPlatform] = useState('');
+  const [queryState, setQueryState] = useState<Boolean>(false); // 취향정보 수정 상태
+  const [URLState, setURLState] = useState<any>(false); // 이메일 공유 상태
+  const [platform, setPlatform] = useState(''); // 내 플랫폼 상태
 
   const { getSocilLoginProvider } = UserApi();
 
   useEffect(() => {
     const ferchData = async () => {
+      // 플랫폼 조회 API
       const result = await getSocilLoginProvider();
       setPlatform(result);
     };
@@ -51,6 +57,7 @@ export default function Setting() {
     }
   }, []);
 
+  // 로그아웃 버튼 함수
   const onClickLogoutButton = async () => {
     const result = await logout();
     if (result) router.push('/sign-in');

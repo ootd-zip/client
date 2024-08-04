@@ -3,7 +3,6 @@ import { Body3, Headline2 } from '@/components/UI';
 import S from './style';
 import Carousel from '@/components/Carousel';
 import ClothInformation from '@/components/ClothInformation';
-import { useEffect, useRef, useState } from 'react';
 
 interface TodayRecommendSampleData {
   data: {
@@ -19,7 +18,11 @@ interface TodayRecommendSampleData {
     }[];
   }[];
 }
-
+/*
+이름: 오늘 입기 좋은 옷
+역할: 오늘 입기 좋은 옷을 날씨와 연계해 유저에게 추천하는 컴포넌트
+특이사항: 현재 사용하지 않음
+*/
 export default function TodayRecommend(props: TodayRecommendSampleData) {
   return (
     <S.Layout>

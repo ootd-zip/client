@@ -23,7 +23,10 @@ interface profileProps {
   data: UserProfileDataType;
   onClickFollowButton: () => void;
 }
-
+/*
+이름: 유저의 프로필
+역할: 마이페이지에서 사용되는 유저의 프로필 컴포넌트
+*/
 export default function Profile({ data, onClickFollowButton }: profileProps) {
   const router = useRouter();
 
@@ -38,6 +41,7 @@ export default function Profile({ data, onClickFollowButton }: profileProps) {
         follow={data.followerCount}
         myCloth={data.followingCount}
       />
+      {/*체형*/}
       {String(data.height) !== '0' && (
         <S.BodyInformation>
           <Body4>{data.height}cm</Body4>
@@ -45,9 +49,11 @@ export default function Profile({ data, onClickFollowButton }: profileProps) {
           <Body4>{data.weight}kg</Body4>
         </S.BodyInformation>
       )}
+      {/*유저의 자기 소개*/}
       <S.Introduce>
         <Body3>{data.description}</Body3>
       </S.Introduce>
+      {/*자기 옷장인지 아닌지 유무에 따른 팔로우/내 정보 수정 버튼*/}
       {data.isMyProfile ? (
         <Button
           className="editButton"

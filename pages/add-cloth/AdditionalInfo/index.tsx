@@ -31,7 +31,9 @@ interface AdditionalInfo {
   setClothSize: Dispatch<SetStateAction<SizeItem | null>>;
   onClickSubmitButton: () => void;
 }
-
+/*
+이름: 옷 등록 추가 정보 
+*/
 export default function AdditionalInfo({
   clothName,
   clothImage,

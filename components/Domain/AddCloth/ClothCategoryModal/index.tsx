@@ -25,22 +25,29 @@ export type CategoryListType = {
   state?: Boolean;
   detailCategories?: CategoryType[];
 };
-
+/*
+이름: 옷 카테고리 모달
+역할: 옷 등록 페이지에서 사용되는 옷 카테고리 선택 모달 컴포넌트
+*/
 export default function ClothCategoryModal({
   isOpen,
   setIsOpen,
   setClothCategory,
   categoryInitial,
 }: ClothCategoryModalProps) {
+  //선택된 카테고리 리스트
   const [selectedCategory, setSelectedCategory] = useState<
     CategoryListType[] | null
   >(null);
 
+  //카테고리 리스트
   const [categoryList, setCategoryList] = useState<CategoryListType[] | null>(
     null
   );
+  //제출 가능 상태
   const [submitButtonState, setSubmitButtonState] = useState<Boolean>(false);
 
+  //카테고리 리스트 상태 변경 시 카테고리 중 선택된게 있다면 제출 가능 상태를 true로 업데이트
   useEffect(() => {
     const filteredCategoryList = [];
     categoryList?.forEach((item: CategoryListType) => {
@@ -58,6 +65,7 @@ export default function ClothCategoryModal({
     setSubmitButtonState(false);
   }, [categoryList]);
 
+  //다음 단계 버튼 클릭 이벤트
   const onClickNextButton = () => {
     setClothCategory(selectedCategory);
     setIsOpen(false);

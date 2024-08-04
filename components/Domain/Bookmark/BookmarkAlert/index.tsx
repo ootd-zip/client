@@ -6,6 +6,11 @@ interface BookmarkAlertProps {
   onClickNoButton: () => void;
 }
 
+/*
+이름: 북마크 삭제 Alert 컴포넌트
+역할: 북마크에서 삭제 여부 확인하는 컴포넌트
+*/
+
 export default function BookmarkAlert({
   onClickNoButton,
   onClickYesButton,

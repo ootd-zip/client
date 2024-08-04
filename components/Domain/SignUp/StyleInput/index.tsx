@@ -8,13 +8,18 @@ interface StyleInputProps {
   selectedStyle: Style[];
   setSelectedStyle: Dispatch<SetStateAction<Style[]>>;
 }
+/*
+이름: 스타일 인풋
+역할: 회원가입에서 사용되는 스타일을 선택하는 컴포넌트
+*/
 export default function StyleInput({
   selectedStyle,
   setSelectedStyle,
 }: StyleInputProps) {
-  const [style, setStyle] = useState<Style[]>([]);
+  const [style, setStyle] = useState<Style[]>([]); //스타일 리스트
   const { getStyle } = OOTDApi();
 
+  //스타일 리스트 조회 api 호출 함수
   useEffect(() => {
     const ferchData = async () => {
       let result = (await getStyle()).map((item: Style) => {
@@ -27,6 +32,7 @@ export default function StyleInput({
     ferchData();
   }, []);
 
+  //스타일 리스트 변동 시 선택한 스타일 리스트 업데이트
   useEffect(() => {
     const newStyle = style.filter((item) => item.state);
 

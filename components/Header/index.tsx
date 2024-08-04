@@ -5,6 +5,11 @@ interface HeaderProps {
   text: string;
 }
 
+/*
+이름: 타이틀 컴포넌트
+역할: 각 페이지에서 사용되는 타이틀
+*/
+
 const Header = ({ text }: HeaderProps) => {
   return (
     <S.Layout>

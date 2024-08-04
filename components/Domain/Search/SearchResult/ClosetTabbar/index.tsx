@@ -6,6 +6,11 @@ interface ClosetTabbarProps {
   currentStep: string;
 }
 
+/*
+이름: 검색 결과 탭바 컴포넌트
+역할: 검색 페이지에서 사용되는 탭바
+*/
+
 export default function ClosetTabbar({
   handleStep,
   currentStep,

@@ -1,9 +1,9 @@
 import AppBar from '@/components/Appbar';
 import S from '@/pageStyle/edit-mypage/style';
-import { AiOutlineArrowLeft, AiOutlineSetting } from 'react-icons/ai';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import Edit from '@/components/Domain/MyPage/Edit';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Style } from '../add-ootd';
 import { AppLayoutProps } from '@/AppLayout';
 import Background from '@/components/Background';
@@ -11,6 +11,11 @@ import Background from '@/components/Background';
 interface ComponentWithLayout extends FC {
   Layout?: FC<AppLayoutProps>;
 }
+
+/*
+이름: 내 정보 수정 페이지
+역할: 마이페이지 내 정보 수정 페이지
+*/
 
 const EditMyPage: ComponentWithLayout = () => {
   const router = useRouter();

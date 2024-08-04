@@ -47,6 +47,11 @@ interface BottomNavBarType {
   click: () => void;
 }
 
+/*
+이름: 하단 네비게이션 바
+역할: 유저의 컨텐츠 이동을 돕는 컴포넌트
+특이사항: url를 기반으로 작동함 
+*/
 export default function BottomNavBar({
   addModalState,
   setAddModalState,
@@ -55,6 +60,7 @@ export default function BottomNavBar({
   const path = router.asPath;
   const myId = useRecoilValue(userId);
 
+  //네비게이션 클릭 시 이동하는 주소
   const routes = [
     '/main/explore',
     '/search',
@@ -63,14 +69,18 @@ export default function BottomNavBar({
     `/mypage/${myId}`,
   ];
 
+  //현재 위치하고 있는 라우터의 인덱스를 얻는 함수
   const getActiveIndex = () =>
     routes.findIndex((route) => path.includes(route));
 
+  //현재 위치하고 있는 인덱스
   const activeIndex = getActiveIndex();
 
+  //바텀 네비게이션 바의 정보를 담고있는 상태, 아이콘과 동작 이벤트로 이루어져있음
   const [bottomNavBarLinkers, setBottomNavBarLinkers] =
     useState<BottomNavBarType[]>();
 
+  //페이지 렌더링 시 바텀 네비게이션 바를 세팅
   useEffect(() => {
     setBottomNavBarLinkers(
       icons.map((icon, index) => ({
@@ -83,6 +93,8 @@ export default function BottomNavBar({
       }))
     );
   }, []);
+
+  //페이지 이동 시 바텀 네비게이션 바 변경
   useEffect(() => {
     const newLinkers = icons.map((icon, index) => ({
       icon: index === activeIndex ? activeIcons[index] : icon,
@@ -95,6 +107,7 @@ export default function BottomNavBar({
     setBottomNavBarLinkers(newLinkers);
   }, [router, activeIndex]);
 
+  //아이템 추가 버튼 클릭 함수
   const onClickPlusButton = () => {
     setAddModalState(!addModalState);
   };

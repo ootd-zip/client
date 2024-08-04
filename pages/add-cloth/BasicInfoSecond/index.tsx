@@ -39,6 +39,10 @@ interface BasicInfoSecondProps {
   onClickSubmitButton: () => void;
 }
 
+/*
+이름: 필수 정보 두번째 단계
+역할: 옷 등록 단계 중 필수 정보 두번째 단계 컴포넌트 
+*/
 export default function BasicInfoSecond({
   clothName,
   clothCategory,
@@ -52,16 +56,19 @@ export default function BasicInfoSecond({
   setOpen,
   open,
   handleStep,
-  onClickSubmitButton,
 }: BasicInfoSecondProps) {
+  //색상 모달 렌더링 유무
   const [colorModalOpen, setColorModalOpen] = useState<Boolean>(false);
+  //사이즈 모달 렌더링 유무
   const [sizeModalOpen, setSizeModalOpen] = useState<Boolean>(false);
+  //추가 정보 추천 Alert 렌더링 유무
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
 
   const { postCloth } = ClothApi();
   const router = useRouter();
-  const myId = useRecoilValue(userId);
+  const myId = useRecoilValue(userId); //현재 로그인 한 유저의 id
 
+  //이전에 선택한 카테고리 컴포넌트
   const Category = () => {
     return (
       <S.Category>
@@ -76,26 +83,32 @@ export default function BasicInfoSecond({
     );
   };
 
+  //배경 선택 함수
   const onClickBackground = () => {
     if (colorModalOpen) setColorModalOpen(false);
     if (sizeModalOpen) setSizeModalOpen(false);
     if (alertOpen) setAlertOpen(false);
   };
 
+  //다음 단계 버튼 클릭 함수
   const onClickNextButton = () => {
     setAlertOpen(true);
   };
 
+  //색상 추가 버튼 클릭 함수
   const onClickColorPlusButton = () => {
     setColorModalOpen(true);
   };
 
+  //다음 단계 버튼 클릭 함수
   const onClickYesButton = () => {
     handleStep('추가정보');
   };
 
+  //스크롤 위치를 기억하기 위한 훅
   const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
 
+  //아니요 버튼 클릭 함수(필수정보만 등록)
   const onClickNoButton = async () => {
     const payload = {
       purchaseStore: clothWhereBuy.letter,
@@ -124,6 +137,7 @@ export default function BasicInfoSecond({
         onClick={onClickBackground}
       />
       <S.Layout>
+        {/*이전에 등록한 정보*/}
         <S.BasicInfoFirst>
           <Category />
           <Headline1>{clothBrand && clothBrand[0].name}</Headline1>
@@ -137,6 +151,7 @@ export default function BasicInfoSecond({
           />
           <hr />
         </S.BasicInfoFirst>
+        {/*이번에 등록할 정보*/}
         <S.BasicInfoSecond>
           <S.Title>
             <Title1 className="title">기본 정보</Title1>
@@ -199,6 +214,7 @@ export default function BasicInfoSecond({
           등록하기
         </NextButton>
       </S.Layout>
+      {/*색상 선택 모달*/}
       {colorModalOpen && (
         <ColorModal
           colorInitial={clothColor}
@@ -207,6 +223,7 @@ export default function BasicInfoSecond({
           isOpen={colorModalOpen}
         />
       )}
+      {/*사이즈 선택 모달*/}
       {sizeModalOpen && (
         <ClothSizeModal
           setIsOpen={setSizeModalOpen}
@@ -220,6 +237,7 @@ export default function BasicInfoSecond({
           clothSizeInitial={clothSize}
         />
       )}
+      {/*추가 정보 여부 선택 Alert*/}
       {alertOpen && (
         <AddClothAlert
           onClickYesButton={onClickYesButton}

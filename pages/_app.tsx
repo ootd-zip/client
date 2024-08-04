@@ -3,10 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '@/styles/GlobalStyle';
 import themes from '@/styles/theme';
 import Script from 'next/script';
-import {
-  NEXT_PUBLIC_APPLE_CLIENT_ID,
-  NEXT_PUBLIC_KAKAO_JS_KEY,
-} from '@/constants/develop.constants';
+import { NEXT_PUBLIC_KAKAO_JS_KEY } from '@/constants/develop.constants';
 import AppLayout from '../AppLayout';
 import { NextPage } from 'next';
 import { RecoilRoot } from 'recoil';
@@ -15,9 +12,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import Head from 'next/head';
 import MyErrorBoundary from '@/components/MyErrorBoundary';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-
 declare global {
   // Kakao 함수를 전역에서 사용할 수 있도록 선언
   interface Window {
@@ -45,7 +39,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <RecoilRoot>
       <>
         <QueryClientProvider client={queryClient}>
-          {/* <ReactQueryDevtools /> */}
           <GlobalStyles />
           <ThemeProvider theme={themes}>
             <Layout>

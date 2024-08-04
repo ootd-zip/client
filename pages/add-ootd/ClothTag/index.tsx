@@ -1,14 +1,7 @@
 import S from '@/pageStyle/add-ootd/ClothTag/style';
 import { Body3 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import TagInformation from '@/components/ClothInformation/TagInformation';
 import Carousel from '@/components/Carousel';
@@ -24,6 +17,10 @@ interface ClothTagProps {
   tagSelectedState: Boolean;
 }
 
+/*
+이름: 옷 태그
+역할: ootd 등록 단계에서 사용되는 옷 태그 컴포넌트
+*/
 export default function ClothTag({
   setImageAndTag,
   handleStep,

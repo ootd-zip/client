@@ -10,7 +10,7 @@ const BookmarkList = styled.div`
 
 const TopButton = styled.div`
   position: fixed;
-  bottom: 162px;
+  bottom: 71px;
   right: 20px;
   width: 48px;
   height: 48px;
