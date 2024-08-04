@@ -1,7 +1,7 @@
 import { Body3, Title1 } from '@/components/UI';
 import S from './style';
 import Input from '@/components/Input';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import Modal from '@/components/Modal';
 import NextButton from '@/components/NextButton';
 import { ClothWhereBuy } from '@/pages/add-cloth';
@@ -11,7 +11,7 @@ interface WhereToBuyModal {
   storedClothWhereBuy?: ClothWhereBuy;
   isOpen: Boolean;
   setIsOpen: Dispatch<SetStateAction<Boolean>>;
-  setWhereToBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
+  setWhereToBuy: Dispatch<SetStateAction<ClothWhereBuy | undefined>>;
 }
 
 export default function WhereToBuyModal({

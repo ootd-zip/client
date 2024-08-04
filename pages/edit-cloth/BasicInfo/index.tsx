@@ -31,17 +31,13 @@ interface BasicInfoProps {
   clothImage: ImageWithTag | undefined;
   clothCategory: CategoryListType[] | null;
   clothBrand: BrandType[] | null;
-  clothWhereBuy: ClothWhereBuy;
   clothColor: ColorListType | null;
-  clothSize: SizeItem | null;
   clothOpen: Boolean;
   setClothImage: Dispatch<SetStateAction<ImageWithTag | undefined>>;
   setClothName: Dispatch<SetStateAction<string>>;
   setClothCategory: Dispatch<SetStateAction<CategoryListType[] | null>>;
   setClothBrand: Dispatch<SetStateAction<BrandType[] | null>>;
-  setClothWhereBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
   setClothColor: Dispatch<SetStateAction<ColorListType | null>>;
-  setClothSize: Dispatch<SetStateAction<SizeItem | null>>;
   setClothOpen: Dispatch<SetStateAction<Boolean>>;
   handleStep: (next: string) => void;
   onClickSubmitButton: () => void;
@@ -52,27 +48,20 @@ export default function BasicInfo({
   clothImage,
   clothCategory,
   clothBrand,
-  clothWhereBuy,
   clothColor,
-  clothSize,
   clothOpen,
   setClothImage,
   setClothName,
   setClothCategory,
   setClothBrand,
-  setClothWhereBuy,
   setClothOpen,
   setClothColor,
-  setClothSize,
   handleStep,
   onClickSubmitButton,
 }: BasicInfoProps) {
   const [categoryModalOpen, setCategoryModalOpen] = useState<Boolean>(false);
-  const [whereToBuyModalOpen, setWhereToBuyModalOpen] =
-    useState<Boolean>(false);
   const [brandModalOpen, setBrandModalOpen] = useState<Boolean>(false);
   const [colorModalOpen, setColorModalOpen] = useState<Boolean>(false);
-  const [sizeModalOpen, setSizeModalOpen] = useState<Boolean>(false);
 
   const Category = clothCategory !== null && (
     <S.Category>
@@ -88,22 +77,14 @@ export default function BasicInfo({
 
   const Brand = <Body3>{clothBrand && clothBrand[0]?.name}</Body3>;
 
-  const WhereToBuy = (
-    <Body3 style={{ WebkitTextDecorationLine: 'underline' }}>
-      {clothWhereBuy?.letter}
-    </Body3>
-  );
-
   const onClickNextButton = () => {
     handleStep('추가정보');
   };
 
   const onClickBackground = () => {
     if (categoryModalOpen) setCategoryModalOpen(false);
-    if (whereToBuyModalOpen) setWhereToBuyModalOpen(false);
     if (brandModalOpen) setBrandModalOpen(false);
     if (colorModalOpen) setColorModalOpen(false);
-    if (sizeModalOpen) setSizeModalOpen(false);
   };
 
   useEffect(() => {
@@ -118,13 +99,7 @@ export default function BasicInfo({
   return (
     <>
       <Background
-        isOpen={
-          categoryModalOpen ||
-          whereToBuyModalOpen ||
-          brandModalOpen ||
-          sizeModalOpen ||
-          colorModalOpen
-        }
+        isOpen={categoryModalOpen || brandModalOpen || colorModalOpen}
         onClick={onClickBackground}
       />
       <S.Layout>
@@ -175,26 +150,7 @@ export default function BasicInfo({
                 setModalOpen={setBrandModalOpen}
               />
             </Input>
-            <Input>
-              <Input.Label size="small" className="subtitle">
-                구매처
-              </Input.Label>
-              {clothWhereBuy ? (
-                <Input.Modal
-                  result={WhereToBuy}
-                  setModalOpen={setWhereToBuyModalOpen}
-                  state={clothWhereBuy?.letter.length > 0}
-                  type={clothWhereBuy?.type}
-                  action="write"
-                />
-              ) : (
-                <Input.Modal
-                  result={WhereToBuy}
-                  setModalOpen={setWhereToBuyModalOpen}
-                  state={true}
-                />
-              )}
-            </Input>
+
             <Input>
               <Input.Label size="small" className="subtitle">
                 색상
@@ -216,16 +172,6 @@ export default function BasicInfo({
               </S.ClothColorSpanList>
             </Input>
 
-            <Input>
-              <Input.Label size="small" className="subtitle">
-                사이즈
-              </Input.Label>
-              <Input.Modal
-                result={<Body3>{clothSize?.name}</Body3>}
-                setModalOpen={setSizeModalOpen}
-                state={clothSize !== null}
-              />
-            </Input>
             <Input>
               <Input.Label size="small" className="subtitle">
                 공개 여부
@@ -263,35 +209,13 @@ export default function BasicInfo({
           setBrandModalIsOpen={setBrandModalOpen}
         />
       )}
-      {whereToBuyModalOpen && (
-        <WhereToBuyModal
-          isOpen={whereToBuyModalOpen}
-          setIsOpen={setWhereToBuyModalOpen}
-          setWhereToBuy={setClothWhereBuy}
-          storedClothWhereBuy={clothWhereBuy}
-        />
-      )}
+
       {colorModalOpen && (
         <ColorModal
           colorInitial={clothColor}
           setIsOpen={setColorModalOpen}
           setClothColor={setClothColor}
           isOpen={colorModalOpen}
-        />
-      )}
-      {sizeModalOpen && (
-        <ClothSizeModal
-          setIsOpen={setSizeModalOpen}
-          setClothSize={setClothSize}
-          isOpen={sizeModalOpen}
-          categoryId={
-            clothCategory
-              ? clothCategory![0].state
-                ? clothCategory![0].id
-                : clothCategory![0].detailCategories![0].id
-              : 0
-          }
-          clothSizeInitial={clothSize}
         />
       )}
     </>
