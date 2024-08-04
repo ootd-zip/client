@@ -6,6 +6,11 @@ interface BlockUserAlertProps {
   onClickNoButton: () => void;
 }
 
+/*
+이름: 차단 해제 Alert 컴포넌트
+역할: 차단 해제 후 팔로우 여부 확인하는 컴포넌트
+*/
+
 export default function BlockUserAlert({
   onClickNoButton,
   onClickYesButton,

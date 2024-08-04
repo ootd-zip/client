@@ -14,6 +14,11 @@ interface ClothDiscriptionProps {
   memo?: string;
 }
 
+/*
+이름: 의류 선택 세부사항 정보 컴포넌트
+역할: 구매, 등록일자, 메모 의류 선택 세부사항 정보 컴포넌트
+*/
+
 import {
   getReactNativeMessage,
   sendReactNativeMessage,

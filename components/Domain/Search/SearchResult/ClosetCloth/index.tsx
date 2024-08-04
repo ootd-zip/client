@@ -41,6 +41,11 @@ export interface SearchFilterData extends FilterData {
   gender?: GenderTypes;
 }
 
+/*
+이름: 검색 결과 옷장 컴포넌트
+역할: 검색 결과에 따른 옷장
+*/
+
 export default function ClosetCloth({
   OOTDTotal,
   OOTDList,
@@ -55,18 +60,23 @@ export default function ClosetCloth({
 }: ClosetClothProps) {
   const router = useRouter();
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<Boolean>(false);
+
+  // 옷장 필터 모달 렌더링 여부
   const [filterModalInitialIndex, setFilterModalInitialIndex] =
     useState<number>(1);
 
+  // 옷장 클릭 시 이동되는 함수
   const onClickImageList = (index: number) => {
     router.push(`/ootd/${index}/search`);
   };
 
+  // 필터 클릭 함수 (필터 함수 클릭하는 것에 따라 모달 시작이 달라짐)
   const onClickFilterSpan = (index: number) => {
     setFilterModalIsOpen(true);
     setFilterModalInitialIndex(index);
   };
 
+  // 초기화 버튼 함수
   const onClickInitButton = () => {
     setFilter({
       category: null,
@@ -80,6 +90,7 @@ export default function ClosetCloth({
     });
   };
 
+  // 옷장 스크를 저장 훅
   useRememberScroll({
     key: 'search-ootd',
     containerRef: OOTDRef,
@@ -94,6 +105,7 @@ export default function ClosetCloth({
         onClick={() => setFilterModalIsOpen(false)}
       />
       <S.Layout>
+        {/* 검색 필터 */}
         <S.SearchFilter onTouchMove={(e) => e.stopPropagation()}>
           <S.Span
             state={
@@ -168,6 +180,7 @@ export default function ClosetCloth({
           </S.FilterSpan>
         </S.SearchFilter>
 
+        {/* 옷장 결과 */}
         {OOTDList.length === 0 ? (
           <EmptyFilteredResult />
         ) : (
@@ -195,6 +208,7 @@ export default function ClosetCloth({
           </>
         )}
       </S.Layout>
+      {/* 옷장 필터 모달 */}
       {filterModalIsOpen && (
         <FilterModal
           isOpen={filterModalIsOpen}

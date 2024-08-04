@@ -13,6 +13,9 @@ export interface AnnoucementDataType {
   body: string;
 }
 
+/*
+이름: 공지사항 페이지
+*/
 export default function Announcement() {
   const router = useRouter();
   const [importantData, _setImportantData] = useState<AnnoucementDataType[]>([

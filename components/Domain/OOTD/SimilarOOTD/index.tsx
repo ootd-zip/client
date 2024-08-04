@@ -11,40 +11,47 @@ interface OOTDListType {
   image: string;
 }
 
+/*
+이름: 비슷한 ootd
+역할: ootd 상세 페이지에서 해당 ootd와 스타일이 비슷한 ootd 리스트를 보여주는 컴포넌트
+*/
 export default function SimilarOOTD() {
   const router = useRouter();
 
   const { getSimilarOOTD } = OOTDApi();
 
-  const [data, setData] = useState<OOTDListType[] | null>(null);
+  //비슷한 ootd 리스트
+  const [ootdList, setOOTDList] = useState<OOTDListType[] | null>(null);
 
+  //비슷한 ootd 리스트 조회 api 호출 함수
   useEffect(() => {
     if (!router.isReady) return;
     const fetchData = async () => {
       const result = await getSimilarOOTD(Number(router.query.OOTDNumber![0]));
-      setData(result?.content);
+      setOOTDList(result?.content);
     };
     fetchData();
   }, [router.isReady, router.query.OOTDNumber]);
 
+  //비슷한 ootd 리스트 클릭 함수
   const onClickSimilarOOTDImage = (ootdId: number) => {
     router.push(`/ootd/${ootdId}`);
   };
 
   return (
     <S.Layout>
-      {data && data.length > 0 && (
+      {ootdList && ootdList.length > 0 && (
         <S.Title>
           <Title1>비슷한 OOTD</Title1>
         </S.Title>
       )}
 
       <S.OOTD>
-        {data && (
+        {ootdList && (
           <ImageList
             onClick={onClickSimilarOOTDImage}
             type="column"
-            data={data.map((item) => {
+            data={ootdList.map((item) => {
               return { ootdId: item.id, ootdImage: item.image };
             })}
           />

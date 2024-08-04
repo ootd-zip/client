@@ -27,6 +27,10 @@ interface WriteOOTDProps {
   complete: Boolean;
 }
 
+/*
+이름: ootd 내용 작성
+역할: ootd에 대한 내용을 작성하는 컴포넌트
+*/
 export default function WriteOOTD({
   imageAndTag,
   string,
@@ -41,20 +45,25 @@ export default function WriteOOTD({
   const myId = useRecoilValue(userId);
   const router = useRouter();
 
+  //스타일 선택 모달 렌더링 여부
   const [styleModalIsOpen, setStyleModalIsOpen] = useState<Boolean>(false);
 
+  //스타일 선택 버튼 클릭 함수
   const onClickAddStyleTag = () => {
     setStyleModalIsOpen(true);
   };
 
+  //스타일 태그 클릭 함수
   const onClickStyleTag = (index: number) => {
     const sampleSelectedStyleTag = [...selectedStyle];
     sampleSelectedStyleTag.splice(index, 1);
     setSelectedStyle(sampleSelectedStyleTag);
   };
 
+  //스크롤 위치를 기억하기 위한 훅
   const { reset } = useRememberScroll({ key: `mypage-${myId}-ootd` });
 
+  //작성 완료 함수
   const onClickSubmitButton = async () => {
     if (imageAndTag !== undefined) {
       const payload = {

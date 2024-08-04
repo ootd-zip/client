@@ -1,7 +1,5 @@
 import { Body3, Caption1 } from '@/components/UI';
 import S from './style';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 
 interface ClosetTabbarProps {
@@ -11,7 +9,10 @@ interface ClosetTabbarProps {
   currentStep: string;
   showingId: number;
 }
-
+/*
+이름: 마이페이지 탭바
+역할: 마이페이지에서 사용되는 탭바 컴포넌트
+*/
 export default function ClosetTabbar({
   ootdCount,
   clothesCount,
@@ -19,8 +20,6 @@ export default function ClosetTabbar({
   currentStep,
   showingId,
 }: ClosetTabbarProps) {
-  const router = useRouter();
-
   return (
     <S.Layout>
       <Link

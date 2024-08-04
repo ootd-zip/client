@@ -11,7 +11,10 @@ interface ClothCategoryModalProps {
   categoryInitital?: CategoryListType[] | null;
   type: 'one' | 'many';
 }
-
+/*
+이름: 옷 카테고리 
+역할: 옷 카테고리 리스트 컴포넌트 
+*/
 export default function ClothCategory({
   categoryList,
   categoryInitital,
@@ -21,14 +24,17 @@ export default function ClothCategory({
 }: ClothCategoryModalProps) {
   const { getClothCategory } = ClothApi();
 
+  //큰 카테고리 현재 선택 인덱스
   const [bigCategoryClickedIndex, setbigCategoryClickedIndex] =
     useState<number>(0);
+  //작은 카테고리 현재 선택 인덱스
   const [smallCategoryClickedIndex, setsmallCategoryClickedIndex] = useState<
     number | null
   >(null);
 
   const [init, setInit] = useState<number>(0);
 
+  //카테고리 조회 api 호출 후 리스트로 업데이트
   useEffect(() => {
     const fetchCategory = async () => {
       const clothCategory = (await getClothCategory()) as CategoryListType[];
@@ -50,6 +56,7 @@ export default function ClothCategory({
     fetchCategory();
   }, []);
 
+  //기존에 선택된 카테고리를 업데이트
   useEffect(() => {
     if (categoryInitital && categoryList) {
       let newCategory = JSON.parse(
@@ -79,13 +86,16 @@ export default function ClothCategory({
     }
   }, [init]);
 
+  //상위 카테고리 선택 함수
   const onClickBigCategory = (id: number, index: number) => {
     setbigCategoryClickedIndex(index);
 
     let newCategory = JSON.parse(JSON.stringify(categoryList));
 
+    //이미 선택되어있는 카테고리 선택 시 취소
     newCategory[index].state = !newCategory[index].state;
 
+    //선택한 상위 카테고리의 하위 카테고리 모두 초기화
     newCategory[index].detailCategories = newCategory[
       index
     ].detailCategories?.map((item: CategoryListType) => {
@@ -95,12 +105,14 @@ export default function ClothCategory({
     setCategoryList(newCategory);
   };
 
+  //하위 카테고리 선택 함수
   const onClickSmallCategory = (index: number) => {
     setsmallCategoryClickedIndex(index);
 
     const newCategory = JSON.parse(
       JSON.stringify(categoryList)
     ) as CategoryListType[];
+    //하나만 선택 가능할 시 선택한 인덱스를 제외한 다른 인데스를 모두 초기화
     if (type === 'one') {
       const initialCategoryList = newCategory.map((item) => {
         return {
@@ -129,6 +141,7 @@ export default function ClothCategory({
     setCategoryList(newCategory);
   };
 
+  //카테고리 리스트에 변화가 생기면, 선택된 카테고리 리스트 상태 업데이트
   useEffect(() => {
     const selectedCategory = [] as CategoryListType[];
 
@@ -158,6 +171,7 @@ export default function ClothCategory({
   return (
     <S.Layout>
       <S.Category>
+        {/*상위 카테고리 */}
         <S.BigCategory>
           {categoryList &&
             categoryList.map((item, index) => {
@@ -172,6 +186,7 @@ export default function ClothCategory({
               );
             })}
         </S.BigCategory>
+        {/*하위 카테고리 */}
         <S.SmallCategory>
           {categoryList &&
             categoryList![bigCategoryClickedIndex].detailCategories?.map(

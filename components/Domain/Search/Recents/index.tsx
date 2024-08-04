@@ -12,6 +12,11 @@ interface recentsProps {
   onSearch: (text: string) => void; // 검색을 실행하는 함수를 받아올 prop
 }
 
+/*
+이름: 최근 검색어 컴포넌트
+역할: 최근 검색어 표현 및 삭제 가능한 컴포넌트
+*/
+
 export default function Recents({
   setSearchValue,
   handleClearKeywords,
@@ -21,6 +26,7 @@ export default function Recents({
 }: recentsProps) {
   return (
     <>
+      {/* 최근 검색어가 존재하는 경우 */}
       {keywords.length > 0 && (
         <S.Layout>
           <S.Menu>
@@ -43,6 +49,7 @@ export default function Recents({
                   >
                     {text}
                   </Button3>
+                  {/* 닫기 버튼 */}
                   <AiOutlineClose
                     className="close"
                     onClick={() => {

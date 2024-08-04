@@ -16,11 +16,15 @@ interface OOTDListType {
   id: number;
   image: string;
 }
-
+/*
+이름: 유저의 다른 ootd
+역할: ootd 상세 페이지에서 사용되는 해당 ootd를 제외한 유저의 ootd 리스트를 보여주는 컴포넌트
+*/
 export default function UserOtherOOTD({ userId, userName }: UserOOTDProps) {
   const router = useRouter();
   const { otherOOTD } = OOTDApi();
 
+  //유저 id와 ootd id가 변하면 유저의 다른 ootd 조회 후 상태 업데이트
   useEffect(() => {
     const fetchData = async () => {
       if (!router.isReady || userId === undefined) return;
@@ -28,14 +32,18 @@ export default function UserOtherOOTD({ userId, userName }: UserOOTDProps) {
         userId,
         Number(router.query.OOTDNumber![0])
       );
-      setData(result.content);
+      setUserOtherOOTD(result.content);
     };
     fetchData();
   }, [router.isReady, userId, router.query.OOTDNumber]);
 
-  const [data, setData] = useState<OOTDListType[] | null>(null);
+  //유저의 다른 ootd 리스트
+  const [userOtherOOTD, setUserOtherOOTD] = useState<OOTDListType[] | null>(
+    null
+  );
 
-  if (!data || data.length === 0) return <></>;
+  //유저의 다른 ootd가 없다면 빈 컴포넌트 렌더링
+  if (!userOtherOOTD || userOtherOOTD.length === 0) return <></>;
 
   return (
     <S.Layout>
@@ -45,7 +53,7 @@ export default function UserOtherOOTD({ userId, userName }: UserOOTDProps) {
         </S.Title>
         <S.OOTD>
           <Carousel infinite={false} slidesToShow={2.15} dots={false}>
-            {data.map((item) => {
+            {userOtherOOTD.map((item) => {
               return (
                 <NextImage
                   onClick={() => router.push(`/ootd/${item.id}`)}

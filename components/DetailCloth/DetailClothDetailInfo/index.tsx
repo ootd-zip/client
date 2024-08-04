@@ -18,6 +18,11 @@ interface ClothDiscriptionProps {
   buyDate?: string;
 }
 
+/*
+이름: 의류 세부사항 정보 컴포넌트
+역할: 색상, 사이즈, 구매시기 세부사항 정보 컴포넌트
+*/
+
 export default function DetailClothDetailInfo({
   color,
   size,
@@ -26,6 +31,7 @@ export default function DetailClothDetailInfo({
   return (
     <S.Layout>
       <S.CategoryStart>
+        {/* colorSpan 컴포넌트가 아닌 자체 colorList 사용 */}
         <S.InfoTitle>
           <Body3 style={{ fontWeight: '600' }}>색상</Body3>
         </S.InfoTitle>
@@ -34,14 +40,6 @@ export default function DetailClothDetailInfo({
             color.map((item, index) => {
               return (
                 <>
-                  {/* <ColorSpan
-                    key={index}
-                    path="detailCloth"
-                    name={item.name}
-                    index={index}
-                    color={item.color}
-                    state={false}
-                  /> */}
                   <S.ColorSpanLayout key={index}>
                     <S.ColorSpan bgColor={item.color} />
                     <Body3>{item.name}</Body3>

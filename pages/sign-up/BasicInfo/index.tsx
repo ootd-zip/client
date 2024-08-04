@@ -10,7 +10,9 @@ interface BasicInfoProps {
   id: string;
   age: string;
 }
-
+/*
+이름: 기본 정보 페이지
+*/
 export default function BasicInfo({
   setId,
   setAge,

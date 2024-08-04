@@ -9,7 +9,9 @@ import { userId } from '@/utils/recoil/atom';
 import { getReactNativeMessage } from '@/utils/reactNativeMessage';
 import { RegisterApi } from '@/apis/domain/Register/RegisterApi';
 import PublicApi from '@/apis/domain/Public/PublicApi';
-
+/*
+이름: 스플레시 스크린 페이지 
+*/
 const SplashScreen: ComponentWithLayout = () => {
   const router = useRouter();
   const { getUserId } = PublicApi();
@@ -17,6 +19,7 @@ const SplashScreen: ComponentWithLayout = () => {
   const [_state, setState] = useState();
   const { getCheckCompleteRegistUserInfo } = RegisterApi();
 
+  //3000동안 유저 id 세팅, jwt 토큰 가져온 뒤 페이지 이동시킴
   useEffect(() => {
     const timer = setTimeout(async () => {
       getReactNativeMessage(setState);

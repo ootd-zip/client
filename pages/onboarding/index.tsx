@@ -7,6 +7,9 @@ import Button from '@/components/Button';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+/*
+이름: 온보딩 페이지 
+*/
 const Onboarding: ComponentWithLayout = () => {
   const router = useRouter();
 

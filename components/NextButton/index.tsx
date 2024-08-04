@@ -9,6 +9,10 @@ interface NextButtonProps {
   className?: string;
 }
 
+/*
+이름: 다음 버튼
+역할: 보통 페이지 맨 아래에서 사용되는 다음 단계 버튼
+*/
 export default function NextButton({
   state,
   onClick,

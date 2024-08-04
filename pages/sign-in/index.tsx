@@ -5,7 +5,9 @@ import { ComponentWithLayout } from '../sign-up';
 import { SignInApi } from '@/apis/domain/SignIn/SignInApi';
 import SocialLoginButton from '@/components/Domain/SignIn/SocialLoginButton';
 import SplashLogo from '@/public/images/SplashLogo.svg';
-
+/*
+이름: 로그인 페이지
+*/
 const SignIn: ComponentWithLayout = () => {
   const [, routing] = SignInApi();
 
