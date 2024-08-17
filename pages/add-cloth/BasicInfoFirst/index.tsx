@@ -1,5 +1,5 @@
 import S from '@/pageStyle/add-cloth/BasicInfoFirst/style';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Input from '@/components/Input';
 import { Body2, Body3, Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
@@ -39,6 +39,7 @@ interface BaiscInfoFirst {
   setClothIsOpen: Dispatch<SetStateAction<Boolean>>;
   handleStep: (next: string) => void;
   suggestionColor?: suggestionColorType;
+  onClickSubmitButton: () => void;
 }
 /*
 이름: 필수 정보 첫단계
@@ -57,6 +58,7 @@ export default function BasicInfoFirst({
   setClothColor,
   setClothIsOpen,
   suggestionColor,
+  onClickSubmitButton,
 }: BaiscInfoFirst) {
   //카테고리 선택 모달 렌더링 유무
   const [categoryModalOpen, setCategoryModalOpen] = useState<Boolean>(false);
@@ -118,24 +120,6 @@ export default function BasicInfoFirst({
     setColorModalOpen(true);
   };
 
-  const onClickAlertNoButton = async () => {
-    const payload = {
-      brandId: clothBrand![0].id,
-      categoryId: clothCategory![0].detailCategories![0].id,
-      colorIds: [...clothColor!].map((item) => item.id),
-      isPrivate: !clothIsOpen,
-      clothesImageUrl: clothImage![0].ootdImage,
-      name: clothName,
-    };
-
-    const result = await postCloth(payload);
-
-    if (result) {
-      reset();
-      router.replace(`/mypage/${myId}`);
-    }
-  };
-
   const [brandSubmitStatus, setNoBrandSubmitStatus] = useState<Boolean>(false);
   const [toastOpen, setToastOpen] = useState<Boolean>(false);
 
@@ -144,10 +128,6 @@ export default function BasicInfoFirst({
       setToastOpen(true);
     }
   }, [brandSubmitStatus, brandModalOpen]);
-
-  useEffect(() => {
-    console.log(suggestionColor);
-  }, [suggestionColor]);
 
   return (
     <>
@@ -288,7 +268,7 @@ export default function BasicInfoFirst({
       {alertOpen && (
         <AddClothAlert
           onClickYesButton={() => handleStep('추가정보')}
-          onClickNoButton={onClickAlertNoButton}
+          onClickNoButton={() => onClickSubmitButton()}
         />
       )}
     </>

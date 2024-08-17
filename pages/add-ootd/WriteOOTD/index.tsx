@@ -25,6 +25,7 @@ interface WriteOOTDProps {
   selectedStyle: Style[];
   setSelectedStyle: Dispatch<SetStateAction<Style[]>>;
   complete: Boolean;
+  realImageURL: string[];
 }
 
 /*
@@ -40,6 +41,7 @@ export default function WriteOOTD({
   selectedStyle,
   setSelectedStyle,
   complete,
+  realImageURL,
 }: WriteOOTDProps) {
   const { postOOTD } = OOTDApi();
   const myId = useRecoilValue(userId);
@@ -70,9 +72,9 @@ export default function WriteOOTD({
         content: string,
         isPrivate: !open as Boolean,
         styles: selectedStyle.map((item) => item.id),
-        ootdImages: imageAndTag.map((ootd) => {
+        ootdImages: imageAndTag.map((ootd, index) => {
           return {
-            ootdImage: ootd.ootdImage,
+            ootdImage: realImageURL[index],
             clothesTags: ootd.ootdImageClothesList
               ? ootd.ootdImageClothesList?.map((tag) => {
                   return {

@@ -1,23 +1,35 @@
-import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import { Dispatch, SetStateAction } from 'react';
-import { WebViewMessageEvent } from 'react-native-webview';
+
 interface Message {
   type: string;
   payload?: any;
 }
+
 export const getReactNativeMessage = (
-  setState: Dispatch<SetStateAction<any>>
+  setState: Dispatch<SetStateAction<any>>,
+  setPreview?: Dispatch<SetStateAction<string[]>>
 ) => {
   const listener = (event: any) => {
     const parsedData = JSON.parse(event.data);
-    if (parsedData?.type === 'OOTD') {
+    if (parsedData?.type === 'OOTDPreview') {
       const banana = parsedData?.payload;
       const imageArray = banana.map((item: any, index: number) => {
         return { ootdImage: item, ootdId: index };
       });
       setState(imageArray);
     }
+    if (parsedData?.type === 'OOTD') {
+      const banana = parsedData?.payload;
+      const imageArray = banana.map((item: any) => {
+        return item;
+      });
+      if (setPreview) setPreview(imageArray);
+    }
     if (parsedData!.type === 'Cloth') {
+      const banana = parsedData?.payload;
+      if (setPreview) setPreview(banana);
+    }
+    if (parsedData!.type === 'ClothPreview') {
       const banana = parsedData?.payload;
       setState([{ ootdImage: banana[0], ootdId: 0 }]);
     }

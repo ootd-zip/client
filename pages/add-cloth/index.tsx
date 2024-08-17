@@ -2,7 +2,7 @@ import AppBar from '@/components/Appbar';
 import Gallery from '@/components/Gallery/';
 import { Title1 } from '@/components/UI';
 import { useFunnel } from '@/hooks/use-funnel';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 import BasicInfoFirst from './BasicInfoFirst';
 import { ComponentWithLayout } from '../sign-up';
@@ -74,7 +74,7 @@ const AddCloth: ComponentWithLayout = () => {
 
   //스크롤 위치를 기억하기 위한 훅
   const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
-  const [realImageURL, setRealImageURL] = useState<string>('');
+  const [realImageURL, setRealImageURL] = useState<string[]>(['']);
 
   //옷 등록 api 함수
   const onClickSubmitButton = async () => {
@@ -85,8 +85,8 @@ const AddCloth: ComponentWithLayout = () => {
       categoryId: clothCategory![0].detailCategories![0].id,
       colorIds: [...clothColor!].map((item) => item.id),
       isPrivate: !open,
-      sizeId: clothSize!.id,
-      clothesImageUrl: realImageURL,
+      sizeId: clothSize?.id,
+      clothesImageUrl: realImageURL[0],
       name: clothName,
       purchaseDate: clothBuyDate,
       clothMemo,
@@ -118,12 +118,6 @@ const AddCloth: ComponentWithLayout = () => {
     }
   };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      getReactNativeMessage(setRealImageURL);
-    }
-  }, []);
-
   return (
     <Funnel>
       <AppBar
@@ -140,6 +134,7 @@ const AddCloth: ComponentWithLayout = () => {
           item="Cloth"
           suggestionColor={suggestionColor}
           setSuggestionColor={setSuggestionColor}
+          setRealImageURL={setRealImageURL}
         />
       </Funnel.Steps>
       <Funnel.Steps name="제품명">
@@ -164,6 +159,7 @@ const AddCloth: ComponentWithLayout = () => {
           setClothIsOpen={setClothIsOpen}
           setClothColor={setClothColor}
           suggestionColor={suggestionColor}
+          onClickSubmitButton={onClickSubmitButton}
         />
       </Funnel.Steps>
       <Funnel.Steps name="추가정보">
