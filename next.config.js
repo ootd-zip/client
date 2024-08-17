@@ -16,7 +16,7 @@ const nextConfig = {
   }, 
   reactStrictMode: false, 
   images: {
-    domains: ['img.freepik.com', 'www.google.es', 'image.msscdn.net', "", 'ootdzip.s3.ap-northeast-2.amazonaws.com']
+    domains: ['img.freepik.com', 'www.google.es', 'image.msscdn.net', "", 'ootdzip.s3.ap-northeast-2.amazonaws.com', 'ootdzip-dev.s3.ap-northeast-2.amazonaws.com']
   },
   webpack: (config, options) => {
     config.module.rules.push({

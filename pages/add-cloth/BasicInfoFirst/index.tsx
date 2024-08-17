@@ -1,19 +1,29 @@
 import S from '@/pageStyle/add-cloth/BasicInfoFirst/style';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Input from '@/components/Input';
 import { Body2, Body3, Title1 } from '@/components/UI';
 import NextButton from '@/components/NextButton';
-import { ClothWhereBuy } from '..';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import ClothCategoryModal, {
   CategoryListType,
 } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import WhereToBuyModal from '@/components/Domain/AddCloth/WhereToBuyModal';
 import { BrandType } from '@/components/BrandList/Brand';
 import BrandModal from '@/components/Domain/AddCloth/BrandModal';
 import NextImage from '@/components/NextImage';
 import ArrowLeft from '@/public/images/ArrowLeft.svg';
 import Background from '@/components/Background';
+import ColorSpan from '@/components/ColorList/BigColor';
+import PlusButton from '@/components/PlusButton';
+import AddClothAlert from '@/components/Domain/AddCloth/AddClothAlert';
+import ClothApi from '@/apis/domain/Cloth/ClothApi';
+import useRememberScroll from '@/hooks/useRememberScroll';
+import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { userId } from '@/utils/recoil/atom';
+import { ColorListType } from '@/components/ColorList';
+import ColorModal from '@/components/Domain/AddCloth/ColorModal';
+import { suggestionColorType } from '..';
+import RecommendColor from '@/components/Domain/AddCloth/RecommendColor';
 import Toast from '@/components/Toast';
 
 interface BaiscInfoFirst {
@@ -21,11 +31,15 @@ interface BaiscInfoFirst {
   clothImage: ImageWithTag | undefined;
   clothCategory: CategoryListType[] | null;
   clothBrand: BrandType[] | null;
-  clothWhereBuy: ClothWhereBuy;
+  clothColor: ColorListType | null;
+  clothIsOpen: Boolean;
+  setClothColor: Dispatch<SetStateAction<ColorListType | null>>;
   setClothCategory: Dispatch<SetStateAction<CategoryListType[] | null>>;
   setClothBrand: Dispatch<SetStateAction<BrandType[] | null>>;
-  setClothWhereBuy: Dispatch<SetStateAction<ClothWhereBuy>>;
+  setClothIsOpen: Dispatch<SetStateAction<Boolean>>;
   handleStep: (next: string) => void;
+  suggestionColor?: suggestionColorType;
+  onClickSubmitButton: () => void;
 }
 /*
 이름: 필수 정보 첫단계
@@ -36,34 +50,42 @@ export default function BasicInfoFirst({
   clothImage,
   clothCategory,
   clothBrand,
-  clothWhereBuy,
+  clothColor,
+  clothIsOpen,
   setClothCategory,
   setClothBrand,
-  setClothWhereBuy,
   handleStep,
+  setClothColor,
+  setClothIsOpen,
+  suggestionColor,
+  onClickSubmitButton,
 }: BaiscInfoFirst) {
   //카테고리 선택 모달 렌더링 유무
   const [categoryModalOpen, setCategoryModalOpen] = useState<Boolean>(false);
   //다음 단계 버튼 활성화 유무
   const [nextButtonState, setNextButtonState] = useState<Boolean>(false);
-  //구매처 작성 모달 렌더링 유무
-  const [whereToBuyModalOpen, setWhereToBuyModalOpen] =
-    useState<Boolean>(false);
-  //브랜드 모달 렌더링 유무
   const [brandModalOpen, setBrandModalOpen] = useState<Boolean>(false);
+  const [alertOpen, setAlertOpen] = useState<Boolean>(false);
+  const [colorModalOpen, setColorModalOpen] = useState<Boolean>(false);
+
+  const { postCloth } = ClothApi();
+
+  const router = useRouter();
+  const myId = useRecoilValue(userId);
 
   //카테고리, 브랜드, 구매처 변동이 있으면 확인 후 다음 단계 버튼 상태 업데이트
   useEffect(() => {
     if (
       clothCategory !== null &&
       clothBrand !== null &&
-      clothWhereBuy?.letter.length > 0
+      clothColor !== null &&
+      clothColor?.length > 0
     ) {
       setNextButtonState(true);
       return;
     }
     setNextButtonState(false);
-  }, [clothCategory, clothBrand, clothWhereBuy]);
+  }, [clothCategory, clothBrand, clothColor]);
 
   //카테고리 선택시 나타나는 카테고리 컴포넌트
   const Category = clothCategory && (
@@ -85,28 +107,17 @@ export default function BasicInfoFirst({
   //브랜드 선택시 나타나는 브랜드 컴포넌트
   const Brand = <Body3>{clothBrand && clothBrand[0].name}</Body3>;
 
-  //구매처 선택시 나타나는 구매처 컴포넌트
-  const WhereToBuy = clothWhereBuy && (
-    <Body3
-      style={{
-        WebkitTextDecorationLine:
-          clothWhereBuy.type === 'Link' ? 'underline' : 'none',
-      }}
-    >
-      {clothWhereBuy?.letter}
-    </Body3>
-  );
-
-  //다음단계 버튼 클릭 이벤트
-  const onClickNextButton = () => {
-    handleStep('기본정보2');
-  };
+  const { reset } = useRememberScroll({ key: `mypage-${myId}-cloth` });
 
   //배경 클릭 함수
   const onClickBackground = () => {
     if (categoryModalOpen) setCategoryModalOpen(false);
-    if (whereToBuyModalOpen) setWhereToBuyModalOpen(false);
     if (brandModalOpen) setBrandModalOpen(false);
+    if (colorModalOpen) setColorModalOpen(false);
+  };
+
+  const onClickColorPlusButton = () => {
+    setColorModalOpen(true);
   };
 
   const [brandSubmitStatus, setNoBrandSubmitStatus] = useState<Boolean>(false);
@@ -121,64 +132,93 @@ export default function BasicInfoFirst({
   return (
     <>
       <Background
-        isOpen={categoryModalOpen || whereToBuyModalOpen || brandModalOpen}
+        isOpen={
+          categoryModalOpen || brandModalOpen || colorModalOpen || alertOpen
+        }
         onClick={onClickBackground}
       />
       <S.Layout>
-        {/*옷 이름*/}
-        <S.ClothName>
-          <Body2>{clothName}</Body2>
-        </S.ClothName>
-        {/*옷 이미지*/}
-        <S.ClothImage>
-          <NextImage
-            width={106}
-            height={106}
-            fill={false}
-            src={clothImage! && clothImage[0].ootdImage}
-            alt=""
-          />
-        </S.ClothImage>
-        <S.BasicInfo>
-          <S.Title>
-            <Title1 className="title">기본 정보</Title1>
-          </S.Title>
-          <S.Information>
-            <Input>
-              <Input.Label size="small">카테고리</Input.Label>
-              <Input.Modal
-                state={clothCategory !== null}
-                result={Category}
-                setModalOpen={setCategoryModalOpen}
-              />
-            </Input>
-            <Input>
-              <Input.Label size="small">브랜드</Input.Label>
-              <Input.Modal
-                result={Brand}
-                state={clothBrand !== null}
-                setModalOpen={setBrandModalOpen}
-              />
-            </Input>
-            <Input>
-              <Input.Label size="small">구매처</Input.Label>
-              {clothWhereBuy ? (
+        <div className="divider">
+          <S.ClothName>
+            <Body2>{clothName}</Body2>
+          </S.ClothName>
+          <S.ClothImage>
+            <NextImage
+              width={106}
+              height={106}
+              fill={false}
+              src={clothImage! && clothImage[0].ootdImage}
+              alt=""
+            />
+          </S.ClothImage>
+          <S.BasicInfo>
+            <S.Title>
+              <Title1 className="title">기본 정보</Title1>
+            </S.Title>
+            <S.Information>
+              <Input>
+                <Input.Label size="small" className="label">
+                  카테고리
+                </Input.Label>
                 <Input.Modal
-                  result={WhereToBuy}
-                  setModalOpen={setWhereToBuyModalOpen}
-                  state={clothWhereBuy?.letter.length > 0}
-                  type={clothWhereBuy.type}
+                  state={clothCategory !== null}
+                  result={Category}
+                  setModalOpen={setCategoryModalOpen}
                 />
-              ) : (
+              </Input>
+              <Input>
+                <Input.Label size="small" className="label">
+                  브랜드
+                </Input.Label>
                 <Input.Modal
-                  result={WhereToBuy}
-                  setModalOpen={setWhereToBuyModalOpen}
-                  state={true}
+                  result={Brand}
+                  state={clothBrand !== null}
+                  setModalOpen={setBrandModalOpen}
                 />
-              )}
-            </Input>
-          </S.Information>
-        </S.BasicInfo>
+              </Input>
+              <Input>
+                <Input.Label size="small" className="label">
+                  색상
+                </Input.Label>
+                <S.ClothColorSpanList>
+                  {clothColor &&
+                    clothColor.map((item, index) => {
+                      return (
+                        <ColorSpan
+                          key={index}
+                          index={index}
+                          color={item.colorCode}
+                          name={item.name}
+                          state={false}
+                        />
+                      );
+                    })}
+                  <PlusButton onClickPlusButton={onClickColorPlusButton} />
+                </S.ClothColorSpanList>
+                {suggestionColor && !clothColor && (
+                  <RecommendColor
+                    suggestionColor={suggestionColor!}
+                    setClothColor={setClothColor}
+                  />
+                )}
+              </Input>
+              <Input>
+                <Input.Label size="small" className="label">
+                  공개 여부
+                </Input.Label>
+                <Input.TrueFalse
+                  left="공개"
+                  right="비공개"
+                  state={clothIsOpen}
+                  setState={setClothIsOpen}
+                />
+                <Input.HelperText className="helpertext" state={1}>
+                  공개로 설정하면 다른사람과 아이템을 공유할 수 있어요.
+                </Input.HelperText>
+              </Input>
+            </S.Information>
+          </S.BasicInfo>
+        </div>
         {toastOpen && (
           <Toast
             className="brandSuggestion"
@@ -190,7 +230,7 @@ export default function BasicInfoFirst({
         <NextButton
           className="nextButton"
           state={nextButtonState}
-          onClick={onClickNextButton}
+          onClick={() => setAlertOpen(true)}
         >
           다음
         </NextButton>
@@ -217,13 +257,18 @@ export default function BasicInfoFirst({
           setNoBrandSubmitStatus={setNoBrandSubmitStatus}
         />
       )}
-      {/*구매처 작성 모달*/}
-      {whereToBuyModalOpen && (
-        <WhereToBuyModal
-          isOpen={whereToBuyModalOpen}
-          setIsOpen={setWhereToBuyModalOpen}
-          setWhereToBuy={setClothWhereBuy}
-          storedClothWhereBuy={clothWhereBuy}
+      {colorModalOpen && (
+        <ColorModal
+          colorInitial={clothColor}
+          setIsOpen={setColorModalOpen}
+          setClothColor={setClothColor}
+          isOpen={colorModalOpen}
+        />
+      )}
+      {alertOpen && (
+        <AddClothAlert
+          onClickYesButton={() => handleStep('추가정보')}
+          onClickNoButton={() => onClickSubmitButton()}
         />
       )}
     </>

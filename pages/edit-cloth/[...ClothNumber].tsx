@@ -69,7 +69,9 @@ const EditCloth: ComponentWithLayout = () => {
         },
       ]);
       setClothSize(result.size);
+      setClothBuyDate(result.purchaseDate);
       setSizeRerender(sizeRerender + 1);
+      setClothMemo(result.memo);
     };
     fetchData();
   }, [router.isReady]);
@@ -101,15 +103,11 @@ const EditCloth: ComponentWithLayout = () => {
       alert('색상을 선택해주세요');
       return;
     }
-    if (!clothSize) {
-      alert('사이즈를 선택해주세요');
-      return;
-    }
 
     //옷 등록 api
     const payload = {
-      purchaseStore: clothWhereBuy.letter,
-      purchaseStoreType: clothWhereBuy.type,
+      purchaseStore: clothWhereBuy?.letter,
+      purchaseStoreType: clothWhereBuy?.type,
       brandId: clothBrand![0].id,
       categoryId: clothCategory![0].detailCategories![0].id,
       colorIds: [...clothColor!].map((item) => item.id),
@@ -140,17 +138,13 @@ const EditCloth: ComponentWithLayout = () => {
           clothImage={clothImage}
           clothCategory={clothCategory}
           clothBrand={clothBrand}
-          clothWhereBuy={clothWhereBuy}
           clothColor={clothColor}
-          clothSize={clothSize}
           clothOpen={clothOpen}
           setClothImage={setClothImage}
           setClothName={setClothName}
           setClothCategory={setClothCategory}
           setClothBrand={setClothBrand}
-          setClothWhereBuy={setClothWhereBuy}
           setClothColor={setClothColor}
-          setClothSize={setClothSize}
           setClothOpen={setClothOpen}
           handleStep={handleStep}
           onClickSubmitButton={onClickSubmitButton}
@@ -158,9 +152,14 @@ const EditCloth: ComponentWithLayout = () => {
       </Funnel.Steps>
       <Funnel.Steps name="추가정보">
         <AdditionalInfo
+          clothCategory={clothCategory}
+          clothWhereBuy={clothWhereBuy}
           clothBuyDate={clothBuyDate}
+          clothSize={clothSize}
           clothMemo={clothMemo}
           clothImage={clothImage}
+          setClothSize={setClothSize}
+          setClothWhereBuy={setClothWhereBuy}
           setClothImage={setClothImage}
           setClothBuyDate={setClothBuyDate}
           setClothMemo={setClothMemo}

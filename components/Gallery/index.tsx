@@ -33,6 +33,7 @@ interface GalleryProps {
   setSuggestionColor?: Dispatch<
     SetStateAction<suggestionColorType | undefined>
   >;
+  setRealImageURL: Dispatch<SetStateAction<string[]>>;
 }
 
 const Gallery = ({
@@ -43,6 +44,7 @@ const Gallery = ({
   item,
   suggestionColor,
   setSuggestionColor,
+  setRealImageURL,
 }: GalleryProps) => {
   const [realTouch, setRealTouch] = useState<number>(100); //현재 클릭한 사진 id
   const [storedImage, setStoredImage] = useRecoilState(storedImageKey); //임시저장 전역상태
@@ -99,7 +101,7 @@ const Gallery = ({
   //react-native의 메세지를 받는 로직, 이미지 저장 후 경로 받는 용도
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      getReactNativeMessage(setImageAndTag);
+      getReactNativeMessage(setImageAndTag, setRealImageURL);
     }
   }, []);
 
@@ -161,62 +163,62 @@ const Gallery = ({
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  useEffect(() => {
-    const fetchColor = async () => {
-      const colorList = (await getColor()) as ColorListType;
-      setColor(colorList);
-    };
+  // useEffect(() => {
+  //   const fetchColor = async () => {
+  //     const colorList = (await getColor()) as ColorListType;
+  //     setColor(colorList);
+  //   };
 
-    fetchColor();
-  }, []);
+  //   fetchColor();
+  // }, []);
 
-  useEffect(() => {
-    if (imageLoaded && color) {
-      handleImageLoad();
-    }
-  }, [imageLoaded, color]);
+  // useEffect(() => {
+  //   if (imageLoaded && color) {
+  //     handleImageLoad();
+  //   }
+  // }, [imageLoaded, color]);
 
-  const handleImageLoad = () => {
-    const img = document.getElementById('sourceImage') as HTMLImageElement;
-    const canvas = canvasRef.current;
+  // const handleImageLoad = () => {
+  //   const img = document.getElementById('sourceImage') as HTMLImageElement;
+  //   const canvas = canvasRef.current;
 
-    if (!img || !canvas) return;
+  //   if (!img || !canvas) return;
 
-    const context = canvas.getContext('2d');
-    if (!context) return;
+  //   const context = canvas.getContext('2d');
+  //   if (!context) return;
 
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+  //   canvas.width = img.naturalWidth;
+  //   canvas.height = img.naturalHeight;
+  //   context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
+  //   const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  //   const data = imageData.data;
 
-    const pixels: RGB[] = [];
-    for (let i = 0; i < data.length; i += 4) {
-      pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
-    }
+  //   const pixels: RGB[] = [];
+  //   for (let i = 0; i < data.length; i += 4) {
+  //     pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
+  //   }
 
-    const k = 5;
-    const clusters = kMeansClustering(pixels, k);
+  //   const k = 5;
+  //   const clusters = kMeansClustering(pixels, k);
 
-    const dominantCluster = clusters.reduce((prev, current) =>
-      prev.pixels.length > current.pixels.length ? prev : current
-    );
+  //   const dominantCluster = clusters.reduce((prev, current) =>
+  //     prev.pixels.length > current.pixels.length ? prev : current
+  //   );
 
-    const averageColor = dominantCluster.centroid;
+  //   const averageColor = dominantCluster.centroid;
 
-    const hexCode = color
-      ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
-      : {
-          id: 24,
-          name: '화이트',
-          colorCode: '#FFFFFF',
-        };
-    if (setSuggestionColor) {
-      setSuggestionColor(hexCode || undefined);
-    }
-  };
+  //   const hexCode = color
+  //     ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
+  //     : {
+  //         id: 24,
+  //         name: '화이트',
+  //         colorCode: '#FFFFFF',
+  //       };
+  //   if (setSuggestionColor) {
+  //     setSuggestionColor(hexCode || undefined);
+  //   }
+  // };
 
   return (
     <>
@@ -238,17 +240,19 @@ const Gallery = ({
           </S.BigImage>
         )}
 
-        {/*realTouch인덱스에 해당하는 사진을 렌더링*/}
+        {/* realTouch인덱스에 해당하는 사진을 렌더링 */}
         {selectedImage &&
           selectedImage.map((item, index) => {
             if (item.ootdId === realTouch)
               return (
                 <S.BigImage key={index}>
                   <NextImage
+                    id="sourceImage"
                     className="bigImage"
                     src={item.ootdImage}
                     alt=""
                     fill={true}
+                    onLoadingComplete={() => setImageLoaded(true)}
                   />
                   <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
                 </S.BigImage>

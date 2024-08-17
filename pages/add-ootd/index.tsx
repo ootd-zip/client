@@ -68,11 +68,6 @@ const AddOOTD: ComponentWithLayout = () => {
 
   const [realImageURL, setRealImageURL] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      getReactNativeMessage(setRealImageURL);
-    }
-  }, []);
   const onClickSkipButton = () => {
     handleStep('게시하기');
   };
@@ -98,6 +93,7 @@ const AddOOTD: ComponentWithLayout = () => {
             handleStep={handleStep}
             nextStep="태그"
             item="OOTD"
+            setRealImageURL={setRealImageURL}
           />
         </Funnel.Steps>
         <Funnel.Steps name="태그">
@@ -119,6 +115,7 @@ const AddOOTD: ComponentWithLayout = () => {
             selectedStyle={selectedStyle}
             setSelectedStyle={setSelectedStyle}
             complete={complete}
+            realImageURL={realImageURL}
           />
         </Funnel.Steps>
       </Funnel>

@@ -1,24 +1,24 @@
 import { Body3 } from '../../UI';
 import S from './style';
 
-interface ColorSpan {
+interface BigColorProps {
   color: string;
   name: string;
   state: Boolean;
   onClick?: (index: number) => void;
   index: number;
 }
-/*
+export default function BigColor({
+  /*
 이름: 색상
 역할: 옷 색상과 이름을 나타는 색상 컴포넌트
 */
-export default function ColorSpan({
   color,
   name,
   state,
   onClick,
   index,
-}: ColorSpan) {
+}: BigColorProps) {
   return (
     <S.Layout>
       {/*선택한 상태*/}
