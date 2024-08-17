@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import useEffectAfterMount from './useEffectAfterMount';
+import { ClipLoader } from 'react-spinners';
 
 interface InfiniteScrollProps {
   fetchDataFunction: any;
@@ -17,62 +18,60 @@ export default function useInfiniteScroll({
   initialPage,
   key,
 }: InfiniteScrollProps) {
-  const [page, setPage] = useState<number>(initialPage ? initialPage : 0); //페이지
-  const [data, setData] = useState(initialData); //스크롤 할 데이터
-  const [hasNextPage, setHasNextPage] = useState<Boolean>(false); //다음 페이지 존재 여부
-  const [isLoading, setIsLoading] = useState<Boolean>(false); //로딩중 상태
-  const [total, setTotal] = useState<number>(0); //리스트 총 갯수
+  const [page, setPage] = useState<number>(initialPage ? initialPage : 0);
+  const [data, setData] = useState(initialData);
+  const [hasNextPage, setHasNextPage] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<Boolean>(false);
+  const [total, setTotal] = useState<number>(0);
+  const [pullDistance, setPullDistance] = useState<number>(0);
+  const [isPulling, setIsPulling] = useState<Boolean>(false);
 
   const containerRef = useRef<any>(null);
+  const startY = useRef<number | null>(null);
   const router = useRouter();
 
-  //초기 api 호출 후 상태 업데이트
+  const fetchData = useCallback(
+    async (pageNum: number, pageSize: number, isRefresh: Boolean = false) => {
+      const result = await fetchDataFunction(pageNum, pageSize);
+      if (!result) return;
+
+      if (isRefresh) {
+        setData(result.content);
+        setPage(1);
+      } else {
+        setData((prevData: any) => [...prevData, ...result.content]);
+        setPage((prevPage) => prevPage + 1);
+      }
+
+      setHasNextPage(!result.isLast);
+      if (result.total) setTotal(result.total);
+      return result;
+    },
+    []
+  );
+
   useEffect(() => {
     if (!router.isReady) return;
-    fetchDataFunction(page, size).then((result: any) => {
-      if (!result) return;
-      if (initialPage) {
-        setData(() => [...initialData, ...result.content]);
-      } else {
-        setData(result.content);
-      }
-      setHasNextPage(!result.isLast);
-      if (initialPage) {
-        if (result.content.length > 0) {
-          setPage(initialPage + 1);
-        }
-      } else {
-        setPage(1);
-      }
-      setIsLoading(false);
-      if (result.total) setTotal(result.total);
-    });
+    fetchData(page, size);
   }, [router.isReady]);
 
-  //isLoading 변경 시 조회 api 호출
   useEffect(() => {
     if (!hasNextPage || !isLoading) return;
-    fetchDataFunction(page, size).then((result: any) => {
-      setHasNextPage(!result.isLast);
-      setData((prevData: any) => [...prevData, ...result.content]);
-      setPage((prevPage) => prevPage + 1);
-      setIsLoading(false);
-    });
-  }, [isLoading]);
+    fetchData(page, size).then(() => setIsLoading(false));
+  }, [isLoading, hasNextPage]);
 
-  //스크롤이 맨 아래에 닿을 시 isLoading상태 true로 변경
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const { scrollTop, clientHeight, scrollHeight } = container;
 
-    if (scrollTop + clientHeight >= scrollHeight && !isLoading) {
+    if (scrollTop + clientHeight >= scrollHeight - 20 && !isLoading) {
       setIsLoading(true);
     }
-  };
+  }, [isLoading]);
 
-  //스크롤 감지 이벤트
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -80,38 +79,99 @@ export default function useInfiniteScroll({
     return () => {
       container.removeEventListener('scroll', handleScroll);
     };
-  }, [containerRef.current]);
+  }, [handleScroll]);
 
-  //스크롤이 아닌 다른 트리거를 사용해 api를 호출하는 함수
-  const moreFetch = () => {
+  const handleTouchStart = useCallback((e: TouchEvent) => {
+    console.log('드래그 시작');
+    if (containerRef.current && containerRef.current.scrollTop === 0) {
+      startY.current = e.touches[0].clientY;
+    } else {
+      startY.current = null;
+    }
+  }, []);
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    console.log('드래그 중');
+    if (startY.current !== null) {
+      const currentY = e.touches[0].clientY;
+      const distance = currentY - startY.current;
+      if (distance > 0) {
+        setIsPulling(true);
+        setPullDistance(Math.min(distance, 150));
+        e.preventDefault();
+      }
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(async () => {
+    console.log('드래그 끝');
+    if (isPulling && pullDistance > 100) {
+      setIsRefreshing(true);
+      await fetchData(0, size, true);
+      setTimeout(() => {
+        setIsRefreshing(false);
+      }, 600);
+    }
+    setIsPulling(false);
+    setPullDistance(0);
+    startY.current = null;
+  }, [isPulling, pullDistance, fetchData, size]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('touchstart', handleTouchStart as any);
+      container.addEventListener('touchmove', handleTouchMove as any, {
+        passive: false,
+      });
+      container.addEventListener('touchend', handleTouchEnd as any);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('touchstart', handleTouchStart as any);
+        container.removeEventListener('touchmove', handleTouchMove as any);
+        container.removeEventListener('touchend', handleTouchEnd as any);
+      }
+    };
+  }, [handleTouchStart, handleTouchMove, handleTouchEnd]);
+
+  const moreFetch = useCallback(() => {
     setIsLoading(true);
-  };
+  }, []);
 
-  //초기화 함수
-  const reset = async () => {
-    fetchDataFunction(0, size).then((result: any) => {
-      setData(result.content);
-      setHasNextPage(!result.isLast);
-      setPage(1);
-      setIsLoading(false);
-      if (result.total) setTotal(result.total);
-    });
-  };
+  const reset = useCallback(async () => {
+    const result = await fetchData(0, size, true);
+    setIsLoading(false);
+    return result;
+  }, [fetchData, size]);
 
-  //data가 변할때 마다 세션 스토리지에 data 저장(뒤로가기 시 이전 데이터를 다시 불러오기 위함)
   useEffectAfterMount(() => {
     if (data.length === 0) return;
     sessionStorage.setItem(`${key}-item`, JSON.stringify(data));
     sessionStorage.setItem(`${key}-page`, String(page));
-  }, [data]);
+  }, [data, key, page]);
+
+  const ReloadSpinner = useCallback(() => {
+    if (isRefreshing)
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <ClipLoader />
+        </div>
+      );
+  }, [isRefreshing]);
 
   return {
     data,
     isLoading,
+    isRefreshing,
     hasNextPage,
     containerRef,
     reset,
     moreFetch,
     total,
+    isPulling,
+    pullDistance,
+    ReloadSpinner,
   };
 }

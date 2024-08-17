@@ -13,6 +13,10 @@ const ClothList = styled.div`
   height: calc(100vh - 202px);
 `;
 
+const RefreshLoader = styled.div`
+  text-align: center;
+`;
+
 const TopButton = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -32,6 +36,6 @@ const TopButton = styled.div`
   }
 `;
 
-const S = { SubHeadDiv, Layout, ClothList, TopButton };
+const S = { SubHeadDiv, Layout, ClothList, TopButton, RefreshLoader };
 
 export default S;

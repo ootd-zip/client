@@ -37,6 +37,7 @@ export default function PublicApi() {
       .getNewToken()
       .catch((err) => {
         window.location.replace('/sign-in');
+        localStorage.clear();
       });
 
     localStorage.setItem('accessToken', accessToken);
