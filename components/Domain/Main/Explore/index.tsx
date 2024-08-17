@@ -11,8 +11,6 @@ import Spinner from '@/components/Spinner';
 import BackTop from '@/public/images/BackTop.svg';
 import Portal from '@/components/Portal';
 import useRememberScroll from '@/hooks/useRememberScroll';
-import { usePullToRefresh } from '@/hooks/usePullToRefresh';
-import { ClipLoader } from 'react-spinners';
 /*
 이름: 탐색
 역할: 유저의 ootd들을 보여주는 탐색 컴포넌트
@@ -53,7 +51,6 @@ export default function Explore() {
     hasNextPage: OOTDHasNextPage,
     reset: ootdReset,
     total,
-    isRefreshing,
     pullDistance,
     ReloadSpinner,
   } = useInfiniteScroll({
