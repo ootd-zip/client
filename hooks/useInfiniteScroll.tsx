@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import useEffectAfterMount from './useEffectAfterMount';
@@ -31,25 +32,29 @@ export default function useInfiniteScroll({
   const startY = useRef<number | null>(null);
   const router = useRouter();
 
-  const fetchData = useCallback(
-    async (pageNum: number, pageSize: number, isRefresh: Boolean = false) => {
-      const result = await fetchDataFunction(pageNum, pageSize);
-      if (!result) return;
+  const fetchData = async (
+    pageNum: number,
+    pageSize: number,
+    isRefresh: Boolean = false
+  ) => {
+    const result = await fetchDataFunction(pageNum, pageSize);
+    if (!result) return;
 
-      if (isRefresh) {
-        setData(result.content);
-        setPage(1);
-      } else {
-        setData((prevData: any) => [...prevData, ...result.content]);
-        setPage((prevPage) => prevPage + 1);
-      }
+    if (isRefresh) {
+      setData(result.content);
+      setPage(1);
+    } else {
+      setData((prevData: any) => {
+        if (prevData.length > 1) return [...prevData, ...result.content];
+        else return result.content;
+      });
+      setPage((prevPage) => prevPage + 1);
+    }
 
-      setHasNextPage(!result.isLast);
-      if (result.total) setTotal(result.total);
-      return result;
-    },
-    []
-  );
+    setHasNextPage(!result.isLast);
+    if (result.total) setTotal(result.total);
+    return result;
+  };
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -152,7 +157,7 @@ export default function useInfiniteScroll({
   const ReloadSpinner = useCallback(() => {
     if (isRefreshing)
       return (
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', paddingBottom: '10px' }}>
           <ClipLoader />
         </div>
       );
@@ -170,5 +175,11 @@ export default function useInfiniteScroll({
     isPulling,
     pullDistance,
     ReloadSpinner,
+    containerProps: {
+      style: {
+        transition: 'transform 0.2s',
+        transform: `translateY(${Math.min(pullDistance / 2, 50)}px)`,
+      },
+    },
   };
 }

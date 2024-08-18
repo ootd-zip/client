@@ -27,6 +27,13 @@ interface ProfileProps {
   profileIsLoading: Boolean;
   profileRef: MutableRefObject<any>;
   profileHasNextPage: Boolean;
+  profileReloadSpinner: () => React.ReactNode;
+  profileContainerProps: {
+    style: {
+      transition: string;
+      transform: string;
+    };
+  };
 }
 
 /*
@@ -40,6 +47,8 @@ export default function Profile({
   profileIsLoading,
   profileRef,
   profileHasNextPage,
+  profileReloadSpinner,
+  profileContainerProps,
 }: ProfileProps) {
   const router = useRouter();
 
@@ -66,7 +75,8 @@ export default function Profile({
 
   return (
     <>
-      <S.Layout ref={profileRef}>
+      <S.Layout ref={profileRef} {...profileContainerProps}>
+        {profileReloadSpinner()}
         {profileList &&
           profileList.map((item, index) => {
             return (
