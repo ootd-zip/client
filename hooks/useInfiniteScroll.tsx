@@ -82,7 +82,6 @@ export default function useInfiniteScroll({
   }, [handleScroll]);
 
   const handleTouchStart = useCallback((e: TouchEvent) => {
-    console.log('드래그 시작');
     if (containerRef.current && containerRef.current.scrollTop === 0) {
       startY.current = e.touches[0].clientY;
     } else {
@@ -91,7 +90,6 @@ export default function useInfiniteScroll({
   }, []);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
-    console.log('드래그 중');
     if (startY.current !== null) {
       const currentY = e.touches[0].clientY;
       const distance = currentY - startY.current;
@@ -104,7 +102,6 @@ export default function useInfiniteScroll({
   }, []);
 
   const handleTouchEnd = useCallback(async () => {
-    console.log('드래그 끝');
     if (isPulling && pullDistance > 100) {
       setIsRefreshing(true);
       await fetchData(0, size, true);
