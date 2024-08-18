@@ -8,7 +8,6 @@ import SubHead from '../SubHead';
 import Spinner from '@/components/Spinner';
 import FilterModal from '@/components/Domain/MyPage/Closet/FilterModal';
 import { FilterData } from '@/components/Domain/MyPage/Closet/ClosetCloth';
-import Portal from '@/components/Portal';
 import EmptyFilteredResult from '../EmptyFilteredResult';
 import Background from '@/components/Background';
 import useRememberScroll from '@/hooks/useRememberScroll';
@@ -24,6 +23,13 @@ interface ClosetClothProps {
   setFilter: Dispatch<SetStateAction<FilterData | SearchFilterData>>;
   sortStandard: string;
   setSortStandard: Dispatch<SetStateAction<string>>;
+  ootdReloadSpinner: () => React.ReactNode;
+  ootdContainerProps: {
+    style: {
+      transition: string;
+      transform: string;
+    };
+  };
 }
 
 export type OOTDListType = {
@@ -56,7 +62,9 @@ export default function ClosetCloth({
   setFilter,
   sortStandard,
   setSortStandard,
+  ootdReloadSpinner,
   setOOTDList,
+  ootdContainerProps,
 }: ClosetClothProps) {
   const router = useRouter();
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<Boolean>(false);
@@ -191,7 +199,8 @@ export default function ClosetCloth({
               count={OOTDTotal || 0}
               style="noPadding"
             />
-            <S.ClothList ref={OOTDRef}>
+            <S.ClothList ref={OOTDRef} {...ootdContainerProps}>
+              {ootdReloadSpinner()}
               <ImageList
                 onClick={onClickImageList}
                 data={OOTDList.map((item) => {

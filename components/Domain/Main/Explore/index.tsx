@@ -51,6 +51,8 @@ export default function Explore() {
     hasNextPage: OOTDHasNextPage,
     reset: ootdReset,
     total,
+    ReloadSpinner,
+    containerProps,
   } = useInfiniteScroll({
     fetchDataFunction: fetchOOTDDataFunction,
     size: 12,
@@ -110,7 +112,8 @@ export default function Explore() {
         />
       </S.SubHeadDiv>
       <S.Layout>
-        <S.ClothList ref={OOTDRef}>
+        {ReloadSpinner()}
+        <S.ClothList ref={OOTDRef} {...containerProps}>
           <ImageList
             onClick={onClickImageList}
             data={OOTDList.map((item) => {

@@ -62,12 +62,20 @@ export default function Following({
     return data;
   };
 
-  const { data, reset, containerRef, total, isLoading, hasNextPage } =
-    useInfiniteScroll({
-      fetchDataFunction,
-      initialData: [],
-      size: 20,
-    });
+  const {
+    data,
+    reset,
+    containerRef,
+    total,
+    isLoading,
+    hasNextPage,
+    ReloadSpinner,
+    containerProps,
+  } = useInfiniteScroll({
+    fetchDataFunction,
+    initialData: [],
+    size: 20,
+  });
 
   useEffect(() => {
     const newData = data.map((item: any) => {
@@ -95,7 +103,8 @@ export default function Following({
       <S.Wrap>
         <SearchBar placeholder="검색" letter={keyword} setLetter={setKeyword} />
       </S.Wrap>
-      <S.Layout ref={containerRef}>
+      <S.Layout ref={containerRef} {...containerProps}>
+        {ReloadSpinner()}
         {followingList &&
           followingList.map((item, index) => {
             return (

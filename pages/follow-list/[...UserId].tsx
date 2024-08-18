@@ -1,16 +1,10 @@
 import AppBar from '@/components/Appbar';
 import S from '@/style/followList/style';
-import {
-  AiOutlineArrowLeft,
-  AiOutlineEllipsis,
-  AiOutlineSetting,
-} from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineEllipsis } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { useFunnel } from '@/hooks/use-funnel';
 import Follower from '@/components/Domain/FollowList/Follower';
 import Following from '@/components/Domain/FollowList/Following';
-import SearchBar from '@/components/SearchBar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ActionSheet from '@/components/ActionSheet';
 import { userId } from '@/utils/recoil/atom';
 import { useRecoilValue } from 'recoil';
