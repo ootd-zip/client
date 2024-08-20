@@ -163,62 +163,95 @@ const Gallery = ({
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // useEffect(() => {
-  //   const fetchColor = async () => {
-  //     const colorList = (await getColor()) as ColorListType;
-  //     setColor(colorList);
-  //   };
+  useEffect(() => {
+    const fetchColor = async () => {
+      const colorList = (await getColor()) as ColorListType;
+      setColor(colorList);
+    };
 
-  //   fetchColor();
-  // }, []);
+    fetchColor();
+  }, []);
 
-  // useEffect(() => {
-  //   if (imageLoaded && color) {
-  //     handleImageLoad();
-  //   }
-  // }, [imageLoaded, color]);
+  useEffect(() => {
+    if (imageLoaded && color) {
+      handleImageLoad();
+    }
+  }, [imageLoaded, color]);
 
-  // const handleImageLoad = () => {
-  //   const img = document.getElementById('sourceImage') as HTMLImageElement;
-  //   const canvas = canvasRef.current;
+  const handleImageLoad = async () => {
+    const img = document.getElementById('sourceImage') as HTMLImageElement;
+    const canvas = canvasRef.current;
 
-  //   if (!img || !canvas) return;
+    if (!img || !canvas) return; // 이미지나 캔버스가 없는 경우 함수 종료
 
-  //   const context = canvas.getContext('2d');
-  //   if (!context) return;
+    const context = canvas.getContext('2d');
+    if (!context) return; // 2D 컨텍스트를 가져오는 데 실패한 경우 함수 종료
 
-  //   canvas.width = img.naturalWidth;
-  //   canvas.height = img.naturalHeight;
-  //   context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+    // 이미지의 너비와 높이 추출
+    const imgWidth = img.naturalWidth;
+    const imgHeight = img.naturalHeight;
 
-  //   const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-  //   const data = imageData.data;
+    // 이미지의 중심 좌표
+    const centerX = Math.floor(imgWidth / 2);
+    const centerY = Math.floor(imgHeight / 2);
 
-  //   const pixels: RGB[] = [];
-  //   for (let i = 0; i < data.length; i += 4) {
-  //     pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
-  //   }
+    const regionSize = 4;
+    const startX = Math.max(centerX - regionSize / 2, 0); // 시작 X 좌표 (이미지 경계를 넘어가지 않도록)
+    const startY = Math.max(centerY - regionSize / 2, 0); // 시작 Y 좌표 (이미지 경계를 넘어가지 않도록)
+    const endX = Math.min(centerX + regionSize / 2, imgWidth); // 끝 X 좌표 (이미지 경계를 넘어가지 않도록)
+    const endY = Math.min(centerY + regionSize / 2, imgHeight); // 끝 Y 좌표 (이미지 경계를 넘어가지 않도록)
 
-  //   const k = 5;
-  //   const clusters = kMeansClustering(pixels, k);
+    // 캔버스의 크기를 중심 주변 영역 설정
+    canvas.width = endX - startX;
+    canvas.height = endY - startY;
 
-  //   const dominantCluster = clusters.reduce((prev, current) =>
-  //     prev.pixels.length > current.pixels.length ? prev : current
-  //   );
+    // 이미지의 중심 주변에서 4px x 4px 영역을 캔버스 생성
+    context.drawImage(
+      img,
+      startX,
+      startY,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
 
-  //   const averageColor = dominantCluster.centroid;
+    // 캔버스에서 이미지 데이터 가져옴
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
 
-  //   const hexCode = color
-  //     ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
-  //     : {
-  //         id: 24,
-  //         name: '화이트',
-  //         colorCode: '#FFFFFF',
-  //       };
-  //   if (setSuggestionColor) {
-  //     setSuggestionColor(hexCode || undefined);
-  //   }
-  // };
+    const pixels: RGB[] = [];
+    for (let i = 0; i < data.length; i += 4) {
+      pixels.push({ r: data[i], g: data[i + 1], b: data[i + 2] });
+    }
+
+    const k = 3; // 군집화에 사용할 클러스터 수
+    const clusters = await kMeansClustering(pixels, k); // k-평균 군집화 수행
+
+    // 가장 큰 클러스터를 찾음
+    const dominantCluster = clusters.reduce((prev, current) =>
+      prev.pixels.length > current.pixels.length ? prev : current
+    );
+
+    // 가장 큰 클러스터의 중심 색상으로 추출
+    const averageColor = dominantCluster.centroid;
+
+    // 색상 코드에서 추출 또는 기본 색상(화이트)
+    const hexCode = color
+      ? findClosestColor(averageColor.r, averageColor.g, averageColor.b, color)
+      : {
+          id: 24,
+          name: '화이트',
+          colorCode: '#FFFFFF',
+        };
+
+    // 제안 색상이 있는 경우 상태를 업데이트합니다.
+    if (setSuggestionColor) {
+      setSuggestionColor(hexCode || undefined);
+    }
+  };
 
   return (
     <>
