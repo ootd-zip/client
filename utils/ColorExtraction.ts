@@ -15,25 +15,50 @@ export interface Cluster {
 }
 
 // k-평균 군집화 함수
-export function kMeansClustering(pixels: RGB[], k: number): Cluster[] {
+export async function kMeansClustering(
+  pixels: RGB[],
+  k: number
+): Promise<Cluster[]> {
   let centroids = initializeCentroids(pixels, k);
   let clusters: Cluster[] = [];
 
   for (let i = 0; i < 10; i++) {
     clusters = assignPixelsToClusters(pixels, centroids);
-    centroids = updateCentroids(clusters);
+    const newCentroids = updateCentroids(clusters);
+
+    // 수렴 조건: 중심점이 거의 변하지 않는 경우 반복 종료
+    if (centroids.every((c, idx) => colorDistance(c, newCentroids[idx]) < 1)) {
+      break;
+    }
+    centroids = newCentroids;
   }
 
   return clusters;
 }
 
-// 초기 중심점 설정 함수
+// k-means++ 초기화 함수
 export function initializeCentroids(pixels: RGB[], k: number): RGB[] {
   const centroids: RGB[] = [];
-  for (let i = 0; i < k; i++) {
-    const randomPixel = pixels[Math.floor(Math.random() * pixels.length)];
-    centroids.push(randomPixel);
+  const firstCentroid = pixels[Math.floor(Math.random() * pixels.length)];
+  centroids.push(firstCentroid);
+
+  while (centroids.length < k) {
+    const distances = pixels.map((pixel) =>
+      Math.min(...centroids.map((centroid) => colorDistance(pixel, centroid)))
+    );
+    const totalDistance = distances.reduce((a, b) => a + b, 0);
+    const randomThreshold = Math.random() * totalDistance;
+    let sumDistance = 0;
+
+    for (let i = 0; i < distances.length; i++) {
+      sumDistance += distances[i];
+      if (sumDistance >= randomThreshold) {
+        centroids.push(pixels[i]);
+        break;
+      }
+    }
   }
+
   return centroids;
 }
 
