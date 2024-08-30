@@ -45,7 +45,7 @@ export default function useInfiniteScroll({
       setPage(1);
     } else {
       setData((prevData: any) => {
-        if (prevData.length > 1) return [...prevData, ...result.content];
+        if (prevData.length >= 1) return [...prevData, ...result.content];
         else return result.content;
       });
       setPage((prevPage) => prevPage + 1);
