@@ -64,14 +64,6 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     key: 'search-user',
   });
 
-  // 검색 결과 스크롤 저장
-  useRememberScroll({
-    key: 'search-user',
-    containerRef: profileRef,
-    setList: setProfileList,
-    list: profileList,
-  });
-
   useEffect(() => {
     if (!profileData || profileData.length === 0) return;
     setProfileList(
