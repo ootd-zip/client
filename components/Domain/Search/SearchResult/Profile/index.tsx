@@ -13,6 +13,7 @@ import Button from '@/components/Button';
 import Avatar from '@/public/images/Avatar.svg';
 import NextImage from '@/components/NextImage';
 import PublicApi from '@/apis/domain/Public/PublicApi';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export type ProfileListType = {
   id: number;
@@ -72,6 +73,14 @@ export default function Profile({
     // 미팔로우 중이라면 팔로우 API
     await follow(userId);
   };
+
+  // 검색 결과 스크롤 저장
+  useRememberScroll({
+    key: 'search-user',
+    containerRef: profileRef,
+    setList: setProfileList,
+    list: profileList,
+  });
 
   return (
     <>

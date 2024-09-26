@@ -66,7 +66,7 @@ export default function useInfiniteScroll({
     fetchData(page, size).then(() => setIsLoading(false));
   }, [isLoading, hasNextPage]);
 
-  const handleScroll = useCallback(() => {
+  const handleScroll = () => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -75,7 +75,7 @@ export default function useInfiniteScroll({
     if (scrollTop + clientHeight >= scrollHeight - 20 && !isLoading) {
       setIsLoading(true);
     }
-  }, [isLoading]);
+  };
 
   useEffect(() => {
     const container = containerRef.current;
