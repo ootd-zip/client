@@ -212,6 +212,14 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     sessionStorage.setItem('search-type', 'ootd');
   };
 
+  // 검색 결과 스크롤 저장
+  useRememberScroll({
+    key: 'search-user',
+    containerRef: profileRef,
+    setList: setProfileList,
+    list: profileList,
+  });
+
   return (
     <>
       <S.Layout>

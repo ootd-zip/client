@@ -74,14 +74,6 @@ export default function Profile({
     await follow(userId);
   };
 
-  // 검색 결과 스크롤 저장
-  useRememberScroll({
-    key: 'search-user',
-    containerRef: profileRef,
-    setList: setProfileList,
-    list: profileList,
-  });
-
   return (
     <>
       <S.Layout ref={profileRef} {...profileContainerProps}>
