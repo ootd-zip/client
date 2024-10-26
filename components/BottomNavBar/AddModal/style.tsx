@@ -10,7 +10,7 @@ const Layout = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   border-block: 2px solid black;
-  @keyframes fadeIn {
+  @keyframes addModalFadeIn {
     from {
       opacity: 0;
     }
@@ -18,7 +18,7 @@ const Layout = styled.div`
       opacity: 100;
     }
   }
-  animation: 0.3s fadeIn ease-in-out;
+  animation: 0.3s addModalFadeIn ease-in-out;
 `;
 const OOTD = styled.div`
   padding: 12px 0;

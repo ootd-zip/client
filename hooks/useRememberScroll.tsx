@@ -41,10 +41,10 @@ export default function useRememberScroll({
   }, []);
 
   //세션 스토리지에 아이템이 있을 경우 리스트에 업데이트
-  useEffect(() => {
-    if (sessionStorage.getItem(`${key}-item`) && setList)
-      setList(JSON.parse(sessionStorage.getItem(`${key}-item`)!));
-  }, []);
+  // useEffect(() => {
+  //   if (sessionStorage.getItem(`${key}-item`) && setList)
+  //     setList(JSON.parse(sessionStorage.getItem(`${key}-item`)!));
+  // }, []);
 
   //세션 스토리지에 스크롤 위치가 있을 경우 스크롤 위치 이동
   useEffectAfterMount(() => {
