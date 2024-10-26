@@ -41,7 +41,24 @@ const SmallColorSpan = styled.div<SmallColorSpanProps>`
   background-color: ${(props) => props.color};
 `;
 
+const XSmallColorSpan = styled.div<SmallColorSpanProps>`
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ColorName = styled.div``;
-const S = { Layout, ColorSpan, ColorName, BigColorSpan, SmallColorSpan };
+const S = {
+  Layout,
+  ColorSpan,
+  ColorName,
+  BigColorSpan,
+  SmallColorSpan,
+  XSmallColorSpan,
+};
 
 export default S;

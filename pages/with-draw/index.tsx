@@ -22,12 +22,12 @@ export default function Withdraw() {
 
   const router = useRouter();
 
-  const [check1, setCheck1] = useState<boolean>(false);
-  const [check2, setCheck2] = useState<boolean>(false);
-  const [check3, setCheck3] = useState<boolean>(false);
-  const [check4, setCheck4] = useState<boolean>(false);
+  const [check1, setCheck1] = useState<Boolean>(false);
+  const [check2, setCheck2] = useState<Boolean>(false);
+  const [check3, setCheck3] = useState<Boolean>(false);
+  const [check4, setCheck4] = useState<Boolean>(false);
 
-  const [possible, setPossible] = useState<boolean>(false);
+  const [possible, setPossible] = useState<Boolean>(false);
   const [alertOpen, setAlertOpen] = useState<Boolean>(false);
 
   useEffect(() => {

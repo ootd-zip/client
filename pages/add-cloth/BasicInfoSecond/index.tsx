@@ -7,7 +7,7 @@ import PlusButton from '@/components/PlusButton';
 import { ColorListType } from '@/components/ColorList';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
 import { CategoryListType } from '@/components/Domain/AddCloth/ClothCategoryModal';
-import ColorSpan from '@/components/ColorList/ColorSpan';
+import BigColor from '@/components/ColorList/BigColor';
 import ColorModal from '@/components/Domain/AddCloth/ColorModal';
 import ClothSizeModal, {
   SizeItem,
@@ -165,7 +165,7 @@ export default function BasicInfoSecond({
                 {clothColor &&
                   clothColor.map((item, index) => {
                     return (
-                      <ColorSpan
+                      <BigColor
                         key={index}
                         index={index}
                         color={item.colorCode}

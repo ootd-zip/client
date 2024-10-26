@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import S from './style';
-import ColorSpan from './ColorSpan';
+import BigColor from './BigColor';
 import ClothApi from '@/apis/domain/Cloth/ClothApi';
 
 export type ColorListType = {
@@ -77,7 +77,7 @@ export default function ColorList({
       <S.ColorList>
         {colorList.map((item, index) => {
           return (
-            <ColorSpan
+            <BigColor
               color={item.colorCode}
               name={item.name}
               state={item.state}

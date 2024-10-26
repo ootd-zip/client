@@ -9,8 +9,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 interface AgreeBlockProps {
   title: string;
   buttonClick?: () => void;
-  checked: boolean;
-  setChecked: Dispatch<SetStateAction<boolean>>;
+  checked: Boolean;
+  setChecked: Dispatch<SetStateAction<Boolean>>;
   lastItem?: Boolean;
 }
 

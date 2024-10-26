@@ -19,16 +19,16 @@ export interface patchOOTDIsPrivatePayload {
 }
 
 export interface postClothPayload {
-  purchaseStore: string;
-  purchaseStoreType: string;
-  brandId: number;
+  name: string;
+  clothesImageUrl: string;
   categoryId: number;
+  brandId: number;
   colorIds: number[];
   isPrivate: Boolean;
-  sizeId: number;
-  clothesImageUrl: string;
-  name: string;
+  sizeId?: number;
   memo?: string;
+  purchaseStore?: string;
+  purchaseStoreType?: string;
   purchaseDate?: string;
 }
 
@@ -139,4 +139,8 @@ export interface getUserBlockListParams {
 
 export interface postUserBlockPayload {
   userId: number;
+}
+
+export interface postBrandPayload {
+  requestContents: string;
 }

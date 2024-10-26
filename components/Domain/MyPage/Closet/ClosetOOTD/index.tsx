@@ -60,6 +60,8 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
     containerRef: ootdRef,
     hasNextPage: ootdHasNextPage,
     reset,
+    ReloadSpinner,
+    containerProps,
   } = useInfiniteScroll({
     fetchDataFunction,
     size: 20,
@@ -142,7 +144,8 @@ export default function ClosetOOTD({ showingId }: ClosetOOTDProps) {
         </Caption1>
       </S.OOTDSort>
       {/*ootd 리스트*/}
-      <S.OOTDList ref={ootdRef} state={listScrollState}>
+      {ReloadSpinner()}
+      <S.OOTDList {...containerProps} ref={ootdRef} state={listScrollState}>
         <ImageList
           type="column"
           data={myPageOOTDList!}

@@ -20,6 +20,7 @@ export default function useRememberScroll({
   useEffect(() => {
     if (!containerRef) return;
     const container = containerRef.current;
+    if (!container) return;
 
     if (!container) return;
 

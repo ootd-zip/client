@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 이러한 상황에서도 뷰포트를 부모로 잡기 위한 도구가 바로 Portal이다.
 */
 const Portal = ({ children }: { children: ReactElement }) => {
-  const [mounted, setMounted] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<Boolean>(false);
 
   useEffect(() => {
     setMounted(true);

@@ -49,7 +49,9 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     isLoading: profileIsLoading,
     containerRef: profileRef,
     hasNextPage: profileHasNextPage,
-    reset,
+    reset: profileReset,
+    ReloadSpinner: profileReloadSpinner,
+    containerProps: profileContainerProps,
   } = useInfiniteScroll({
     fetchDataFunction,
     size: 12,
@@ -60,14 +62,6 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
       ? JSON.parse(sessionStorage.getItem('search-user-page')!)
       : 0,
     key: 'search-user',
-  });
-
-  // 검색 결과 스크롤 저장
-  useRememberScroll({
-    key: 'search-user',
-    containerRef: profileRef,
-    setList: setProfileList,
-    list: profileList,
   });
 
   useEffect(() => {
@@ -87,7 +81,7 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
   // 조건 변경시 초기화
   useEffectAfterMount(() => {
     setProfileList([]);
-    reset();
+    profileReset();
   }, [keywordsValue]);
 
   // 검색 결과 옷집 필터
@@ -161,6 +155,8 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
     hasNextPage: OOTDHasNextPage,
     reset: ootdReset,
     total: OOTDTotal,
+    ReloadSpinner: ootdReloadSpinner,
+    containerProps: ootdContainerProps,
   } = useInfiniteScroll({
     fetchDataFunction: fetchOOTDDataFunction,
     size: 12,
@@ -252,6 +248,8 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
                   setFilter={setFilter}
                   sortStandard={sortStandard}
                   setSortStandard={setSortStandard}
+                  ootdReloadSpinner={ootdReloadSpinner}
+                  ootdContainerProps={ootdContainerProps}
                 />
               )}
             </TabView.Tab>
@@ -263,6 +261,8 @@ export default function SearchResult({ keywordsValue }: searchResultProps) {
                   profileIsLoading={profileIsLoading}
                   profileRef={profileRef}
                   profileHasNextPage={profileHasNextPage}
+                  profileReloadSpinner={profileReloadSpinner}
+                  profileContainerProps={profileContainerProps}
                 />
               ) : (
                 <EmptySearch />

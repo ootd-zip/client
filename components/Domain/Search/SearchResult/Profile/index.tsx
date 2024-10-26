@@ -13,6 +13,7 @@ import Button from '@/components/Button';
 import Avatar from '@/public/images/Avatar.svg';
 import NextImage from '@/components/NextImage';
 import PublicApi from '@/apis/domain/Public/PublicApi';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 export type ProfileListType = {
   id: number;
@@ -27,6 +28,13 @@ interface ProfileProps {
   profileIsLoading: Boolean;
   profileRef: MutableRefObject<any>;
   profileHasNextPage: Boolean;
+  profileReloadSpinner: () => React.ReactNode;
+  profileContainerProps: {
+    style: {
+      transition: string;
+      transform: string;
+    };
+  };
 }
 
 /*
@@ -40,6 +48,8 @@ export default function Profile({
   profileIsLoading,
   profileRef,
   profileHasNextPage,
+  profileReloadSpinner,
+  profileContainerProps,
 }: ProfileProps) {
   const router = useRouter();
 
@@ -64,9 +74,18 @@ export default function Profile({
     await follow(userId);
   };
 
+  // 검색 결과 스크롤 저장
+  useRememberScroll({
+    key: 'search-user',
+    containerRef: profileRef,
+    setList: setProfileList,
+    list: profileList,
+  });
+
   return (
     <>
-      <S.Layout ref={profileRef}>
+      <S.Layout ref={profileRef} {...profileContainerProps}>
+        {profileReloadSpinner()}
         {profileList &&
           profileList.map((item, index) => {
             return (

@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
 const Layout = styled.div`
-  height: 104vh;
+  height: calc(100vh - 48px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  justify-content: space-between;
   .nextButton {
-    padding-bottom: 0;
-    position: fixed;
     padding: 20px 20px;
-    bottom: 0;
-    background-color: white;
+  }
+  .divider {
+    overflow-y: scroll;
+  }
+  .helpertext {
+    margin-top: 8px;
   }
 `;
 
@@ -53,12 +56,20 @@ const Title = styled.div`
 `;
 
 const Information = styled.div`
-  p {
+  .label {
     margin-bottom: 16px;
   }
   display: flex;
   flex-direction: column;
   gap: 32px;
+`;
+
+const ClothColorSpanList = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
 `;
 
 const S = {
@@ -69,6 +80,7 @@ const S = {
   BasicInfo,
   Title,
   Information,
+  ClothColorSpanList,
 };
 
 export default S;

@@ -10,6 +10,10 @@ import { AiOutlineArrowLeft, AiOutlineClose } from 'react-icons/ai';
 import { Button3, Title1 } from '@/components/UI';
 import { useRouter } from 'next/router';
 import { ImageWithTag } from '@/components/Domain/AddOOTD/TagModal';
+import {
+  getReactNativeMessage,
+  sendReactNativeMessage,
+} from '@/utils/reactNativeMessage';
 
 export interface Style {
   id: number;
@@ -62,6 +66,8 @@ const AddOOTD: ComponentWithLayout = () => {
     setComplete(false);
   }, [string, imageAndTag, selectedStyle]);
 
+  const [realImageURL, setRealImageURL] = useState<string[]>([]);
+
   const onClickSkipButton = () => {
     handleStep('게시하기');
   };
@@ -87,6 +93,7 @@ const AddOOTD: ComponentWithLayout = () => {
             handleStep={handleStep}
             nextStep="태그"
             item="OOTD"
+            setRealImageURL={setRealImageURL}
           />
         </Funnel.Steps>
         <Funnel.Steps name="태그">
@@ -108,6 +115,7 @@ const AddOOTD: ComponentWithLayout = () => {
             selectedStyle={selectedStyle}
             setSelectedStyle={setSelectedStyle}
             complete={complete}
+            realImageURL={realImageURL}
           />
         </Funnel.Steps>
       </Funnel>

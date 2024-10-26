@@ -98,6 +98,8 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
     hasNextPage,
     containerRef,
     reset,
+    ReloadSpinner,
+    containerProps,
   } = useInfiniteScroll({
     fetchDataFunction,
     initialData: sessionStorage.getItem(`mypage-${showingId}-cloth-item`)
@@ -252,7 +254,12 @@ export default function ClosetCloth({ showingId }: ClosetClothProps) {
         </S.SearchFilter>
         {isLoading && hasNextPage && <Spinner />}
         {/*옷 조회 결과 리스트*/}
-        <S.ClothList ref={containerRef} state={listScrollState}>
+        {ReloadSpinner()}
+        <S.ClothList
+          {...containerProps}
+          ref={containerRef}
+          state={listScrollState}
+        >
           <ImageList
             onClick={onClickImageList}
             data={searchResult!}

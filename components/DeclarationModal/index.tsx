@@ -35,7 +35,7 @@ export default function DeclarationModal({
   setReceivedDeclaration,
   setReportStatus,
 }: DeclarationModalProps) {
-  const [checks, setChecks] = useState<Array<boolean>>([
+  const [checks, setChecks] = useState<Array<Boolean>>([
     false,
     false,
     false,
@@ -45,7 +45,7 @@ export default function DeclarationModal({
     false,
     false,
   ]);
-  const [possible, setPossible] = useState<boolean>(false);
+  const [possible, setPossible] = useState<Boolean>(false);
 
   // 신고 사유 어느 한 개라도 해당되면 신고하기 버튼 활성화 가능
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function DeclarationModal({
   // 신고 사유 클릭 후 최종 신고하기 버튼
   const onClickDeclarationButton = async () => {
     const trueIndices: number[] = checks.reduce(
-      (acc: number[], currentValue: boolean, currentIndex: number) => {
+      (acc: number[], currentValue: Boolean, currentIndex: number) => {
         if (currentValue === true) {
           acc.push(currentIndex);
         }

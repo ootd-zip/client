@@ -36,7 +36,7 @@ export default function PublicApi() {
     const { accessToken, refreshToken } = await authService
       .getNewToken()
       .catch((err) => {
-        window.location.replace('/sign-in');
+        throw Error(err);
       });
 
     localStorage.setItem('accessToken', accessToken);
