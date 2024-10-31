@@ -66,6 +66,7 @@ export default function BrandModal({
       return;
     }
     setClothBrand(selectedBrandList);
+    setBrandModalIsOpen(false);
   };
 
   //키워드 변경 시 브랜드 조회 api 호출한 뒤 브랜드 리스트 업데이트
