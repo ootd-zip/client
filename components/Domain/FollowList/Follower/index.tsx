@@ -12,6 +12,7 @@ import PublicApi from '@/apis/domain/Public/PublicApi';
 import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import Spinner from '@/components/Spinner';
+import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 
 interface followerProps {
   setSelectedUserName: Dispatch<SetStateAction<string>>;
@@ -103,7 +104,7 @@ export default function Follower({
     setAlertOpen(true);
   };
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     reset();
   }, [keyword]);
 

@@ -10,6 +10,7 @@ import { UserApi } from '@/apis/domain/User/UserApi';
 import NextImage from '@/components/NextImage';
 import Avatar from '@/public/images/Avatar.svg';
 import Spinner from '@/components/Spinner';
+import useEffectAfterMount from '@/hooks/useEffectAfterMount';
 
 interface followingProps {
   followingList: followListType[];
@@ -89,7 +90,7 @@ export default function Following({
     setFollowingList(newData);
   }, [data]);
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     reset();
   }, [keyword]);
 
