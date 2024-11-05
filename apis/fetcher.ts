@@ -25,7 +25,7 @@ fetcher.interceptors.response.use(
     return config;
   },
   async (error) => {
-    if (error.respnse.data && error.response.data.divisionCode === 'U002') {
+    if (error.response.data.divisionCode === 'U002') {
       if (!refreshing) {
         // 리프레시 중이 아닌 경우에만 리프레시 요청 진행
         refreshing = true; // 리프레시 중으로 표시

@@ -67,7 +67,7 @@ export default function Follower({
       page,
       size,
       name: keyword,
-      userId: Number(router.query.UserId![0]),
+      userId: Number(router.query.UserId ?? [0]),
     });
     return data;
   };
@@ -85,11 +85,11 @@ export default function Follower({
     fetchDataFunction,
     initialData: [],
     size: 20,
-    key: `follower-${Number(router.query.UserId![0])}`,
+    key: `follower-${Number(router.query.UserId ?? [0])}`,
   });
 
   useRememberScroll({
-    key: `follower-${Number(router.query.UserId![0])}`,
+    key: `follower-${Number(router.query.UserId ?? [0])}`,
     containerRef,
     setList: setFollowerList,
     list: followerList,

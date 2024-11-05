@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import useEffectAfterMount from './useEffectAfterMount';
 import { ClipLoader } from 'react-spinners';
+import { useRouter } from 'next/router';
 
 interface InfiniteScrollProps {
   fetchDataFunction: any;
@@ -26,7 +27,7 @@ export default function useInfiniteScroll({
   const [total, setTotal] = useState<number>(0);
   const [pullDistance, setPullDistance] = useState<number>(0);
   const [isPulling, setIsPulling] = useState<Boolean>(false);
-
+  const router = useRouter();
   const containerRef = useRef<any>(null);
   const startY = useRef<number | null>(null);
 
@@ -56,6 +57,7 @@ export default function useInfiniteScroll({
 
   //초기 데이터 패칭
   useEffect(() => {
+    if (!router.isReady) return;
     if (initialData?.length > 0) {
       fetchDataFunction(0, 1).then((response: any) => {
         setTotal(response.total);
@@ -63,7 +65,7 @@ export default function useInfiniteScroll({
       return;
     }
     fetchData(page, size);
-  }, []);
+  }, [router.isReady]);
 
   //추가 데이터 패칭
   useEffect(() => {
