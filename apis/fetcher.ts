@@ -6,7 +6,6 @@ let refreshing = false; // 리프레시 중인지 여부를 추적하는 변수
 
 const fetcher = axios.create({
   baseURL: NEXT_PUBLIC_API_HOST,
-  timeout: 2500,
 });
 
 fetcher.interceptors.request.use((config) => {
@@ -26,7 +25,7 @@ fetcher.interceptors.response.use(
     return config;
   },
   async (error) => {
-    if (error.response.data.divisionCode === 'U002') {
+    if (error.respnse.data && error.response.data.divisionCode === 'U002') {
       if (!refreshing) {
         // 리프레시 중이 아닌 경우에만 리프레시 요청 진행
         refreshing = true; // 리프레시 중으로 표시
