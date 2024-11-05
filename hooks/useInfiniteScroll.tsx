@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import useEffectAfterMount from './useEffectAfterMount';
 import { ClipLoader } from 'react-spinners';
@@ -68,7 +67,10 @@ export default function useInfiniteScroll({
 
   //추가 데이터 패칭
   useEffect(() => {
-    if (!hasNextPage || !isLoading) return;
+    if (!hasNextPage || !isLoading) {
+      setIsLoading(false);
+      return;
+    }
     fetchData(page, size).then(() => setIsLoading(false));
   }, [isLoading]);
 
@@ -145,6 +147,7 @@ export default function useInfiniteScroll({
   }, [handleTouchStart, handleTouchMove, handleTouchEnd]);
 
   const moreFetch = useCallback(() => {
+    setHasNextPage(true);
     setIsLoading(true);
   }, []);
 
