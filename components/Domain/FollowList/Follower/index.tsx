@@ -13,6 +13,7 @@ import { useRecoilValue } from 'recoil';
 import { userId } from '@/utils/recoil/atom';
 import Spinner from '@/components/Spinner';
 import useEffectAfterMount from '@/hooks/useEffectAfterMount';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 interface followerProps {
   setSelectedUserName: Dispatch<SetStateAction<string>>;
@@ -84,6 +85,14 @@ export default function Follower({
     fetchDataFunction,
     initialData: [],
     size: 20,
+    key: `follower-${Number(router.query.UserId![0])}`,
+  });
+
+  useRememberScroll({
+    key: `follower-${Number(router.query.UserId![0])}`,
+    containerRef,
+    setList: setFollowerList,
+    list: followerList,
   });
 
   useEffect(() => {
