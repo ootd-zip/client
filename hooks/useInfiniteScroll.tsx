@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import useEffectAfterMount from './useEffectAfterMount';
 import { ClipLoader } from 'react-spinners';
+import { useRouter } from 'next/router';
 
 interface InfiniteScrollProps {
   fetchDataFunction: any;
@@ -21,16 +21,15 @@ export default function useInfiniteScroll({
 }: InfiniteScrollProps) {
   const [page, setPage] = useState<number>(initialPage ? initialPage : 0);
   const [data, setData] = useState(initialData);
-  const [hasNextPage, setHasNextPage] = useState<Boolean>(false);
+  const [hasNextPage, setHasNextPage] = useState<Boolean>(true);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<Boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [pullDistance, setPullDistance] = useState<number>(0);
   const [isPulling, setIsPulling] = useState<Boolean>(false);
-
+  const router = useRouter();
   const containerRef = useRef<any>(null);
   const startY = useRef<number | null>(null);
-  const router = useRouter();
 
   const fetchData = async (
     pageNum: number,
@@ -56,15 +55,26 @@ export default function useInfiniteScroll({
     return result;
   };
 
+  //초기 데이터 패칭
   useEffect(() => {
     if (!router.isReady) return;
+    if (initialData?.length > 0) {
+      fetchDataFunction(0, 1).then((response: any) => {
+        setTotal(response.total);
+      });
+      return;
+    }
     fetchData(page, size);
   }, [router.isReady]);
 
+  //추가 데이터 패칭
   useEffect(() => {
-    if (!hasNextPage || !isLoading) return;
+    if (!hasNextPage || !isLoading) {
+      setIsLoading(false);
+      return;
+    }
     fetchData(page, size).then(() => setIsLoading(false));
-  }, [isLoading, hasNextPage]);
+  }, [isLoading]);
 
   const handleScroll = () => {
     const container = containerRef.current;
@@ -139,6 +149,7 @@ export default function useInfiniteScroll({
   }, [handleTouchStart, handleTouchMove, handleTouchEnd]);
 
   const moreFetch = useCallback(() => {
+    setHasNextPage(true);
     setIsLoading(true);
   }, []);
 

@@ -22,8 +22,6 @@ export default function useRememberScroll({
     const container = containerRef.current;
     if (!container) return;
 
-    if (!container) return;
-
     //세션 스토리지에 스크롤 저장 함수 (데이터 불러오기 전 스크롤 위치 이동을 막기 위한 컴포넌트 높이 저장)
     const handleScroll = () => {
       const { scrollTop, scrollHeight } = container;

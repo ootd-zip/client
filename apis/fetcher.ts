@@ -6,7 +6,6 @@ let refreshing = false; // 리프레시 중인지 여부를 추적하는 변수
 
 const fetcher = axios.create({
   baseURL: NEXT_PUBLIC_API_HOST,
-  timeout: 2500,
 });
 
 fetcher.interceptors.request.use((config) => {
