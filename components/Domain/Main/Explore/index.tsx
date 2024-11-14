@@ -1,5 +1,5 @@
 import S from './style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { OOTDApi } from '@/apis/domain/OOTD/OOTDApi';
@@ -66,7 +66,7 @@ export default function Explore() {
   });
 
   //탐색 리스트 조회 api 호출 완료 시 ootdList 상태 업데이트
-  useEffectAfterMount(() => {
+  useEffect(() => {
     setOOTDList(
       OOTDData.map((item: any) => {
         return {

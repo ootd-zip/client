@@ -10,6 +10,8 @@ import { UserApi } from '@/apis/domain/User/UserApi';
 import NextImage from '@/components/NextImage';
 import Avatar from '@/public/images/Avatar.svg';
 import Spinner from '@/components/Spinner';
+import useEffectAfterMount from '@/hooks/useEffectAfterMount';
+import useRememberScroll from '@/hooks/useRememberScroll';
 
 interface followingProps {
   followingList: followListType[];
@@ -57,7 +59,7 @@ export default function Following({
       page,
       size,
       name: keyword,
-      userId: Number(router.query.UserId![0]),
+      userId: Number(router.query.UserId ?? [0]),
     });
     return data;
   };
@@ -75,6 +77,14 @@ export default function Following({
     fetchDataFunction,
     initialData: [],
     size: 20,
+    key: `following-${Number(router.query.UserId ?? [0])}`,
+  });
+
+  useRememberScroll({
+    key: `following-${Number(router.query.UserId ?? [0])}`,
+    containerRef,
+    setList: setFollowingList,
+    list: followingList,
   });
 
   useEffect(() => {
@@ -89,7 +99,7 @@ export default function Following({
     setFollowingList(newData);
   }, [data]);
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     reset();
   }, [keyword]);
 
