@@ -22,6 +22,7 @@ export default function Setting() {
   const router = useRouter();
 
   const [queryState, setQueryState] = useState<Boolean>(false); // 취향정보 수정 상태
+  const [brandState, setBrandState] = useState<Boolean>(false); // 브랜드 건의 상태
   const [URLState, setURLState] = useState<any>(false); // 이메일 공유 상태
   const [platform, setPlatform] = useState(''); // 내 플랫폼 상태
 
@@ -46,8 +47,11 @@ export default function Setting() {
   };
 
   useEffect(() => {
-    if (router.query.state !== undefined) {
+    if (router.query.state == 'likeInfoEditSuccess') {
       setQueryState(true);
+    }
+    if (router.query.state == 'brandSuggestionSuccess') {
+      setBrandState(true);
     }
   }, []);
 
@@ -111,6 +115,10 @@ export default function Setting() {
               buttonClick={() => router.push('/CommunityGuideline')}
             /> */}
             <SettingBlock
+              text="브랜드 건의하기"
+              buttonClick={() => router.push('/brand-suggestion')}
+            />
+            <SettingBlock
               text="이용약관"
               buttonClick={() => router.push('/agree-policy')}
             />
@@ -152,6 +160,14 @@ export default function Setting() {
               text="취향정보 수정이 완료되었습니다."
               setState={setQueryState}
               state={queryState}
+            />
+          )}
+          {brandState && (
+            <Toast
+              className="brandSuggestion"
+              text={`브랜드 건의가 정상적으로 접수되었습니다.`}
+              setState={setBrandState}
+              state={brandState}
             />
           )}
         </S.SettingDiv>
